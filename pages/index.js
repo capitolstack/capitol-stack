@@ -1,5 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import ThesisSection from '../components/ThesisSection'
+
 
 export default function Home() {
   return (
@@ -22,6 +24,7 @@ export default function Home() {
         <a href="#contact" className="inline-block px-6 py-3 bg-teal-700 text-white rounded-full hover:bg-teal-800 font-semibold">
           Learn More
         </a>
+      <ThesisSection />
       </main>
     </>
   )
