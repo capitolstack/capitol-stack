@@ -2,6 +2,8 @@ import Head from 'next/head'
 import Image from 'next/image'
 import ThesisSection from '../components/ThesisSection'
 import PortfolioSection from '../components/PortfolioSection'
+import TeamSection from '../components/TeamSection'
+
 
 
 
@@ -28,6 +30,7 @@ export default function Home() {
         </a>
       <ThesisSection />
       <PortfolioSection />
+      <TeamSection />
       </main>
     </>
   )
