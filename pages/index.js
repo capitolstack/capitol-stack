@@ -1,6 +1,8 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import ThesisSection from '../components/ThesisSection'
+import PortfolioSection from '../components/PortfolioSection'
+
 
 
 export default function Home() {
@@ -25,6 +27,7 @@ export default function Home() {
           Learn More
         </a>
       <ThesisSection />
+      <PortfolioSection />
       </main>
     </>
   )
