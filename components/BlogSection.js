@@ -1,16 +1,16 @@
 export default function BlogSection() {
   return (
-    <section className="bg-[#F9FAFB] py-28 px-6 font-inter">
+    <section className="bg-[#F9FAFB] py-28 px-6 font-inter text-[#1A1A1A]">
       <div className="max-w-4xl mx-auto text-left">
-        <h2 className="text-3xl font-semibold text-gray-900 mb-6 border-l-4 border-[#007070] pl-4">
+        <h2 className="text-3xl font-semibold mb-6 text-[#1A1A1A] border-l-4 border-[#007070] pl-4 text-left">
           Insights & Updates
         </h2>
-        <div className="bg-white shadow-sm border border-gray-200 rounded-xl p-6">
-          <h3 className="text-2xl font-bold text-gray-900 mb-2">
+        <div className="bg-white shadow-sm border border-[#E5E7EB] rounded-xl p-6">
+          <h3 className="text-2xl font-bold text-[#1A1A1A] mb-2">
             Why Capitol Stack Exists: A Better Way to Back Climate Builders
           </h3>
-          <p className="text-sm text-gray-500 mb-6">By Jason Cahill, Managing Director, Capitol Stack</p>
-          <div className="space-y-4 text-gray-700 leading-relaxed text-lg">
+          <p className="text-sm text-[#4B5563] mb-6">By Jason Cahill, Managing Director, Capitol Stack</p>
+          <div className="space-y-4 text-[#4B5563] leading-relaxed text-lg">
             <p>
               The next generation of climate innovation won’t come from Silicon Valley alone. It will come from the halls of government, the labs of the DOE, the field ops of USAID, and the spreadsheets of EPA analysts who’ve spent years navigating systems that are slow to move—but impossible to ignore.
             </p>
