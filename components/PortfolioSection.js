@@ -11,7 +11,11 @@ export default function PortfolioSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           {/* Fortify */}
           <div className="flex items-start space-x-4">
-            <div className="w-16 h-16 bg-gray-200 rounded-full flex-shrink-0" />
+            <img
+              src="/logos/fortify.png"
+              alt="Fortify Logo"
+              className="w-16 h-16 object-contain rounded-md"
+            />
             <div>
               <h3 className="text-xl font-bold text-gray-900 mb-1">Fortify</h3>
               <p className="text-md text-gray-700">
@@ -22,7 +26,11 @@ export default function PortfolioSection() {
 
           {/* Andium */}
           <div className="flex items-start space-x-4">
-            <div className="w-16 h-16 bg-gray-200 rounded-full flex-shrink-0" />
+            <img
+              src="/logos/andium.png"
+              alt="Andium Logo"
+              className="w-16 h-16 object-contain rounded-md"
+            />
             <div>
               <h3 className="text-xl font-bold text-gray-900 mb-1">Andium</h3>
               <p className="text-md text-gray-700">
@@ -33,7 +41,11 @@ export default function PortfolioSection() {
 
           {/* SmarterX */}
           <div className="flex items-start space-x-4">
-            <div className="w-16 h-16 bg-gray-200 rounded-full flex-shrink-0" />
+            <img
+              src="/logos/smarterx.png"
+              alt="SmarterX Logo"
+              className="w-16 h-16 object-contain rounded-md"
+            />
             <div>
               <h3 className="text-xl font-bold text-gray-900 mb-1">SmarterX</h3>
               <p className="text-md text-gray-700">
@@ -44,5 +56,5 @@ export default function PortfolioSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
