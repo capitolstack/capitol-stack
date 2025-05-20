@@ -20,7 +20,7 @@ export default function Home() {
         />
       </Head>
 
-      <main className="bg-[#F3F7FB] min-h-screen px-6 py-32 text-center font-inter flex flex-col items-center justify-center">
+      <main className="bg-[#F3F7FB] min-h-screen px-6 py-32 text-center font-inter flex flex-col items-center justify-center text-[#1A1A1A]">
         <img
           src="/capitol-stack-logo.png"
           alt="Capitol Stack Logo"
