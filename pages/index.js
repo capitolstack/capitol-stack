@@ -4,6 +4,8 @@ import ThesisSection from '../components/ThesisSection'
 import PortfolioSection from '../components/PortfolioSection'
 import TeamSection from '../components/TeamSection'
 import BlogSection from '../components/BlogSection'
+import ContactSection from '../components/ContactSection'
+
 
 
 
@@ -34,7 +36,7 @@ export default function Home() {
       <PortfolioSection />
       <TeamSection />
       <BlogSection />
-
+      <ContactSection />
       </main>
     </>
   )
