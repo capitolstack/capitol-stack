@@ -13,6 +13,7 @@ export default function ContactSection() {
           <button
             type="submit"
             className="w-full bg-teal-700 text-white font-semibold py-3 rounded hover:bg-teal-800"
+           
           >
             Send Message
           </button>
