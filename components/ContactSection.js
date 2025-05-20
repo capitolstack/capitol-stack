@@ -6,8 +6,8 @@ export default function ContactSection() {
   const [formType, setFormType] = useState('contact');
 
   const forms = {
-    contact: 'https://tally.so/embed/wA5yjW?hideTitle=1&transparentBackground=1&dynamicHeight=1',
-    deck: 'https://tally.so/embed/3XyzJP?hideTitle=1&transparentBackground=1&dynamicHeight=1',
+    contact: 'https://tally.so/embed/wA5yjW?hideTitle=1&transparentBackground=1',
+    deck: 'https://tally.so/embed/3XyzJP?hideTitle=1&transparentBackground=1',
   };
 
   return (
@@ -45,7 +45,7 @@ export default function ContactSection() {
         </div>
 
         {/* Animated Form Container */}
-        <div className="relative min-h-[520px]">
+        <div className="relative min-h-[640px]">
           <AnimatePresence mode="wait">
             {formType === 'contact' && (
               <motion.iframe
@@ -56,7 +56,7 @@ export default function ContactSection() {
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.4 }}
                 width="100%"
-                height="500"
+                height="640"
                 frameBorder="0"
                 marginHeight="0"
                 marginWidth="0"
@@ -73,7 +73,7 @@ export default function ContactSection() {
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.4 }}
                 width="100%"
-                height="500"
+                height="640"
                 frameBorder="0"
                 marginHeight="0"
                 marginWidth="0"
