@@ -11,12 +11,12 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-28 px-6 bg-white font-inter">
+    <section id="contact" className="py-28 px-6 bg-[#F9FAFB] font-inter text-[#1A1A1A]">
       <div className="max-w-4xl mx-auto text-center">
-        <h2 className="text-3xl font-semibold text-gray-900 mb-6 border-l-4 border-[#007070] pl-4 text-left">
+        <h2 className="text-3xl font-semibold text-[#1A1A1A] mb-6 border-l-4 border-[#007070] pl-4 text-left">
           Get in Touch
         </h2>
-        <p className="mb-8 text-lg text-gray-700 text-left">
+        <p className="mb-8 text-lg text-[#4B5563] text-left">
           Whether you're a founder or just reaching out, use the toggle below to get started.
         </p>
 
@@ -27,7 +27,7 @@ export default function ContactSection() {
             className={`px-6 py-2 rounded-l-full border transition-colors duration-200 ${
               formType === 'contact'
                 ? 'bg-[#007070] text-white'
-                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                : 'bg-[#E5E7EB] text-[#1A1A1A] hover:bg-[#D1D5DB]'
             }`}
           >
             Message Us
@@ -37,7 +37,7 @@ export default function ContactSection() {
             className={`px-6 py-2 rounded-r-full border transition-colors duration-200 ${
               formType === 'deck'
                 ? 'bg-[#007070] text-white'
-                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                : 'bg-[#E5E7EB] text-[#1A1A1A] hover:bg-[#D1D5DB]'
             }`}
           >
             Submit Your Deck
