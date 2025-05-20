@@ -35,20 +35,18 @@ export default function Home() {
   </p>
   <a
     href="#contact"
-    className="inline-block bg-[#007070] hover:bg-[#005F5F] text-white font-semibold px-8 py-3 rounded-full transition-colors"
+    className="inline-block bg-[#007070] hover:bg-[#005F5F] text-white font-semibold px-8 py-3 rounded-full transition-colors mb-20"
   >
     Learn More
   </a>
 </main>
 
-        </a>
-      <ThesisSection />
-      <PortfolioSection />
-      <TeamSection />
-      <BlogSection />
-      <ContactSection />
-      </main>
-    <footer className="bg-black text-white py-10 text-center font-inter">
+<ThesisSection />
+<PortfolioSection />
+<TeamSection />
+<BlogSection />
+<ContactSection />
+<footer className="bg-black text-white py-10 text-center font-inter">
   <p>&copy; {new Date().getFullYear()} Capitol Stack VC. All rights reserved.</p>
 </footer>
 
