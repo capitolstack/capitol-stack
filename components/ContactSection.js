@@ -4,11 +4,6 @@ import Script from 'next/script';
 export default function ContactSection() {
   const [formType, setFormType] = useState('contact');
 
-  const forms = {
-    contact: 'https://tally.so/embed/wA5yjW?hideTitle=1&transparentBackground=1&dynamicHeight=1',
-    deck: 'https://tally.so/embed/3XyzJP?hideTitle=1&transparentBackground=1&dynamicHeight=1',
-  };
-
   return (
     <section id="contact" className="py-28 px-6 bg-white font-inter">
       <div className="max-w-4xl mx-auto text-center">
@@ -43,17 +38,31 @@ export default function ContactSection() {
           </button>
         </div>
 
-        {/* Embedded Tally Form */}
+        {/* Both forms, one hidden */}
         <div className="w-full">
-          <iframe
-            data-tally-src={forms[formType]}
-            width="100%"
-            height="500"
-            frameBorder="0"
-            marginHeight="0"
-            marginWidth="0"
-            title={formType === 'contact' ? 'Contact Form' : 'Deck Submission Form'}
-          />
+          {formType === 'contact' && (
+            <iframe
+              src="https://tally.so/embed/wA5yjW?hideTitle=1&transparentBackground=1&dynamicHeight=1"
+              width="100%"
+              height="500"
+              frameBorder="0"
+              marginHeight="0"
+              marginWidth="0"
+              title="Contact Form"
+            ></iframe>
+          )}
+
+          {formType === 'deck' && (
+            <iframe
+              src="https://tally.so/embed/3XyzJP?hideTitle=1&transparentBackground=1&dynamicHeight=1"
+              width="100%"
+              height="500"
+              frameBorder="0"
+              marginHeight="0"
+              marginWidth="0"
+              title="Submit Your Deck"
+            ></iframe>
+          )}
         </div>
       </div>
 
