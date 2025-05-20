@@ -38,6 +38,10 @@ export default function Home() {
       <BlogSection />
       <ContactSection />
       </main>
+    <footer className="bg-black text-white py-10 text-center font-inter">
+  <p>&copy; {new Date().getFullYear()} Capitol Stack VC. All rights reserved.</p>
+</footer>
+
     </>
   )
 }
