@@ -3,6 +3,8 @@ import Image from 'next/image'
 import ThesisSection from '../components/ThesisSection'
 import PortfolioSection from '../components/PortfolioSection'
 import TeamSection from '../components/TeamSection'
+import BlogSection from '../components/BlogSection'
+
 
 
 
@@ -31,6 +33,8 @@ export default function Home() {
       <ThesisSection />
       <PortfolioSection />
       <TeamSection />
+      <BlogSection />
+
       </main>
     </>
   )
