@@ -8,7 +8,7 @@ export default function PortfolioSection() {
         <p className="text-md text-[#4B5563] mb-12 pl-4">
           Selected investments from the founder’s prior fund, Carbon Ventures
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-12">
           {/* Fortify */}
           <div className="flex items-start space-x-4">
             <img
@@ -16,8 +16,8 @@ export default function PortfolioSection() {
               alt="Fortify Logo"
               className="w-16 h-16 object-contain rounded-md border border-[#E5E7EB]"
             />
-            <div>
-              <h3 className="text-xl font-bold text-[#1A1A1A] mb-1">Fortify</h3>
+            <div className="space-y-3">
+              <h3 className="text-xl font-bold text-[#1A1A1A]">Fortify</h3>
               <p className="text-md text-[#4B5563]">
                 Fortify is a Boston-based digital manufacturing company specializing in advanced composite materials for additive manufacturing.
               </p>
@@ -31,8 +31,8 @@ export default function PortfolioSection() {
               alt="Andium Logo"
               className="w-16 h-16 object-contain rounded-md border border-[#E5E7EB]"
             />
-            <div>
-              <h3 className="text-xl font-bold text-[#1A1A1A] mb-1">Andium</h3>
+            <div className="space-y-3">
+              <h3 className="text-xl font-bold text-[#1A1A1A]">Andium</h3>
               <p className="text-md text-[#4B5563]">
                 Andium provides AI-powered remote field monitoring solutions to reduce greenhouse gas emissions and enhance operational efficiency in the energy sector.
               </p>
@@ -46,8 +46,8 @@ export default function PortfolioSection() {
               alt="SmarterX Logo"
               className="w-16 h-16 object-contain rounded-md border border-[#E5E7EB]"
             />
-            <div>
-              <h3 className="text-xl font-bold text-[#1A1A1A] mb-1">SmarterX</h3>
+            <div className="space-y-3">
+              <h3 className="text-xl font-bold text-[#1A1A1A]">SmarterX</h3>
               <p className="text-md text-[#4B5563]">
                 SmarterX uses data and science to help brands and retailers safely manage regulated consumer products, reducing environmental harm and risk at scale.
               </p>
