@@ -12,18 +12,19 @@ export default function App({ Component, pageProps }) {
         />
         <link rel="icon" href="/favicon.ico" />
 
-        {/* Open Graph for link previews */}
+        {/* Open Graph / Social Preview */}
         <meta property="og:title" content="Capitol Stack – Founder-First Climate Tech VC" />
         <meta
           property="og:description"
           content="Investing in overlooked but deeply capable builders at the intersection of climate, government, and software."
         />
         <meta property="og:image" content="/images/og-preview.png" />
-        <meta property="og:url" content="https://your-vercel-url.vercel.app" />
+        <meta property="og:url" content="https://capitolstack.vercel.app" />
         <meta name="twitter:card" content="summary_large_image" />
 
-        {/* Mobile theme color */}
+        {/* Mobile UI Color */}
         <meta name="theme-color" content="#007070" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
       <Component {...pageProps} />
