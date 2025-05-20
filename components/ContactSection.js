@@ -9,27 +9,40 @@ export default function ContactSection() {
           Interested in investing, collaborating, or learning more? Reach out — or share your deck directly below.
         </p>
         <form className="space-y-4">
-          <input type="text" placeholder="Your Name" className="w-full p-3 border rounded" />
-          <input type="email" placeholder="Your Email" className="w-full p-3 border rounded" />
-          <textarea placeholder="Message" rows="5" className="w-full p-3 border rounded" />
-          <button
-            type="submit"
-            className="w-full bg-[#007070] hover:bg-[#005F5F] text-white font-semibold py-3 rounded transition-colors"
-          >
-            Send Message
-          </button>
-        </form>
+          <input
+            type="text"
+            placeholder="Your Name"
+            className="w-full p-3 border rounded"
+          />
+          <input
+            type="email"
+            placeholder="Your Email"
+            className="w-full p-3 border rounded"
+          />
+          <textarea
+            placeholder="Message"
+            rows="5"
+            className="w-full p-3 border rounded"
+          />
 
-        <div className="mt-10">
-          <a
-            href="https://tally.so/r/3XyzJP"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block bg-black hover:bg-gray-800 text-white font-semibold px-6 py-3 rounded-full transition-colors"
-          >
-            Submit Your Deck
-          </a>
-        </div>
+          <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+            <button
+              type="submit"
+              className="w-full sm:w-auto bg-[#007070] hover:bg-[#005F5F] text-white font-semibold px-6 py-3 rounded transition-colors"
+            >
+              Send Message
+            </button>
+
+            <a
+              href="https://tally.so/r/3XyzJP"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto bg-black hover:bg-gray-800 text-white font-semibold px-6 py-3 rounded transition-colors text-center"
+            >
+              Submit Your Deck
+            </a>
+          </div>
+        </form>
       </div>
     </section>
   );
