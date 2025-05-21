@@ -12,6 +12,21 @@ export default function App({ Component, pageProps }) {
         />
         <link rel="icon" href="/favicon.ico" />
 
+            {/* Google Analytics */}
+  <script async src={`https://www.googletagmanager.com/gtag/js?id=G-NH6MMP8EQF`}></script>
+  <script
+    dangerouslySetInnerHTML={{
+      __html: `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-NH6MMP8EQF', {
+          page_path: window.location.pathname,
+        });
+      `,
+    }}
+  />
+
         {/* Open Graph / Social Preview */}
         <meta property="og:title" content="Capitol Stack – Founder-First Climate Tech VC" />
         <meta
