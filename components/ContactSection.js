@@ -13,17 +13,15 @@ export default function ContactSection() {
   return (
     <section id="contact" className="py-28 px-6 bg-[#F9FAFB] font-inter text-[#1A1A1A]">
       <div className="max-w-4xl mx-auto text-center">
-        <div className="space-y-6 text-left">
-          <h2 className="text-3xl font-semibold border-l-4 border-[#007070] pl-4">
-            Get in Touch
-          </h2>
-          <p className="text-lg text-[#4B5563]">
-            Whether you're a founder or just reaching out, use the toggle below to get started.
-          </p>
-        </div>
+        <h2 className="text-3xl font-semibold text-[#1A1A1A] mb-6 border-l-4 border-[#007070] pl-4 text-left">
+          Get in Touch
+        </h2>
+        <p className="mb-8 text-lg text-[#4B5563] text-left">
+          Whether you're a founder or just reaching out, use the toggle below to get started.
+        </p>
 
         {/* Toggle Switch */}
-        <div className="flex justify-center gap-2 sm:gap-4 my-10">
+        <div className="flex justify-center mb-10">
           <button
             onClick={() => setFormType('contact')}
             className={`px-6 py-2 rounded-l-full border transition-colors duration-200 ${
@@ -65,6 +63,7 @@ export default function ContactSection() {
                 title="Contact Form"
               />
             )}
+
             {formType === 'deck' && (
               <motion.iframe
                 key="deck"
@@ -85,12 +84,32 @@ export default function ContactSection() {
         </div>
       </div>
 
-      {/* Tally Embed Script */}
+      {/* Tally Embed Script + GA4 Tracking for deck submissions */}
       <Script
         id="tally-js"
         src="https://tally.so/widgets/embed.js"
         onLoad={() => {
-          if (window.Tally) window.Tally.loadEmbeds();
+          if (window.Tally) {
+            window.Tally.loadEmbeds();
+
+            window.addEventListener('message', function (e) {
+              const isTally = e.origin.includes('tally.so');
+              const { type, formId } = e.data || {};
+
+              if (
+                isTally &&
+                type === 'TALLY_FORM_SUBMITTED' &&
+                formId === '3XyzJP'
+              ) {
+                if (typeof window.gtag === 'function') {
+                  window.gtag('event', 'deck_submission', {
+                    event_category: 'Forms',
+                    event_label: 'Pitch Deck Submitted',
+                  });
+                }
+              }
+            });
+          }
         }}
       />
     </section>
