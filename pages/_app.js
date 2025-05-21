@@ -1,9 +1,26 @@
 import Head from 'next/head';
 import Script from 'next/script';
-import '../styles/globals.css';
-
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import '../styles/globals.css'; // ← using relative path to avoid Vercel build issues
 
 export default function App({ Component, pageProps }) {
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleRouteChange = (url) => {
+      if (typeof window.gtag === 'function') {
+        window.gtag('config', 'G-NH6MMP8EQF', {
+          page_path: url,
+        });
+      }
+    };
+    router.events.on('routeChangeComplete', handleRouteChange);
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [router.events]);
+
   return (
     <>
       <Head>
@@ -25,7 +42,7 @@ export default function App({ Component, pageProps }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      {/* ✅ Google Analytics with next/script */}
+      {/* ✅ Load GA4 script */}
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-NH6MMP8EQF"
         strategy="afterInteractive"
