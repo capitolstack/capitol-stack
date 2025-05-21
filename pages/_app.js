@@ -24,9 +24,8 @@ export default function App({ Component, pageProps }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      {/* ✅ Load GA script after page is interactive */}
+      {/* Load GA script after the page is interactive */}
       <Script
-        async
         src="https://www.googletagmanager.com/gtag/js?id=G-NH6MMP8EQF"
         strategy="afterInteractive"
       />
@@ -38,7 +37,7 @@ export default function App({ Component, pageProps }) {
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-NH6MMP8EQF', { debug_mode: true });
+            gtag('config', 'G-NH6MMP8EQF');
           `,
         }}
       />
