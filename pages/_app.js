@@ -24,7 +24,7 @@ export default function App({ Component, pageProps }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      {/* Load GA script after the page is interactive */}
+      {/* ✅ Google Analytics */}
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-NH6MMP8EQF"
         strategy="afterInteractive"
