@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import Script from 'next/script';
 import '@/styles/globals.css';
 
 export default function App({ Component, pageProps }) {
@@ -27,26 +26,6 @@ export default function App({ Component, pageProps }) {
         <meta name="theme-color" content="#007070" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-
-      {/* ✅ Load GA4 Script with Next.js Script */}
-      <Script
-        async
-        src="https://www.googletagmanager.com/gtag/js?id=G-NH6MMP8EQF"
-      />
-      <Script
-        id="ga-init"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-NH6MMP8EQF', {
-              page_path: window.location.pathname,
-            });
-          `,
-        }}
-      />
 
       <Component {...pageProps} />
     </>
