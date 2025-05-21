@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Script from 'next/script';
 import '@/styles/globals.css';
 
 export default function App({ Component, pageProps }) {
@@ -11,8 +12,6 @@ export default function App({ Component, pageProps }) {
           content="Capitol Stack backs mission-driven climate tech founders emerging from government, science, and infrastructure systems."
         />
         <link rel="icon" href="/favicon.ico" />
-
-        {/* Open Graph / Social Preview */}
         <meta property="og:title" content="Capitol Stack – Founder-First Climate Tech VC" />
         <meta
           property="og:description"
@@ -21,11 +20,28 @@ export default function App({ Component, pageProps }) {
         <meta property="og:image" content="/images/og-preview.png" />
         <meta property="og:url" content="https://capitolstack.vc" />
         <meta name="twitter:card" content="summary_large_image" />
-
-        {/* Mobile UI Color */}
         <meta name="theme-color" content="#007070" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
+
+      {/* ✅ Load GA script after page is interactive */}
+      <Script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=G-NH6MMP8EQF"
+        strategy="afterInteractive"
+      />
+      <Script
+        id="gtag-init"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-NH6MMP8EQF', { debug_mode: true });
+          `,
+        }}
+      />
 
       <Component {...pageProps} />
     </>
