@@ -1,23 +1,27 @@
 {
   "redirects": [
     {
-      "source": "https://www.capitolstack.com/:path*",
-      "destination": "https://capitolstack.vc/:path*",
+      "source": "/(.*)",
+      "has": [{ "host": "capitolstack.com" }],
+      "destination": "https://capitolstack.vc/:1",
       "permanent": true
     },
     {
-      "source": "https://capitolstack.com/:path*",
-      "destination": "https://capitolstack.vc/:path*",
+      "source": "/(.*)",
+      "has": [{ "host": "www.capitolstack.com" }],
+      "destination": "https://capitolstack.vc/:1",
       "permanent": true
     },
     {
-      "source": "https://www.capitolstack.net/:path*",
-      "destination": "https://capitolstack.vc/:path*",
+      "source": "/(.*)",
+      "has": [{ "host": "capitolstack.net" }],
+      "destination": "https://capitolstack.vc/:1",
       "permanent": true
     },
     {
-      "source": "https://capitolstack.net/:path*",
-      "destination": "https://capitolstack.vc/:path*",
+      "source": "/(.*)",
+      "has": [{ "host": "www.capitolstack.net" }],
+      "destination": "https://capitolstack.vc/:1",
       "permanent": true
     }
   ]
