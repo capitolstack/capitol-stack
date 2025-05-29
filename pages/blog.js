@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import BlogCard from '@/components/BlogCard';
+import BlogCard from '../components/BlogCard';
 
 export default function Blog({ posts }) {
   return (
