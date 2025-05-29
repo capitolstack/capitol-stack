@@ -4,15 +4,14 @@ import Image from 'next/image';
 export default function BlogCard({ title, date, summary, image, slug }) {
   return (
     <div className="bg-white rounded-2xl shadow hover:shadow-lg transition overflow-hidden">
-      {image && (
+      <div className="relative w-full h-64 bg-white">
         <Image
           src={image}
           alt={title}
-          width={600}
-          height={400}
-          className="w-full h-48 object-cover"
+          fill
+          className="object-contain p-4"
         />
-      )}
+      </div>
       <div className="p-6">
         <h2 className="text-xl font-semibold mb-2">
           <Link href={`/blog/${slug}`}>
