@@ -4,6 +4,12 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
+        {/* Google Fonts: Inter */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+          rel="stylesheet"
+        />
+
         {/* Google Analytics (gtag.js) */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-NH6MMP8EQF"></script>
         <script
@@ -17,7 +23,7 @@ export default function Document() {
           }}
         />
       </Head>
-      <body>
+      <body className="font-inter">
         <Main />
         <NextScript />
       </body>
