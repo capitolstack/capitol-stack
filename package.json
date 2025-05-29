@@ -10,7 +10,9 @@
   "dependencies": {
     "autoprefixer": "^10.4.0",
     "framer-motion": "^12.12.1",
+    "gray-matter": "^4.0.3",
     "next": "latest",
+    "next-mdx-remote": "^5.0.0",
     "postcss": "^8.4.0",
     "react": "latest",
     "react-dom": "latest",
