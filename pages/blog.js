@@ -5,26 +5,61 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 export default function Blog({ posts }) {
+  if (!posts.length) {
+    return <p className="p-12 text-center text-gray-600">No blog posts available.</p>;
+  }
+
+  const [featured, ...others] = posts;
+
   return (
-    <div className="mx-auto max-w-6xl px-4 py-12">
-      <h1 className="mb-8 text-3xl font-bold text-gray-900">Inside Capitol Stack</h1>
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {posts.map((post) => (
-          <Link key={post.slug} href={`/posts/${post.slug}`}>
-            <div className="group relative rounded-xl border border-gray-200 bg-white p-6 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
+    <div className="mx-auto max-w-7xl px-4 py-12">
+      <h1 className="mb-12 text-4xl font-bold text-gray-900">Inside Capitol Stack</h1>
+
+      {/* Featured Article */}
+      <Link href={`/posts/${featured.slug}`} className="group block mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          {featured.image && (
+            <div className="relative w-full h-72 lg:h-96 rounded-lg overflow-hidden">
+              <Image
+                src={featured.image}
+                alt={featured.title}
+                fill
+                className="object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+            </div>
+          )}
+          <div>
+            <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 group-hover:text-primary transition-colors">
+              {featured.title}
+            </h2>
+            <p className="mt-4 text-gray-700 text-lg max-w-xl">
+              {featured.description}
+            </p>
+          </div>
+        </div>
+      </Link>
+
+      {/* Remaining Posts Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {others.map((post) => (
+          <Link key={post.slug} href={`/posts/${post.slug}`} className="group block">
+            <div className="rounded-xl border border-gray-200 bg-white p-6 hover:shadow-lg transition-shadow">
               {post.image && (
-                <Image
-                  src={post.image}
-                  alt="Post image"
-                  width={500}
-                  height={300}
-                  className="mb-4 rounded-md"
-                />
+                <div className="mb-4 aspect-video relative rounded-md overflow-hidden">
+                  <Image
+                    src={post.image}
+                    alt={post.title}
+                    fill
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                </div>
               )}
-              <h2 className="text-xl font-semibold text-gray-900 group-hover:text-indigo-600">
+              <h3 className="text-lg font-semibold text-gray-900 group-hover:text-primary transition-colors">
                 {post.title}
-              </h2>
-              <p className="mt-2 text-sm text-gray-600">{post.description}</p>
+              </h3>
+              <p className="mt-2 text-sm text-gray-600">
+                {post.description}
+              </p>
             </div>
           </Link>
         ))}
@@ -43,7 +78,6 @@ export async function getStaticProps() {
       const fileContents = fs.readFileSync(filePath, 'utf8');
       const { data } = matter(fileContents);
 
-      // Skip unpublished posts
       if (data.published === false) return null;
 
       return {
@@ -51,9 +85,11 @@ export async function getStaticProps() {
         title: data.title,
         description: data.description ?? data.summary ?? '',
         image: data.image || null,
+        date: data.date || null,
       };
     })
-    .filter(Boolean); // remove nulls
+    .filter(Boolean)
+    .sort((a, b) => new Date(b.date) - new Date(a.date));
 
   return {
     props: {
