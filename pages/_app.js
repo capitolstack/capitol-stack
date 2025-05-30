@@ -3,8 +3,8 @@ import Script from 'next/script';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { ThemeProvider } from 'next-themes';
-import Navbar from '@/components/Navbar'; // Assumes the Navbar.js is in components/
-import '../styles/globals.css'; // using relative path to avoid Vercel build issues
+import '../styles/globals.css'; // ← using relative path to avoid Vercel build issues
+import Navbar from '@/components/Navbar'; // assumes you place Navbar in components/
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
@@ -44,7 +44,7 @@ export default function App({ Component, pageProps }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      {/* ✅ Google Analytics */}
+      {/* ✅ Load GA4 script */}
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-NH6MMP8EQF"
         strategy="afterInteractive"
@@ -62,8 +62,10 @@ export default function App({ Component, pageProps }) {
         }}
       />
 
-      {/* ✅ Global site nav */}
+      {/* ✅ Global Navbar */}
       <Navbar />
+
+      {/* ✅ Page content */}
       <Component {...pageProps} />
     </ThemeProvider>
   );
