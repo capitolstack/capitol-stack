@@ -12,7 +12,7 @@ export default function Blog({ featuredPost, posts }) {
 
       {/* Featured Article */}
       {featuredPost && (
-        <Link href={`/posts/${featuredPost.slug}`} className="block mb-12">
+        <Link href={`/blog/${featuredPost.slug}`} className="block mb-12">
           <div className="relative grid grid-cols-1 md:grid-cols-2 gap-6 rounded-xl overflow-hidden border border-gray-200 bg-white hover:shadow-lg transition-all duration-300">
             <div className="relative w-full h-64 md:h-auto">
               <Image
@@ -50,7 +50,7 @@ export default function Blog({ featuredPost, posts }) {
       {/* Remaining Posts */}
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {posts.map((post) => (
-          <Link key={post.slug} href={`/posts/${post.slug}`}>
+          <Link key={post.slug} href={`/blog/${post.slug}`}>
             <div className="group relative rounded-xl border border-gray-200 bg-white p-6 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
               <div className="relative w-full h-48 mb-4 rounded-md overflow-hidden">
                 <Image
@@ -75,8 +75,8 @@ export default function Blog({ featuredPost, posts }) {
                       height={24}
                       className="rounded-full"
                     />
-                    <span className="text-sm text-gray-500">
-                      {post.author} · {format(new Date(post.date), 'MMMM d, yyyy')}
+                    <span className="text-xs text-gray-500">
+                      {post.author} · {format(new Date(post.date), 'MMM d, yyyy')}
                     </span>
                   </>
                 )}
@@ -106,22 +106,21 @@ export async function getStaticProps() {
         title: data.title,
         description: data.description ?? data.summary ?? '',
         image: data.image || null,
-        date: data.date || null,
-        author: data.author || null,
+        date: data.date,
+        author: data.author,
       };
     })
     .filter(Boolean);
 
-  const featuredSlug = 'inside-capitol-stack';
-  const featuredPost = allPosts.find((post) => post.slug === featuredSlug);
-  const otherPosts = allPosts
-    .filter((post) => post.slug !== featuredSlug)
+  const featuredPost = allPosts.find((post) => post.slug === 'inside-capitol-stack');
+  const remainingPosts = allPosts
+    .filter((post) => post.slug !== 'inside-capitol-stack')
     .sort((a, b) => new Date(b.date) - new Date(a.date));
 
   return {
     props: {
       featuredPost,
-      posts: otherPosts,
+      posts: remainingPosts,
     },
   };
 }
