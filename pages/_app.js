@@ -2,7 +2,9 @@ import Head from 'next/head';
 import Script from 'next/script';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import '../styles/globals.css'; // ← using relative path to avoid Vercel build issues
+import { ThemeProvider } from 'next-themes';
+import Navbar from '@/components/Navbar'; // Assumes the Navbar.js is in components/
+import '../styles/globals.css'; // using relative path to avoid Vercel build issues
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
@@ -22,7 +24,7 @@ export default function App({ Component, pageProps }) {
   }, [router.events]);
 
   return (
-    <>
+    <ThemeProvider attribute="class">
       <Head>
         <title>Capitol Stack – Founder-First Climate Tech VC</title>
         <meta
@@ -42,7 +44,7 @@ export default function App({ Component, pageProps }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      {/* ✅ Load GA4 script */}
+      {/* ✅ Google Analytics */}
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-NH6MMP8EQF"
         strategy="afterInteractive"
@@ -60,7 +62,9 @@ export default function App({ Component, pageProps }) {
         }}
       />
 
+      {/* ✅ Global site nav */}
+      <Navbar />
       <Component {...pageProps} />
-    </>
+    </ThemeProvider>
   );
 }
