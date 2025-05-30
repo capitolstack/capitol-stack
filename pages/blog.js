@@ -37,18 +37,23 @@ export async function getStaticProps() {
   const postsDirectory = path.join(process.cwd(), 'posts');
   const filenames = fs.readdirSync(postsDirectory);
 
-  const posts = filenames.map((filename) => {
-    const filePath = path.join(postsDirectory, filename);
-    const fileContents = fs.readFileSync(filePath, 'utf8');
-    const { data } = matter(fileContents);
+  const posts = filenames
+    .map((filename) => {
+      const filePath = path.join(postsDirectory, filename);
+      const fileContents = fs.readFileSync(filePath, 'utf8');
+      const { data } = matter(fileContents);
 
-    return {
-      slug: filename.replace(/\.mdx?$/, ''),
-      title: data.title,
-      description: data.description,
-      image: data.image || null,
-    };
-  });
+      // Skip unpublished posts
+      if (data.published === false) return null;
+
+      return {
+        slug: filename.replace(/\.mdx?$/, ''),
+        title: data.title,
+        description: data.description ?? data.summary ?? '',
+        image: data.image || null,
+      };
+    })
+    .filter(Boolean); // remove nulls
 
   return {
     props: {
