@@ -1,3 +1,5 @@
+// pages/blog.js
+
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
@@ -9,9 +11,8 @@ export default function Blog({ featured, posts }) {
     <div className="mx-auto max-w-6xl px-4 py-12">
       <h1 className="mb-12 text-4xl font-bold text-gray-900">Inside Capitol Stack</h1>
 
-      {/* Featured Post */}
       {featured && (
-        <Link href={`/posts/${featured.slug}`} className="block mb-16 group">
+        <Link href={`/blog/${featured.slug}`} className="block mb-16 group">
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div className="aspect-w-16 aspect-h-9 relative w-full h-64 md:h-full">
               <Image
@@ -48,10 +49,9 @@ export default function Blog({ featured, posts }) {
         </Link>
       )}
 
-      {/* Remaining Posts */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {posts.map((post) => (
-          <Link key={post.slug} href={`/posts/${post.slug}`}>
+          <Link key={post.slug} href={`/blog/${post.slug}`}>
             <div className="group relative border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition">
               <div className="aspect-w-16 aspect-h-9 relative">
                 <Image
@@ -94,24 +94,26 @@ export default function Blog({ featured, posts }) {
 
 export async function getStaticProps() {
   const postsDirectory = path.join(process.cwd(), 'posts');
-  const filenames = fs.readdirSync(postsDirectory);
+  const filenames = fs.readdirSync(postsDirectory).filter((f) => f.endsWith('.mdx'));
 
-  const allPosts = filenames.map((filename) => {
-    const filePath = path.join(postsDirectory, filename);
-    const fileContents = fs.readFileSync(filePath, 'utf8');
-    const { data } = matter(fileContents);
+  const allPosts = filenames
+    .map((filename) => {
+      const filePath = path.join(postsDirectory, filename);
+      const fileContents = fs.readFileSync(filePath, 'utf8');
+      const { data } = matter(fileContents);
 
-    if (data.published === false) return null;
+      if (data.published === false) return null;
 
-    return {
-      slug: data.slug || filename.replace(/\.mdx?$/, ''),
-      title: data.title || '',
-      description: data.description || data.summary || '',
-      image: data.image || null,
-      date: data.date || null,
-      author: typeof data.author === 'string' ? { name: data.author } : data.author || null,
-    };
-  }).filter(Boolean);
+      return {
+        slug: filename.replace(/\.mdx$/, ''),
+        title: data.title || 'Untitled',
+        description: data.description || data.summary || '',
+        image: data.image || '',
+        date: data.date || '',
+        author: data.author || {},
+      };
+    })
+    .filter(Boolean);
 
   const featuredSlug = 'inside-capitol-stack';
   const featured = allPosts.find((post) => post.slug === featuredSlug) || null;
