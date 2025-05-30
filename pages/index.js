@@ -1,12 +1,19 @@
-
 import Head from 'next/head'
 import ThesisSection from '../components/ThesisSection'
 import PortfolioSection from '../components/PortfolioSection'
 import TeamSection from '../components/TeamSection'
 import BlogSection from '../components/BlogSection'
 import ContactSection from '../components/ContactSection'
+import { getAllPosts } from '@/lib/posts'
 
-export default function Home() {
+export async function getStaticProps() {
+  const posts = getAllPosts()
+  return {
+    props: { posts },
+  }
+}
+
+export default function Home({ posts }) {
   return (
     <>
       <Head>
@@ -43,7 +50,7 @@ export default function Home() {
       <ThesisSection />
       <PortfolioSection />
       <TeamSection />
-      <BlogSection />
+      <BlogSection posts={posts} />
       <ContactSection />
 
       <footer className="bg-black text-white py-10 text-center font-inter">
