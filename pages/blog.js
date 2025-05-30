@@ -1,5 +1,3 @@
-// pages/blog.js
-
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
@@ -12,11 +10,11 @@ export default function Blog({ featured, posts }) {
       <h1 className="mb-12 text-4xl font-bold text-gray-900">Inside Capitol Stack</h1>
 
       {featured && (
-        <Link href={`/blog/${featured.slug}`} className="block mb-16 group">
+        <Link href={`/posts/${featured.slug}`} className="block mb-16 group">
           <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="aspect-w-16 aspect-h-9 relative w-full h-64 md:h-full">
+            <div className="aspect-video relative w-full h-64 md:h-full">
               <Image
-                src={featured.image || '/default.jpg'}
+                src={featured.image}
                 alt={featured.title}
                 fill
                 className="rounded-xl object-cover"
@@ -27,7 +25,7 @@ export default function Blog({ featured, posts }) {
                 {featured.title}
               </h2>
               <p className="mt-2 text-gray-700">{featured.description}</p>
-              {featured.author?.name && (
+              {featured.author && (
                 <div className="mt-4 flex items-center gap-3">
                   {featured.author.avatar && (
                     <Image
@@ -51,11 +49,11 @@ export default function Blog({ featured, posts }) {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {posts.map((post) => (
-          <Link key={post.slug} href={`/blog/${post.slug}`}>
+          <Link key={post.slug} href={`/posts/${post.slug}`}>
             <div className="group relative border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition">
-              <div className="aspect-w-16 aspect-h-9 relative">
+              <div className="aspect-video relative w-full h-48">
                 <Image
-                  src={post.image || '/default.jpg'}
+                  src={post.image}
                   alt={post.title}
                   fill
                   className="object-cover"
@@ -66,7 +64,7 @@ export default function Blog({ featured, posts }) {
                   {post.title}
                 </h3>
                 <p className="mt-1 text-sm text-gray-600">{post.description}</p>
-                {post.author?.name && (
+                {post.author && (
                   <div className="mt-4 flex items-center gap-3">
                     {post.author.avatar && (
                       <Image
@@ -94,9 +92,10 @@ export default function Blog({ featured, posts }) {
 
 export async function getStaticProps() {
   const postsDirectory = path.join(process.cwd(), 'posts');
-  const filenames = fs.readdirSync(postsDirectory).filter((f) => f.endsWith('.mdx'));
+  const filenames = fs.readdirSync(postsDirectory);
 
   const allPosts = filenames
+    .filter(name => name.endsWith('.mdx'))
     .map((filename) => {
       const filePath = path.join(postsDirectory, filename);
       const fileContents = fs.readFileSync(filePath, 'utf8');
@@ -106,11 +105,11 @@ export async function getStaticProps() {
 
       return {
         slug: filename.replace(/\.mdx$/, ''),
-        title: data.title || 'Untitled',
-        description: data.description || data.summary || '',
-        image: data.image || '',
-        date: data.date || '',
-        author: data.author || {},
+        title: data.title ?? '',
+        description: data.description ?? data.summary ?? '',
+        image: data.image || null,
+        date: data.date || null,
+        author: data.author || null,
       };
     })
     .filter(Boolean);
