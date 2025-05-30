@@ -32,6 +32,9 @@ export default function Blog({ posts }) {
             <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 group-hover:text-primary transition-colors">
               {featured.title}
             </h2>
+            <p className="mt-2 text-sm text-gray-500">
+              {formatDate(featured.date)} · {featured.author || 'Capitol Stack'}
+            </p>
             <p className="mt-4 text-gray-700 text-lg max-w-xl">
               {featured.description}
             </p>
@@ -43,7 +46,7 @@ export default function Blog({ posts }) {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {others.map((post) => (
           <Link key={post.slug} href={`/posts/${post.slug}`} className="group block">
-            <div className="rounded-xl border border-gray-200 bg-white p-6 hover:shadow-lg transition-shadow">
+            <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-all duration-300 transform group-hover:-translate-y-1 group-hover:shadow-lg">
               {post.image && (
                 <div className="mb-4 aspect-video relative rounded-md overflow-hidden">
                   <Image
@@ -57,8 +60,9 @@ export default function Blog({ posts }) {
               <h3 className="text-lg font-semibold text-gray-900 group-hover:text-primary transition-colors">
                 {post.title}
               </h3>
-              <p className="mt-2 text-sm text-gray-600">
-                {post.description}
+              <p className="mt-2 text-sm text-gray-600">{post.description}</p>
+              <p className="mt-3 text-xs text-gray-500">
+                {formatDate(post.date)} · {post.author || 'Capitol Stack'}
               </p>
             </div>
           </Link>
@@ -66,6 +70,16 @@ export default function Blog({ posts }) {
       </div>
     </div>
   );
+}
+
+// Format date to readable form
+function formatDate(dateStr) {
+  if (!dateStr) return '';
+  return new Date(dateStr).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
 }
 
 export async function getStaticProps() {
@@ -86,6 +100,7 @@ export async function getStaticProps() {
         description: data.description ?? data.summary ?? '',
         image: data.image || null,
         date: data.date || null,
+        author: data.author || null,
       };
     })
     .filter(Boolean)
