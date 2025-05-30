@@ -1,5 +1,3 @@
-// pages/blog.js
-
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
@@ -17,7 +15,7 @@ export default function Blog({ featured, posts }) {
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div className="aspect-w-16 aspect-h-9 relative w-full h-64 md:h-full">
               <Image
-                src={featured.image}
+                src={featured.image || '/default.jpg'}
                 alt={featured.title}
                 fill
                 className="rounded-xl object-cover"
@@ -28,7 +26,7 @@ export default function Blog({ featured, posts }) {
                 {featured.title}
               </h2>
               <p className="mt-2 text-gray-700">{featured.description}</p>
-              {featured.author && (
+              {featured.author?.name && (
                 <div className="mt-4 flex items-center gap-3">
                   {featured.author.avatar && (
                     <Image
@@ -57,7 +55,7 @@ export default function Blog({ featured, posts }) {
             <div className="group relative border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition">
               <div className="aspect-w-16 aspect-h-9 relative">
                 <Image
-                  src={post.image}
+                  src={post.image || '/default.jpg'}
                   alt={post.title}
                   fill
                   className="object-cover"
@@ -68,7 +66,7 @@ export default function Blog({ featured, posts }) {
                   {post.title}
                 </h3>
                 <p className="mt-1 text-sm text-gray-600">{post.description}</p>
-                {post.author && (
+                {post.author?.name && (
                   <div className="mt-4 flex items-center gap-3">
                     {post.author.avatar && (
                       <Image
@@ -98,24 +96,22 @@ export async function getStaticProps() {
   const postsDirectory = path.join(process.cwd(), 'posts');
   const filenames = fs.readdirSync(postsDirectory);
 
-  const allPosts = filenames
-    .map((filename) => {
-      const filePath = path.join(postsDirectory, filename);
-      const fileContents = fs.readFileSync(filePath, 'utf8');
-      const { data } = matter(fileContents);
+  const allPosts = filenames.map((filename) => {
+    const filePath = path.join(postsDirectory, filename);
+    const fileContents = fs.readFileSync(filePath, 'utf8');
+    const { data } = matter(fileContents);
 
-      if (data.published === false) return null;
+    if (data.published === false) return null;
 
-      return {
-        slug: filename.replace(/\.mdx?$/, ''),
-        title: data.title,
-        description: data.description ?? data.summary ?? '',
-        image: data.image || null,
-        date: data.date || null,
-        author: data.author || null,
-      };
-    })
-    .filter(Boolean);
+    return {
+      slug: data.slug || filename.replace(/\.mdx?$/, ''),
+      title: data.title || '',
+      description: data.description || data.summary || '',
+      image: data.image || null,
+      date: data.date || null,
+      author: typeof data.author === 'string' ? { name: data.author } : data.author || null,
+    };
+  }).filter(Boolean);
 
   const featuredSlug = 'inside-capitol-stack';
   const featured = allPosts.find((post) => post.slug === featuredSlug) || null;
