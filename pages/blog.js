@@ -1,3 +1,5 @@
+// pages/blog.js
+
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
@@ -9,25 +11,28 @@ export default function Blog({ featured, posts }) {
     <div className="mx-auto max-w-6xl px-4 py-12">
       <h1 className="mb-12 text-4xl font-bold text-gray-900">Inside Capitol Stack</h1>
 
+      {/* Featured Post */}
       {featured && (
-        <Link href={`/posts/${featured.slug}`} className="block mb-16 group">
+        <Link href={`/blog/${featured.slug}`} className="block mb-16 group">
           <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="aspect-video relative w-full h-64 md:h-full">
-              <Image
-                src={featured.image}
-                alt={featured.title}
-                fill
-                className="rounded-xl object-cover"
-              />
+            <div className="relative w-full h-64 md:h-full overflow-hidden rounded-xl">
+              {featured.image && (
+                <Image
+                  src={featured.image}
+                  alt={featured.title}
+                  fill
+                  className="object-cover"
+                />
+              )}
             </div>
             <div>
               <h2 className="text-2xl font-bold text-gray-900 group-hover:text-primary">
                 {featured.title}
               </h2>
               <p className="mt-2 text-gray-700">{featured.description}</p>
-              {featured.author && (
+              {featured.author?.name && (
                 <div className="mt-4 flex items-center gap-3">
-                  {featured.author.avatar && (
+                  {featured.author?.avatar && (
                     <Image
                       src={featured.author.avatar}
                       alt={featured.author.name}
@@ -47,26 +52,29 @@ export default function Blog({ featured, posts }) {
         </Link>
       )}
 
+      {/* Remaining Posts */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {posts.map((post) => (
-          <Link key={post.slug} href={`/posts/${post.slug}`}>
-            <div className="group relative border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition">
-              <div className="aspect-video relative w-full h-48">
-                <Image
-                  src={post.image}
-                  alt={post.title}
-                  fill
-                  className="object-cover"
-                />
+          <Link key={post.slug} href={`/blog/${post.slug}`}>
+            <div className="group border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition bg-white">
+              <div className="relative h-48">
+                {post.image && (
+                  <Image
+                    src={post.image}
+                    alt={post.title}
+                    fill
+                    className="object-cover"
+                  />
+                )}
               </div>
-              <div className="p-4 bg-white">
+              <div className="p-4">
                 <h3 className="text-lg font-semibold text-gray-900 group-hover:text-primary">
                   {post.title}
                 </h3>
                 <p className="mt-1 text-sm text-gray-600">{post.description}</p>
-                {post.author && (
+                {post.author?.name && (
                   <div className="mt-4 flex items-center gap-3">
-                    {post.author.avatar && (
+                    {post.author?.avatar && (
                       <Image
                         src={post.author.avatar}
                         alt={post.author.name}
@@ -92,24 +100,23 @@ export default function Blog({ featured, posts }) {
 
 export async function getStaticProps() {
   const postsDirectory = path.join(process.cwd(), 'posts');
-  const filenames = fs.readdirSync(postsDirectory);
+  const filenames = fs.readdirSync(postsDirectory).filter((file) => file.endsWith('.mdx'));
 
   const allPosts = filenames
-    .filter(name => name.endsWith('.mdx'))
     .map((filename) => {
       const filePath = path.join(postsDirectory, filename);
       const fileContents = fs.readFileSync(filePath, 'utf8');
       const { data } = matter(fileContents);
 
-      if (data.published === false) return null;
+      if (data.published === false || !data.title) return null;
 
       return {
         slug: filename.replace(/\.mdx$/, ''),
-        title: data.title ?? '',
+        title: data.title,
         description: data.description ?? data.summary ?? '',
         image: data.image || null,
         date: data.date || null,
-        author: data.author || null,
+        author: typeof data.author === 'object' ? data.author : null,
       };
     })
     .filter(Boolean);
