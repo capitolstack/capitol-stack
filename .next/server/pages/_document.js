@@ -1,0 +1,6 @@
+"use strict";(()=>{var e={};e.id=220,e.ids=[220],e.modules={361:e=>{e.exports=require("next/dist/compiled/next-server/pages.runtime.prod.js")},2015:e=>{e.exports=require("react")},3873:e=>{e.exports=require("path")},8732:e=>{e.exports=require("react/jsx-runtime")},9674:(e,r,t)=>{t.r(r),t.d(r,{default:()=>i});var s=t(8732),a=t(2341);function i(){return(0,s.jsxs)(a.Html,{lang:"en",children:[(0,s.jsxs)(a.Head,{children:[(0,s.jsx)("link",{href:"https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap",rel:"stylesheet"}),(0,s.jsx)("script",{async:!0,src:"https://www.googletagmanager.com/gtag/js?id=G-NH6MMP8EQF"}),(0,s.jsx)("script",{dangerouslySetInnerHTML:{__html:`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-NH6MMP8EQF', { debug_mode: true });
+            `}})]}),(0,s.jsxs)("body",{className:"font-inter",children:[(0,s.jsx)(a.Main,{}),(0,s.jsx)(a.NextScript,{})]})]})}}};var r=require("../webpack-runtime.js");r.C(e);var t=e=>r(r.s=e),s=r.X(0,[89,341],()=>t(9674));module.exports=s})();
