@@ -5,45 +5,43 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { format } from 'date-fns';
 
-export default function Blog({ posts }) {
-  if (!posts || posts.length === 0) return <p>No posts found.</p>;
-
-  const [featured, ...rest] = posts;
-
+export default function Blog({ featuredPost, otherPosts }) {
   return (
     <div className="mx-auto max-w-6xl px-4 py-12">
       <h1 className="mb-10 text-4xl font-bold text-gray-900">Inside Capitol Stack</h1>
 
       {/* Featured Article */}
-      <Link href={`/posts/${featured.slug}`}>
-        <div className="group mb-16 flex flex-col lg:flex-row items-start gap-8 rounded-xl border border-gray-200 bg-white p-6 shadow-md hover:shadow-lg transition-shadow duration-300">
-          <div className="relative w-full lg:w-1/2 h-auto overflow-hidden rounded-lg">
-            {featured.image && (
-              <Image
-                src={featured.image}
-                alt={`Cover for ${featured.title}`}
-                width={800}
-                height={450}
-                className="w-full h-auto rounded-lg group-hover:scale-105 transition-transform duration-300"
-              />
-            )}
+      {featuredPost && (
+        <Link href={`/posts/${featuredPost.slug}`}>
+          <div className="group mb-16 flex flex-col lg:flex-row items-start gap-8 rounded-xl border border-gray-200 bg-white p-6 shadow-md hover:shadow-lg transition-shadow duration-300">
+            <div className="relative w-full lg:w-1/2 h-auto overflow-hidden rounded-lg">
+              {featuredPost.image && (
+                <Image
+                  src={featuredPost.image}
+                  alt={`Cover for ${featuredPost.title}`}
+                  width={800}
+                  height={450}
+                  className="w-full h-auto rounded-lg group-hover:scale-105 transition-transform duration-300"
+                />
+              )}
+            </div>
+            <div className="flex-1">
+              <h2 className="text-2xl font-semibold text-gray-900 group-hover:text-indigo-600 mb-2">
+                {featuredPost.title}
+              </h2>
+              <p className="text-sm text-gray-500 mb-4">
+                {format(new Date(featuredPost.date), 'MMMM d, yyyy')}
+                {featuredPost.author && ` • by ${featuredPost.author}`}
+              </p>
+              <p className="text-gray-700 text-base">{featuredPost.description}</p>
+            </div>
           </div>
-          <div className="flex-1">
-            <h2 className="text-2xl font-semibold text-gray-900 group-hover:text-indigo-600 mb-2">
-              {featured.title}
-            </h2>
-            <p className="text-sm text-gray-500 mb-4">
-              {format(new Date(featured.date), 'MMMM d, yyyy')}
-              {featured.author && ` • by ${featured.author}`}
-            </p>
-            <p className="text-gray-700 text-base">{featured.description}</p>
-          </div>
-        </div>
-      </Link>
+        </Link>
+      )}
 
       {/* Remaining Articles */}
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {rest.map((post) => (
+        {otherPosts.map((post) => (
           <Link key={post.slug} href={`/posts/${post.slug}`}>
             <div className="group relative rounded-xl border border-gray-200 bg-white p-5 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
               <div className="relative mb-4 w-full overflow-hidden rounded-md">
@@ -77,7 +75,7 @@ export async function getStaticProps() {
   const postsDirectory = path.join(process.cwd(), 'posts');
   const filenames = fs.readdirSync(postsDirectory);
 
-  const posts = filenames
+  const allPosts = filenames
     .map((filename) => {
       const filePath = path.join(postsDirectory, filename);
       const fileContents = fs.readFileSync(filePath, 'utf8');
@@ -94,12 +92,18 @@ export async function getStaticProps() {
         author: data.author || null,
       };
     })
-    .filter(Boolean)
-    .sort((a, b) => new Date(b.date) - new Date(a.date)); // sort newest first
+    .filter(Boolean);
+
+  const featuredPostSlug = 'inside-capitol-stack';
+  const featuredPost = allPosts.find((post) => post.slug === featuredPostSlug);
+  const otherPosts = allPosts
+    .filter((post) => post.slug !== featuredPostSlug)
+    .sort((a, b) => new Date(b.date) - new Date(a.date));
 
   return {
     props: {
-      posts,
+      featuredPost: featuredPost ?? null,
+      otherPosts,
     },
   };
 }
