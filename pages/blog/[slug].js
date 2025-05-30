@@ -7,8 +7,15 @@ import { serialize } from 'next-mdx-remote/serialize';
 import { MDXRemote } from 'next-mdx-remote';
 import Head from 'next/head';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 export default function PostPage({ source, frontMatter }) {
+  const router = useRouter();
+
+  if (router.isFallback) {
+    return <div>Loading…</div>;
+  }
+
   return (
     <div className="mx-auto max-w-3xl px-4 py-12">
       <Head>
@@ -31,24 +38,6 @@ export default function PostPage({ source, frontMatter }) {
         )}
 
         <MDXRemote {...source} />
-
-        {frontMatter.author && (
-          <div className="mt-8 flex items-center gap-4">
-            {frontMatter.author.avatar && (
-              <Image
-                src={frontMatter.author.avatar}
-                alt={frontMatter.author.name}
-                width={48}
-                height={48}
-                className="rounded-full"
-              />
-            )}
-            <div>
-              <p className="font-semibold">{frontMatter.author.name}</p>
-              <p className="text-sm text-gray-500">{frontMatter.author.role}</p>
-            </div>
-          </div>
-        )}
       </article>
     </div>
   );
@@ -56,10 +45,10 @@ export default function PostPage({ source, frontMatter }) {
 
 export async function getStaticPaths() {
   const postsDirectory = path.join(process.cwd(), 'posts');
-  const filenames = fs.readdirSync(postsDirectory);
+  const filenames = fs.readdirSync(postsDirectory).filter((f) => f.endsWith('.mdx'));
 
   const paths = filenames.map((filename) => ({
-    params: { slug: filename.replace(/\.mdx?$/, '') },
+    params: { slug: filename.replace(/\.mdx$/, '') },
   }));
 
   return {
@@ -70,10 +59,14 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const filePath = path.join(process.cwd(), 'posts', `${params.slug}.mdx`);
+
+  if (!fs.existsSync(filePath)) {
+    return { notFound: true };
+  }
+
   const source = fs.readFileSync(filePath, 'utf8');
   const { content, data } = matter(source);
-
-  const mdxSource = await serialize(content, { scope: data });
+  const mdxSource = await serialize(content);
 
   return {
     props: {
