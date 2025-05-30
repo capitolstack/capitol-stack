@@ -1,11 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: 'class', // Enables dark mode using a 'class' strategy (required for next-themes)
+  darkMode: 'class', // Enables dark mode using a 'class' strategy
   content: [
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
     './lib/**/*.{js,ts}',
-    './posts/**/*.{mdx}',
+    './posts/**/*.mdx', // ✅ fixed pattern
   ],
   theme: {
     extend: {
@@ -32,6 +32,17 @@ module.exports = {
             h1: { fontWeight: '700' },
             h2: { fontWeight: '700' },
             h3: { fontWeight: '600' },
+          },
+        },
+        dark: {
+          css: {
+            color: theme('colors.gray.300'),
+            a: { color: theme('colors.primary') },
+            strong: { color: theme('colors.white') },
+            blockquote: {
+              borderLeftColor: theme('colors.primary'),
+              color: theme('colors.gray.300'),
+            },
           },
         },
       }),
