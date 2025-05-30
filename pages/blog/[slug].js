@@ -13,6 +13,7 @@ export async function getStaticPaths() {
   const paths = filenames.map((filename) => ({
     params: { slug: filename.replace(/\.mdx?$/, '') },
   }));
+
   return { paths, fallback: false };
 }
 
@@ -21,55 +22,45 @@ export async function getStaticProps({ params }) {
   const source = fs.readFileSync(filePath, 'utf8');
   const { content, data } = matter(source);
   const mdxSource = await serialize(content);
+
   return {
     props: {
       source: mdxSource,
-      frontMatter: data,
+      frontMatter: {
+        ...data,
+        slug: params.slug,
+      },
     },
   };
 }
 
 export default function BlogPost({ source, frontMatter }) {
-  const { title, summary, date, image, author } = frontMatter;
+  const formattedDate = format(new Date(frontMatter.date), 'MMMM d, yyyy');
 
   return (
     <>
       <Head>
-        <title>{title} | Capitol Stack</title>
-        <meta name="description" content={summary || ''} />
+        <title>{frontMatter.title} | Capitol Stack</title>
+        <meta name="description" content={frontMatter.summary || ''} />
       </Head>
-
       <div className="max-w-3xl mx-auto px-4 py-12">
-        {image && (
+        <h1 className="text-3xl font-bold mb-4">{frontMatter.title}</h1>
+
+        <div className="flex items-center mb-8 space-x-4">
           <Image
-            src={image}
-            alt={title}
-            width={1200}
-            height={600}
-            className="mb-8 rounded-lg object-cover w-full h-auto"
-            priority
+            src={`/images/authors/${frontMatter.author?.toLowerCase().replace(/\s+/g, '-')}.jpg`}
+            alt={frontMatter.author}
+            width={40}
+            height={40}
+            className="rounded-full"
           />
-        )}
-
-        <h1 className="text-4xl font-bold mb-4 text-gray-900">{title}</h1>
-
-        <div className="flex items-center gap-4 mb-10 text-sm text-gray-600">
-          {author?.avatar && (
-            <Image
-              src={author.avatar}
-              alt={author.name}
-              width={40}
-              height={40}
-              className="rounded-full"
-            />
-          )}
           <div>
-            <div className="font-semibold">{author?.name}</div>
-            <div className="text-xs">{author?.role} • {format(new Date(date), 'MMMM d, yyyy')}</div>
+            <p className="text-sm font-medium text-gray-700">{frontMatter.author}</p>
+            <p className="text-xs text-gray-500">{formattedDate}</p>
           </div>
         </div>
 
-        <article className="prose prose-lg prose-slate max-w-none">
+        <article className="prose prose-lg prose-gray max-w-none">
           <MDXRemote {...source} />
         </article>
       </div>
