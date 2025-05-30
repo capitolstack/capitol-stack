@@ -1,26 +1,25 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-export default function BlogCard({ title, date, summary, image, slug }) {
+export default function BlogCard({ post }) {
   return (
-    <div className="bg-white rounded-2xl shadow hover:shadow-lg transition overflow-hidden">
-      <div className="relative w-full h-64 bg-white">
-        <Image
-          src={image}
-          alt={title}
-          fill
-          className="object-contain p-4"
-        />
+    <Link href={`/posts/${post.slug}`}>
+      <div className="group relative border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition">
+        <div className="aspect-video relative w-full h-48">
+          <Image
+            src={post.image}
+            alt={post.title}
+            fill
+            className="object-cover"
+          />
+        </div>
+        <div className="p-4 bg-white">
+          <h3 className="text-lg font-semibold text-gray-900 group-hover:text-primary">
+            {post.title}
+          </h3>
+          <p className="mt-1 text-sm text-gray-600">{post.description}</p>
+        </div>
       </div>
-      <div className="p-6">
-        <h2 className="text-xl font-semibold mb-2">
-          <Link href={`/blog/${slug}`}>
-            <span className="hover:underline">{title}</span>
-          </Link>
-        </h2>
-        <p className="text-gray-500 text-sm mb-4">{date}</p>
-        <p className="text-gray-700 text-base">{summary}</p>
-      </div>
-    </div>
+    </Link>
   );
 }
