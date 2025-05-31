@@ -1,52 +1,27 @@
-/** @type {import('tailwindcss').Config} */
+// tailwind.config.js
+const { fontFamily } = require('tailwindcss/defaultTheme');
+
 module.exports = {
-  darkMode: 'class', // Enables dark mode using a 'class' strategy
+  darkMode: 'class',
   content: [
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
     './lib/**/*.{js,ts}',
-    './posts/**/*.mdx',
+    './posts/**/*.mdx'
   ],
   theme: {
     extend: {
       colors: {
-        primary: '#007070',
-        background: '#ffffff',
-        darkBackground: '#0f172a',
+        primary: '#007070'
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        serif: ['Merriweather', 'serif'],
+        sans: ['Inter', ...fontFamily.sans],
       },
-      typography: (theme) => ({
-        DEFAULT: {
-          css: {
-            color: theme('colors.gray.800'),
-            a: { color: theme('colors.primary') },
-            strong: { color: theme('colors.gray.900') },
-            blockquote: {
-              borderLeftColor: theme('colors.primary'),
-              fontStyle: 'italic',
-              quotes: 'none',
-            },
-            h1: { fontWeight: '700' },
-            h2: { fontWeight: '700' },
-            h3: { fontWeight: '600' },
-          },
-        },
-        dark: {
-          css: {
-            color: theme('colors.gray.300'),
-            a: { color: theme('colors.primary') },
-            strong: { color: theme('colors.white') },
-            blockquote: {
-              borderLeftColor: theme('colors.primary'),
-              color: theme('colors.gray.300'),
-            },
-          },
-        },
-      }),
     },
   },
-  plugins: [require('@tailwindcss/typography')],
+  plugins: [
+    require('@tailwindcss/typography'),
+    require('@tailwindcss/line-clamp'),
+    require('@tailwindcss/aspect-ratio')
+  ]
 };
