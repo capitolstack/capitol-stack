@@ -6,12 +6,13 @@ export default function BlogCard({ title, date, summary, image, slug }) {
     <div className="bg-white rounded-2xl shadow hover:shadow-lg transition overflow-hidden">
       <Link href={`/blog/${slug}`}>
         <div>
-          <div className="w-full h-64">
+          {/* Increase height from h-64 to h-80 to show full images */}
+          <div className="w-full h-80">
             <Image
               src={image}
               alt={title}
               width={400}
-              height={256}
+              height={320}
               className="w-full h-full object-cover"
             />
           </div>
