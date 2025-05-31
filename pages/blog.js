@@ -13,26 +13,24 @@ export default function Blog({ featured, posts }) {
 
       {/* Featured Post */}
       {featured && (
-        <Link href={`/blog/${featured.slug}`} className="block mb-16 group">
+        <Link href={`/posts/${featured.slug}`} className="block mb-16 group">
           <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="relative w-full h-64 md:h-full overflow-hidden rounded-xl">
-              {featured.image && (
-                <Image
-                  src={featured.image}
-                  alt={featured.title}
-                  fill
-                  className="object-cover"
-                />
-              )}
+            <div className="relative w-full h-64 md:h-full">
+              <Image
+                src={featured.image}
+                alt={featured.title}
+                fill
+                className="rounded-xl object-cover"
+              />
             </div>
             <div>
               <h2 className="text-2xl font-bold text-gray-900 group-hover:text-primary">
                 {featured.title}
               </h2>
               <p className="mt-2 text-gray-700">{featured.description}</p>
-              {featured.author?.name && (
+              {featured.author && (
                 <div className="mt-4 flex items-center gap-3">
-                  {featured.author?.avatar && (
+                  {featured.author.avatar && (
                     <Image
                       src={featured.author.avatar}
                       alt={featured.author.name}
@@ -55,26 +53,24 @@ export default function Blog({ featured, posts }) {
       {/* Remaining Posts */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {posts.map((post) => (
-          <Link key={post.slug} href={`/blog/${post.slug}`}>
-            <div className="group border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition bg-white">
-              <div className="relative h-48">
-                {post.image && (
-                  <Image
-                    src={post.image}
-                    alt={post.title}
-                    fill
-                    className="object-cover"
-                  />
-                )}
+          <Link key={post.slug} href={`/posts/${post.slug}`}>
+            <div className="group relative border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition">
+              <div className="relative h-48 w-full">
+                <Image
+                  src={post.image}
+                  alt={post.title}
+                  fill
+                  className="object-cover"
+                />
               </div>
-              <div className="p-4">
+              <div className="p-4 bg-white">
                 <h3 className="text-lg font-semibold text-gray-900 group-hover:text-primary">
                   {post.title}
                 </h3>
                 <p className="mt-1 text-sm text-gray-600">{post.description}</p>
-                {post.author?.name && (
+                {post.author && (
                   <div className="mt-4 flex items-center gap-3">
-                    {post.author?.avatar && (
+                    {post.author.avatar && (
                       <Image
                         src={post.author.avatar}
                         alt={post.author.name}
@@ -108,15 +104,15 @@ export async function getStaticProps() {
       const fileContents = fs.readFileSync(filePath, 'utf8');
       const { data } = matter(fileContents);
 
-      if (data.published === false || !data.title) return null;
+      if (data.published === false) return null;
 
       return {
-        slug: filename.replace(/\.mdx$/, ''),
+        slug: filename.replace(/\.mdx?$/, ''),
         title: data.title,
         description: data.description ?? data.summary ?? '',
         image: data.image || null,
         date: data.date || null,
-        author: typeof data.author === 'object' ? data.author : null,
+        author: data.author || null,
       };
     })
     .filter(Boolean);
