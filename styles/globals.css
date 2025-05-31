@@ -54,7 +54,7 @@
   }
 }
 
-/* CRITICAL: Text Truncation Utilities - These fix your overflow issues */
+/* CRITICAL: Text Truncation Utilities */
 @layer utilities {
   .line-clamp-1 {
     display: -webkit-box;
@@ -91,23 +91,25 @@
     max-height: 6em;
   }
 
-  /* Aspect Ratio Utilities */
-  .aspect-video {
-    aspect-ratio: 16 / 9;
+  /* CRITICAL: Image Truncation Fixes */
+  .image-container {
     position: relative;
+    width: 100%;
     overflow: hidden;
   }
-
-  .aspect-square {
-    aspect-ratio: 1 / 1;
-    position: relative;
-    overflow: hidden;
+  
+  /* Fix for Next.js Image component truncation */
+  .next-image-fix {
+    position: relative !important;
+    width: 100% !important;
+    height: 100% !important;
   }
-
-  .aspect-portrait {
-    aspect-ratio: 3 / 4;
-    position: relative;
-    overflow: hidden;
+  
+  .next-image-fix img {
+    object-fit: cover !important;
+    object-position: center !important;
+    width: 100% !important;
+    height: 100% !important;
   }
 
   /* Container utilities */
@@ -118,6 +120,51 @@
   .container-wide {
     @apply max-w-6xl mx-auto px-4;
   }
+}
+
+/* CRITICAL: Blog Card Image Fixes */
+.blog-card-image {
+  position: relative;
+  width: 100%;
+  height: 192px; /* h-48 */
+  overflow: hidden;
+  background-color: #f3f4f6;
+}
+
+@media (min-width: 640px) {
+  .blog-card-image {
+    height: 224px; /* h-56 */
+  }
+}
+
+@media (min-width: 768px) {
+  .blog-card-image {
+    height: 256px; /* h-64 */
+  }
+}
+
+/* Ensure images never exceed container bounds */
+.blog-card-image img {
+  object-fit: cover !important;
+  object-position: center !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+}
+
+/* Fix for any remaining truncation issues */
+.no-truncate-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.no-truncate-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
 }
 
 /* Component Styles */
@@ -205,6 +252,23 @@
   }
 }
 
+/* Portfolio logos specific fix */
+.portfolio-logo {
+  width: 64px !important;
+  height: 64px !important;
+  object-fit: contain !important;
+  padding: 8px;
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+}
+
+/* Dark mode portfolio logos */
+.dark .portfolio-logo {
+  background-color: #1f2937;
+  border-color: #374151;
+}
+
 /* Blog prose styles */
 .prose {
   @apply max-w-none;
@@ -241,8 +305,13 @@
   color: var(--color-primary-dark);
 }
 
+/* Ensure images in blog posts don't truncate */
 .prose img {
-  @apply rounded-lg shadow-md;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
 }
 
 .prose blockquote {
@@ -263,6 +332,24 @@
   background-color: var(--color-background-secondary);
 }
 
+/* Force proper image behavior globally */
+img[src*="/images/"] {
+  object-fit: cover !important;
+  object-position: center !important;
+}
+
+/* Next.js Image component fixes */
+[data-nextjs-image] {
+  object-fit: cover !important;
+  object-position: center !important;
+}
+
+/* Fix any layout shifts from images */
+.next-image-container {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
 /* Responsive improvements */
 @media (max-width: 640px) {
   .text-heading-1 {
@@ -273,8 +360,28 @@
     @apply text-2xl;
   }
 
-  .aspect-video {
-    min-height: 200px;
+  /* Ensure blog cards don't break on mobile */
+  .blog-card-image {
+    height: 192px !important; /* Force h-48 on mobile */
+  }
+  
+  /* Adjust card padding on mobile */
+  .card {
+    @apply mx-2;
+  }
+}
+
+/* Medium screens */
+@media (min-width: 641px) and (max-width: 768px) {
+  .blog-card-image {
+    height: 224px !important; /* Force h-56 on tablet */
+  }
+}
+
+/* Large screens */
+@media (min-width: 769px) {
+  .blog-card-image {
+    height: 256px !important; /* Force h-64 on desktop */
   }
 }
 
@@ -306,4 +413,18 @@
 
 .animate-pulse {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Fix for Framer Motion layout shifts */
+[data-framer-original-sizes] {
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* Emergency image truncation fix */
+.force-image-cover {
+  object-fit: cover !important;
+  object-position: center !important;
+  width: 100% !important;
+  height: 100% !important;
 }
