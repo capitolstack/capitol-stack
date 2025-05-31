@@ -12,18 +12,18 @@ export default function Blog({ featured, posts }) {
       {featured && (
         <Link href={`/blog/${featured.slug}`} className="block mb-16 group">
           <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="relative w-full h-80">
+            <div className="relative w-full h-80 bg-gray-100 rounded-xl overflow-hidden">
               <Image
                 src={featured.image || '/default-blog.jpg'}
                 alt={featured.title}
                 fill
-                className="rounded-xl object-cover"
+                className="object-cover"
                 sizes="(max-width: 768px) 100vw, 50vw"
                 priority
               />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 group-hover:text-[#007070]">
+              <h2 className="text-2xl font-bold text-gray-900 group-hover:text-blue-600">
                 {featured.title}
               </h2>
               <p className="mt-2 text-gray-700">{featured.description}</p>
@@ -36,7 +36,7 @@ export default function Blog({ featured, posts }) {
         {posts.map((post) => (
           <Link key={post.slug} href={`/blog/${post.slug}`}>
             <div className="group relative border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition bg-white">
-              <div className="relative w-full h-64">
+              <div className="relative w-full h-48 bg-gray-100">
                 <Image
                   src={post.image || '/default-blog.jpg'}
                   alt={post.title}
@@ -46,7 +46,7 @@ export default function Blog({ featured, posts }) {
                 />
               </div>
               <div className="p-6">
-                <h3 className="text-lg font-semibold text-gray-900 group-hover:text-[#007070] transition-colors">
+                <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
                   {post.title}
                 </h3>
                 <p className="mt-2 text-sm text-gray-600">{post.description}</p>
@@ -83,12 +83,4 @@ export async function getStaticProps() {
   const featured = allPosts.find((post) => post.slug === featuredSlug) || null
   const posts = allPosts
     .filter((post) => post.slug !== featuredSlug)
-    .sort((a, b) => new Date(b.date) - new Date(a.date))
-
-  return {
-    props: {
-      featured,
-      posts
-    }
-  }
-}
+    .sort((a, b) => new Date(b.date) - new Date(a.dat
