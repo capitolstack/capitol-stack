@@ -5,53 +5,54 @@ import path from 'path';
 import matter from 'gray-matter';
 import { serialize } from 'next-mdx-remote/serialize';
 import { MDXRemote } from 'next-mdx-remote';
-import Image from 'next/image';
 import Head from 'next/head';
+import Image from 'next/image';
+import Layout from '@/components/Layout';
 
-export default function PostPage({ frontmatter, mdxSource }) {
-  const { title, date, excerpt, image } = frontmatter;
+export default function BlogPost({ frontMatter, mdxSource }) {
+  const { title, date, image, description } = frontMatter;
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-10">
+    <Layout>
       <Head>
-        <title>{title} | Capitol Stack</title>
-        <meta name="description" content={excerpt} />
+        <title>{title} | Capitol Stack Blog</title>
+        <meta name="description" content={description} />
+        {image && <meta property="og:image" content={`/images/${image}`} />}
       </Head>
 
-      {image && (
-        <div className="relative w-full h-64 md:h-96 mb-6">
-          <Image
-            src={`/images/${image}`}
-            alt={title}
-            fill
-            sizes="(max-width: 768px) 100vw, 768px"
-            className="object-cover rounded-2xl"
-            priority
-          />
+      <article className="max-w-3xl mx-auto px-4 py-12">
+        <h1 className="text-4xl font-bold mb-4">{title}</h1>
+        <p className="text-sm text-gray-500 mb-6">{date}</p>
+
+        {image && (
+          <div className="w-full mb-6 rounded-lg overflow-hidden">
+            <Image
+              src={`/images/${image}`}
+              alt={title}
+              width={1200}
+              height={630}
+              className="w-full h-auto object-cover"
+              priority
+            />
+          </div>
+        )}
+
+        <div className="prose prose-lg max-w-none">
+          <MDXRemote {...mdxSource} />
         </div>
-      )}
-
-      <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">{title}</h1>
-      <p className="text-sm text-gray-500 dark:text-gray-400 mb-8">
-        {new Date(date).toLocaleDateString(undefined, {
-          year: 'numeric',
-          month: 'short',
-          day: 'numeric',
-        })}
-      </p>
-
-      <article className="prose dark:prose-invert max-w-none">
-        <MDXRemote {...mdxSource} />
       </article>
-    </div>
+    </Layout>
   );
 }
 
 export async function getStaticPaths() {
   const files = fs.readdirSync(path.join('posts'));
-  const paths = files.map((filename) => ({
-    params: { slug: filename.replace('.mdx', '') },
-  }));
+
+  const paths = files
+    .filter((filename) => filename.endsWith('.mdx')) // Only MDX posts
+    .map((filename) => ({
+      params: { slug: filename.replace('.mdx', '') },
+    }));
 
   return {
     paths,
@@ -60,13 +61,17 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params: { slug } }) {
-  const markdownWithMeta = fs.readFileSync(path.join('posts', `${slug}.mdx`), 'utf-8');
-  const { data: frontmatter, content } = matter(markdownWithMeta);
+  const markdownWithMeta = fs.readFileSync(
+    path.join('posts', slug + '.mdx'),
+    'utf-8'
+  );
+
+  const { data: frontMatter, content } = matter(markdownWithMeta);
   const mdxSource = await serialize(content);
 
   return {
     props: {
-      frontmatter,
+      frontMatter,
       mdxSource,
     },
   };
