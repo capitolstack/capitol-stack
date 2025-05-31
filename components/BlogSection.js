@@ -71,19 +71,41 @@ export default function BlogSection({ posts }) {
             >
               <Link href={`/blog/${post.slug}`}>
                 <div className="cursor-pointer">
-                  <div className="overflow-hidden rounded-t-xl">
-                    {/* Image Container */}
-                    <div className="relative aspect-video w-full bg-gray-100 dark:bg-gray-800 overflow-hidden">
+                  {/* FIXED: Image Container - No more truncation */}
+                  <div className="relative w-full h-48 sm:h-56 bg-gray-100 dark:bg-gray-800 overflow-hidden">
+                    {post.image ? (
                       <img
-                        src={post.image || '/images/default-blog.jpg'}
+                        src={post.image}
                         alt={post.title}
                         className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        style={{
+                          objectFit: 'cover',
+                          objectPosition: 'center',
+                          width: '100%',
+                          height: '100%'
+                        }}
                         loading={index < 2 ? 'eager' : 'lazy'}
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          e.target.nextSibling.style.display = 'flex';
+                        }}
                       />
-                      
-                      {/* Overlay gradient for better text readability */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    ) : null}
+                    
+                    {/* Fallback placeholder */}
+                    <div 
+                      className={`w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 ${post.image ? 'hidden' : 'flex'}`}
+                    >
+                      <div className="text-center text-gray-500 dark:text-gray-400">
+                        <svg className="w-12 h-12 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+                        </svg>
+                        <p className="text-sm font-medium">Article</p>
+                      </div>
                     </div>
+                    
+                    {/* Overlay gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </div>
                   
                   {/* Content */}
@@ -98,13 +120,13 @@ export default function BlogSection({ posts }) {
                     </time>
                     
                     {/* Title */}
-                    <h3 className="text-xl font-semibold text-[#1A1A1A] dark:text-white mb-3 group-hover:text-[#007070] transition-colors duration-200 line-clamp-2">
-                      {post.title}
+                    <h3 className="text-xl font-semibold text-[#1A1A1A] dark:text-white mb-3 group-hover:text-[#007070] transition-colors duration-200">
+                      <span className="line-clamp-2">{post.title}</span>
                     </h3>
                     
                     {/* Summary */}
-                    <p className="text-[#4B5563] dark:text-gray-300 text-base leading-relaxed line-clamp-3 mb-4">
-                      {post.summary || post.description}
+                    <p className="text-[#4B5563] dark:text-gray-300 text-base leading-relaxed mb-4">
+                      <span className="line-clamp-3">{post.summary || post.description}</span>
                     </p>
                     
                     {/* Read More */}
