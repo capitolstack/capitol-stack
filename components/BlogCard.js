@@ -1,23 +1,35 @@
 import Link from 'next/link';
-import Image from 'next/image';
 
 export default function BlogCard({ title, date, summary, image, slug }) {
   return (
     <article className="group">
       <Link href={`/blog/${slug}`} className="block">
-        {/* Image Container - Stripe uses 16:10 ratio */}
+        {/* Image Container - Fixed dimensions, cannot truncate */}
         <div className="relative mb-6 overflow-hidden rounded-lg bg-gray-100">
-          <div className="aspect-[16/10] w-full">
+          <div style={{ width: '100%', height: '240px', position: 'relative' }}>
             {image ? (
-              <Image
+              <img
                 src={image}
                 alt={title}
-                fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                className="object-cover transition-transform duration-300 group-hover:scale-105"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  display: 'block'
+                }}
+                className="transition-transform duration-300 group-hover:scale-105"
               />
             ) : (
-              <div className="flex h-full w-full items-center justify-center bg-gray-100">
+              <div 
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backgroundColor: '#f3f4f6'
+                }}
+              >
                 <svg
                   className="h-12 w-12 text-gray-400"
                   fill="none"
@@ -36,7 +48,7 @@ export default function BlogCard({ title, date, summary, image, slug }) {
           </div>
         </div>
 
-        {/* Content - Stripe typography */}
+        {/* Content */}
         <div className="space-y-3">
           <time className="text-sm font-medium text-gray-500">
             {new Date(date).toLocaleDateString('en-US', {
