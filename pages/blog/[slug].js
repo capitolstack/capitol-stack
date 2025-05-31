@@ -5,24 +5,64 @@ import path from 'path';
 import matter from 'gray-matter';
 import { serialize } from 'next-mdx-remote/serialize';
 import { MDXRemote } from 'next-mdx-remote';
+import Head from 'next/head';
+import Image from 'next/image';
 
-export default function BlogPost({ source, frontMatter }) {
+export default function PostPage({ source, frontMatter }) {
   return (
-    <div className="prose mx-auto px-4 py-12 max-w-3xl">
-      <h1>{frontMatter.title}</h1>
-      <MDXRemote {...source} />
+    <div className="mx-auto max-w-3xl px-4 py-12">
+      <Head>
+        <title>{frontMatter.title} | Capitol Stack</title>
+        <meta name="description" content={frontMatter.description || frontMatter.summary} />
+      </Head>
+
+      <article className="prose prose-lg dark:prose-invert">
+        <h1>{frontMatter.title}</h1>
+        <p className="text-gray-500">{new Date(frontMatter.date).toLocaleDateString()}</p>
+
+        {frontMatter.image && (
+          <div className="w-full aspect-w-16 aspect-h-9 mb-8 relative">
+            <Image
+              src={frontMatter.image}
+              alt={frontMatter.title}
+              layout="fill"
+              objectFit="cover"
+              className="rounded-lg"
+              priority
+            />
+          </div>
+        )}
+
+        <MDXRemote {...source} />
+
+        {frontMatter.author && (
+          <div className="mt-8 flex items-center gap-4">
+            {frontMatter.author.avatar && (
+              <Image
+                src={frontMatter.author.avatar}
+                alt={frontMatter.author.name}
+                width={48}
+                height={48}
+                className="rounded-full"
+              />
+            )}
+            <div>
+              <p className="font-semibold">{frontMatter.author.name}</p>
+              <p className="text-sm text-gray-500">{frontMatter.author.role}</p>
+            </div>
+          </div>
+        )}
+      </article>
     </div>
   );
 }
 
 export async function getStaticPaths() {
-  const postsDir = path.join(process.cwd(), 'posts');
-  const filenames = fs.readdirSync(postsDir).filter((file) => file.endsWith('.mdx'));
+  const postsDirectory = path.join(process.cwd(), 'posts');
+  const filenames = fs.readdirSync(postsDirectory);
 
   const paths = filenames.map((filename) => ({
-    params: {
-      slug: filename.replace(/\.mdx$/, ''),
-    },
+    params: { slug: filename.replace(/\.mdx?$/, '') },
   }));
 
   return {
@@ -32,13 +72,9 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const filePath = path.join(process.cwd(), 'posts', `${params.slug}.mdx`);
+  const postPath = path.join(process.cwd(), 'posts', `${params.slug}.mdx`);
+  const source = fs.readFileSync(postPath, 'utf8');
 
-  if (!fs.existsSync(filePath)) {
-    return { notFound: true };
-  }
-
-  const source = fs.readFileSync(filePath, 'utf8');
   const { content, data } = matter(source);
   const mdxSource = await serialize(content);
 
