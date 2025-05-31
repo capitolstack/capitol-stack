@@ -5,7 +5,7 @@ module.exports = {
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
     './lib/**/*.{js,ts}',
-    './posts/**/*.mdx', // ✅ fixed pattern
+    './posts/**/*.mdx',
   ],
   theme: {
     extend: {
@@ -18,7 +18,6 @@ module.exports = {
         sans: ['Inter', 'sans-serif'],
         serif: ['Merriweather', 'serif'],
       },
-      // Remove aspect-ratio since we're using Next.js Image with proper sizing
       typography: (theme) => ({
         DEFAULT: {
           css: {
