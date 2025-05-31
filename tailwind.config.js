@@ -1,11 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: 'class', // Enables dark mode via class strategy
+  darkMode: 'class', // Enables dark mode using a 'class' strategy
   content: [
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
     './lib/**/*.{js,ts}',
-    './posts/**/*.mdx', // MDX blog content
+    './posts/**/*.mdx', // ✅ fixed pattern
   ],
   theme: {
     extend: {
@@ -18,6 +18,7 @@ module.exports = {
         sans: ['Inter', 'sans-serif'],
         serif: ['Merriweather', 'serif'],
       },
+      // Remove aspect-ratio since we're using Next.js Image with proper sizing
       typography: (theme) => ({
         DEFAULT: {
           css: {
@@ -48,8 +49,5 @@ module.exports = {
       }),
     },
   },
-  plugins: [
-    require('@tailwindcss/typography'),
-    require('@tailwindcss/aspect-ratio'), // Enables `aspect-w-*` and `aspect-h-*` utilities
-  ],
+  plugins: [require('@tailwindcss/typography')],
 };
