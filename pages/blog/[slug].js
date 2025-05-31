@@ -13,20 +13,22 @@ export default function PostPage({ source, frontMatter }) {
     <div className="mx-auto max-w-3xl px-4 py-12">
       <Head>
         <title>{frontMatter.title} | Capitol Stack</title>
-        <meta name="description" content={frontMatter.description || frontMatter.summary} />
+        <meta name="description" content={frontMatter.description || frontMatter.summary || ''} />
       </Head>
 
       <article className="prose prose-lg dark:prose-invert">
         <h1>{frontMatter.title}</h1>
-        <p className="text-gray-500">{new Date(frontMatter.date).toLocaleDateString()}</p>
+        {frontMatter.date && (
+          <p className="text-gray-500">{new Date(frontMatter.date).toLocaleDateString()}</p>
+        )}
 
         {frontMatter.image && (
-          <div className="w-full aspect-w-16 aspect-h-9 mb-8 relative">
+          <div className="relative w-full h-64 mb-8 rounded-lg overflow-hidden">
             <Image
               src={frontMatter.image}
               alt={frontMatter.title}
-              layout="fill"
-              objectFit="cover"
+              fill
+              style={{ objectFit: 'cover' }}
               className="rounded-lg"
               priority
             />
@@ -35,7 +37,7 @@ export default function PostPage({ source, frontMatter }) {
 
         <MDXRemote {...source} />
 
-        {frontMatter.author && (
+        {frontMatter.author?.name && (
           <div className="mt-8 flex items-center gap-4">
             {frontMatter.author.avatar && (
               <Image
@@ -48,7 +50,9 @@ export default function PostPage({ source, frontMatter }) {
             )}
             <div>
               <p className="font-semibold">{frontMatter.author.name}</p>
-              <p className="text-sm text-gray-500">{frontMatter.author.role}</p>
+              {frontMatter.author.role && (
+                <p className="text-sm text-gray-500">{frontMatter.author.role}</p>
+              )}
             </div>
           </div>
         )}
@@ -61,9 +65,11 @@ export async function getStaticPaths() {
   const postsDirectory = path.join(process.cwd(), 'posts');
   const filenames = fs.readdirSync(postsDirectory);
 
-  const paths = filenames.map((filename) => ({
-    params: { slug: filename.replace(/\.mdx?$/, '') },
-  }));
+  const paths = filenames
+    .filter((filename) => filename.endsWith('.mdx'))
+    .map((filename) => ({
+      params: { slug: filename.replace(/\.mdx$/, '') },
+    }));
 
   return {
     paths,
@@ -74,7 +80,6 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const postPath = path.join(process.cwd(), 'posts', `${params.slug}.mdx`);
   const source = fs.readFileSync(postPath, 'utf8');
-
   const { content, data } = matter(source);
   const mdxSource = await serialize(content);
 
