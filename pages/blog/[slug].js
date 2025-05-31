@@ -1,40 +1,32 @@
 // pages/blog/[slug].js
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
 import { serialize } from 'next-mdx-remote/serialize';
 import { MDXRemote } from 'next-mdx-remote';
 import Head from 'next/head';
 import remarkGfm from 'remark-gfm';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
-
-const postsDirectory = path.join(process.cwd(), 'posts');
+import { getPostBySlug, getAllPosts } from '../../lib/posts';
+import MDXComponents from '../../components/MDXComponents';
 
 export async function getStaticPaths() {
-  const filenames = fs.readdirSync(postsDirectory);
-  const paths = filenames.map((filename) => ({
-    params: { slug: filename.replace(/\.mdx$/, '') },
-  }));
-
+  const posts = getAllPosts();
+  const paths = posts.map((post) => ({ params: { slug: post.slug } }));
   return { paths, fallback: false };
 }
 
 export async function getStaticProps({ params }) {
-  const filePath = path.join(postsDirectory, `${params.slug}.mdx`);
-  const source = fs.readFileSync(filePath, 'utf8');
-  const { content, data } = matter(source);
-  const mdxSource = await serialize(content, {
+  const post = getPostBySlug(params.slug);
+  const mdxSource = await serialize(post.content, {
     mdxOptions: {
       remarkPlugins: [remarkGfm],
       rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings],
     },
-    scope: data,
+    scope: post,
   });
 
   return {
     props: {
-      frontMatter: data,
+      frontMatter: post,
       mdxSource,
     },
   };
@@ -45,14 +37,14 @@ export default function PostPage({ frontMatter, mdxSource }) {
     <>
       <Head>
         <title>{frontMatter.title} | Capitol Stack</title>
-        <meta name="description" content={frontMatter.excerpt} />
+        <meta name="description" content={frontMatter.excerpt || frontMatter.description || ''} />
       </Head>
       <article className="prose dark:prose-invert max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <h1>{frontMatter.title}</h1>
         <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
           {new Date(frontMatter.date).toLocaleDateString()}
         </p>
-        <MDXRemote {...mdxSource} />
+        <MDXRemote {...mdxSource} components={MDXComponents} />
       </article>
     </>
   );
