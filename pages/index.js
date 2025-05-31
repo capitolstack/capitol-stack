@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import ThesisSection from '../components/ThesisSection'
 import PortfolioSection from '../components/PortfolioSection'
 import TeamSection from '../components/TeamSection'
@@ -10,7 +9,7 @@ import { getAllPosts } from '@/lib/posts'
 export async function getStaticProps() {
   const posts = getAllPosts()
   return {
-    props: { posts },
+    props: { posts }
   }
 }
 
@@ -20,30 +19,19 @@ export default function Home({ posts }) {
       <Head>
         <title>Capitol Stack VC</title>
         <link rel="icon" href="/capitol-stack-logo.png" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
-          rel="stylesheet"
-        />
       </Head>
 
       <main className="bg-[#F3F7FB] min-h-screen px-6 py-32 text-center font-inter flex flex-col items-center justify-center text-[#1A1A1A]">
-        <div className="relative w-24 h-24 sm:w-32 sm:h-32 md:w-[140px] md:h-[140px] mb-6 sm:mb-8 md:mb-10">
-          <Image
-            src="/capitol-stack-logo.png"
-            alt="Capitol Stack Logo"
-            fill
-            className="object-contain"
-            sizes="(max-width: 640px) 96px, (max-width: 768px) 128px, 140px"
-            priority
-          />
-        </div>
+        <img
+          src="/capitol-stack-logo.png"
+          alt="Capitol Stack Logo"
+          className="w-24 sm:w-32 md:w-[140px] mb-6 sm:mb-8 md:mb-10"
+        />
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight text-gray-900 max-w-3xl mb-6">
           Backing the Next Generation of Climate Tech Builders
         </h1>
         <p className="text-base sm:text-lg md:text-xl text-gray-700 max-w-xl mb-8">
-          Capitol Stack is a pre-seed VC fund based in Washington, D.C., investing in founders emerging from the world&apos;s deepest policy, tech, and scientific talent pool.
+          Capitol Stack is a pre-seed VC fund based in Washington, D.C., investing in founders emerging from the deepest policy, tech, and scientific talent pool.
         </p>
         
           href="#contact"
@@ -60,7 +48,7 @@ export default function Home({ posts }) {
       <ContactSection />
 
       <footer className="bg-black text-white py-10 text-center font-inter">
-        <p>&copy; {new Date().getFullYear()} Capitol Stack VC. All rights reserved.</p>
+        <p>© 2024 Capitol Stack VC. All rights reserved.</p>
       </footer>
     </>
   )
