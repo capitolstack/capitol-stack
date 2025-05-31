@@ -43,7 +43,7 @@ export default function Home({ posts }) {
           Backing the Next Generation of Climate Tech Builders
         </h1>
         <p className="text-base sm:text-lg md:text-xl text-gray-700 max-w-xl mb-8">
-          Capitol Stack is a pre-seed VC fund based in Washington, D.C., investing in founders emerging from the world's deepest policy, tech, and scientific talent pool.
+          Capitol Stack is a pre-seed VC fund based in Washington, D.C., investing in founders emerging from the world&apos;s deepest policy, tech, and scientific talent pool.
         </p>
         
           href="#contact"
