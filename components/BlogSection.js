@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowRightIcon } from '@heroicons/react/20/solid';
 
 export default function BlogSection({ posts }) {
   const displayPosts = posts?.slice(0, 6) || [];
@@ -34,18 +33,33 @@ export default function BlogSection({ posts }) {
               className="group"
             >
               <Link href={`/blog/${post.slug}`} className="block">
-                {/* Image - Stripe's 16:10 ratio */}
+                {/* Image - Fixed dimensions */}
                 <div className="relative mb-6 overflow-hidden rounded-lg bg-gray-100">
-                  <div className="aspect-[16/10] w-full">
+                  <div style={{ width: '100%', height: '240px', position: 'relative' }}>
                     {post.image ? (
                       <img
                         src={post.image}
                         alt={post.title}
-                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          display: 'block'
+                        }}
+                        className="transition-transform duration-300 group-hover:scale-105"
                         loading={index < 3 ? 'eager' : 'lazy'}
                       />
                     ) : (
-                      <div className="flex h-full w-full items-center justify-center bg-gray-100">
+                      <div 
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          backgroundColor: '#f3f4f6'
+                        }}
+                      >
                         <svg
                           className="h-12 w-12 text-gray-400"
                           fill="none"
@@ -119,7 +133,9 @@ export default function BlogSection({ posts }) {
             className="inline-flex items-center rounded-full bg-[#007070] px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#005f5f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#007070] transition-colors"
           >
             View all articles
-            <ArrowRightIcon className="ml-2 h-4 w-4" />
+            <svg className="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
           </Link>
         </div>
       </div>
