@@ -11,22 +11,25 @@ export default function Navbar() {
 
   return (
     <nav className="w-full border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 md:px-8 py-4 flex items-center justify-between">
-      <Link href="/">
-        <div className="text-xl font-bold tracking-tight text-gray-900 dark:text-white hover:opacity-80 cursor-pointer">
-          Capitol Stack
-        </div>
+      <Link 
+        href="/"
+        className="text-xl font-bold tracking-tight text-gray-900 dark:text-white hover:opacity-80 transition-opacity"
+      >
+        Capitol Stack
       </Link>
 
       <div className="flex items-center gap-6">
-        <Link href="/blog">
-          <span className="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">
-            Blog
-          </span>
+        <Link 
+          href="/blog"
+          className="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors"
+        >
+          Blog
         </Link>
-        <Link href="/submit">
-          <span className="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">
-            Submit
-          </span>
+        <Link 
+          href="/submit"
+          className="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors"
+        >
+          Submit
         </Link>
 
         {mounted && (
