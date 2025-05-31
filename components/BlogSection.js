@@ -3,152 +3,130 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 
 export default function BlogSection({ posts }) {
-  // Take only first 4 posts for homepage
-  const displayPosts = posts?.slice(0, 4) || [];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut",
-      },
-    },
-  };
+  const displayPosts = posts?.slice(0, 6) || [];
 
   if (!displayPosts.length) {
     return null;
   }
 
   return (
-    <section className="py-28 px-6 bg-[#F9FAFB] dark:bg-gray-800">
-      <div className="max-w-6xl mx-auto">
-        {/* Section Header */}
-        <div className="flex items-center justify-between mb-12">
-          <div>
-            <h2 className="text-3xl font-semibold text-[#1A1A1A] dark:text-white mb-4 border-l-4 border-[#007070] pl-4">
-              Latest Insights
-            </h2>
-            <p className="text-lg text-[#4B5563] dark:text-gray-300 pl-4">
-              Thoughts on climate tech, venture capital, and building the future
-            </p>
-          </div>
-          
-          <Link 
-            href="/blog"
-            className="hidden md:flex items-center text-[#007070] hover:text-[#005f5f] font-semibold group transition-all duration-200"
-          >
-            View all articles
-            <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </Link>
+    <section className="bg-white dark:bg-gray-900 py-24">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        {/* Header - Stripe style */}
+        <div className="mx-auto max-w-2xl text-center">
+          <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+            Latest insights
+          </h2>
+          <p className="mt-4 text-lg leading-8 text-gray-600 dark:text-gray-300">
+            Learn about the latest developments in climate tech and venture capital.
+          </p>
         </div>
 
-        {/* Posts Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-8"
-        >
+        {/* Posts Grid - Stripe-inspired layout */}
+        <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
           {displayPosts.map((post, index) => (
             <motion.article
               key={post.slug}
-              variants={itemVariants}
-              className="bg-white dark:bg-gray-900 rounded-xl shadow-sm hover:shadow-lg dark:shadow-gray-900/20 transition-all duration-300 overflow-hidden border border-gray-100 dark:border-gray-800 group"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="group cursor-pointer"
             >
-              <Link href={`/blog/${post.slug}`}>
-                <div className="cursor-pointer">
-                  {/* FIXED: Image Container - No more truncation */}
-                  <div className="relative w-full h-48 sm:h-56 bg-gray-100 dark:bg-gray-800 overflow-hidden">
+              <Link href={`/blog/${post.slug}`} className="block">
+                {/* Image */}
+                <div className="relative mb-6 overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800">
+                  <div className="aspect-[16/10]">
                     {post.image ? (
                       <img
                         src={post.image}
                         alt={post.title}
-                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                        style={{
-                          objectFit: 'cover',
-                          objectPosition: 'center',
-                          width: '100%',
-                          height: '100%'
-                        }}
-                        loading={index < 2 ? 'eager' : 'lazy'}
-                        onError={(e) => {
-                          e.target.style.display = 'none';
-                          e.target.nextSibling.style.display = 'flex';
-                        }}
+                        className="h-full w-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
+                        loading={index < 3 ? 'eager' : 'lazy'}
                       />
-                    ) : null}
-                    
-                    {/* Fallback placeholder */}
-                    <div 
-                      className={`w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 ${post.image ? 'hidden' : 'flex'}`}
-                    >
-                      <div className="text-center text-gray-500 dark:text-gray-400">
-                        <svg className="w-12 h-12 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
-                        </svg>
-                        <p className="text-sm font-medium">Article</p>
+                    ) : (
+                      <div className="flex h-full items-center justify-center">
+                        <div className="text-center">
+                          <svg
+                            className="mx-auto h-12 w-12 text-gray-400"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            aria-hidden="true"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={1}
+                              d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                            />
+                          </svg>
+                          <p className="mt-2 text-sm text-gray-500">Image</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="space-y-3">
+                  {/* Date */}
+                  <time className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    {new Date(post.date).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </time>
+
+                  {/* Title */}
+                  <h3 className="text-xl font-semibold leading-tight text-gray-900 dark:text-white group-hover:text-[#007070] transition-colors duration-200">
+                    {post.title}
+                  </h3>
+
+                  {/* Summary */}
+                  <p className="text-base leading-relaxed text-gray-600 dark:text-gray-300 line-clamp-2">
+                    {post.summary || post.description}
+                  </p>
+
+                  {/* Author info if available */}
+                  {post.author && (
+                    <div className="flex items-center space-x-3 pt-2">
+                      {post.author.avatar ? (
+                        <img
+                          className="h-8 w-8 rounded-full"
+                          src={post.author.avatar}
+                          alt={post.author.name}
+                        />
+                      ) : (
+                        <div className="h-8 w-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                          <span className="text-xs font-medium text-gray-600 dark:text-gray-300">
+                            {post.author.name.charAt(0)}
+                          </span>
+                        </div>
+                      )}
+                      <div className="text-sm">
+                        <p className="font-medium text-gray-900 dark:text-white">{post.author.name}</p>
+                        {post.author.role && (
+                          <p className="text-gray-500 dark:text-gray-400">{post.author.role}</p>
+                        )}
                       </div>
                     </div>
-                    
-                    {/* Overlay gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-                  
-                  {/* Content */}
-                  <div className="p-6">
-                    {/* Date */}
-                    <time className="text-sm text-[#007070] font-medium block mb-3">
-                      {new Date(post.date).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric'
-                      })}
-                    </time>
-                    
-                    {/* Title */}
-                    <h3 className="text-xl font-semibold text-[#1A1A1A] dark:text-white mb-3 group-hover:text-[#007070] transition-colors duration-200">
-                      <span className="line-clamp-2">{post.title}</span>
-                    </h3>
-                    
-                    {/* Summary */}
-                    <p className="text-[#4B5563] dark:text-gray-300 text-base leading-relaxed mb-4">
-                      <span className="line-clamp-3">{post.summary || post.description}</span>
-                    </p>
-                    
-                    {/* Read More */}
-                    <div className="flex items-center text-[#007070] font-semibold text-sm group-hover:translate-x-1 transition-transform duration-200">
-                      Read article
-                      <ArrowRight className="ml-2 w-4 h-4" />
-                    </div>
-                  </div>
+                  )}
                 </div>
               </Link>
             </motion.article>
           ))}
-        </motion.div>
+        </div>
 
-        {/* Mobile View All Link */}
-        <div className="mt-12 text-center md:hidden">
-          <Link 
+        {/* View all link - Stripe style */}
+        <div className="mt-16 text-center">
+          <Link
             href="/blog"
-            className="inline-flex items-center px-6 py-3 text-base font-semibold text-[#1A1A1A] dark:text-white bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-full transition-all duration-200 shadow-sm hover:shadow-md"
+            className="inline-flex items-center rounded-full bg-[#007070] px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#005f5f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#007070] transition-colors"
           >
             View all articles
-            <ArrowRight className="ml-2 w-4 h-4" />
+            <ArrowRight className="ml-2 h-4 w-4" />
           </Link>
         </div>
       </div>
