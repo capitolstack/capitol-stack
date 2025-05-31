@@ -1,80 +1,74 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState } from 'react';
 
 export default function BlogCard({ title, date, summary, image, slug }) {
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const [imageError, setImageError] = useState(false);
-
   return (
-    <article className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 dark:border-gray-800 group">
-      <Link href={`/blog/${slug}`}>
-        <div className="cursor-pointer">
-          {/* FIXED: Image Container - No more truncation */}
-          <div className="relative w-full h-48 sm:h-56 md:h-64 bg-gray-100 dark:bg-gray-800 overflow-hidden">
-            {!imageError && image ? (
+    <article className="group cursor-pointer">
+      <Link href={`/blog/${slug}`} className="block">
+        {/* Image Container - Stripe-style aspect ratio */}
+        <div className="relative mb-6 overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800">
+          <div className="aspect-[16/10]">
+            {image ? (
               <Image
                 src={image}
                 alt={title}
                 fill
-                className={`transition-all duration-300 group-hover:scale-105 ${
-                  imageLoaded ? 'opacity-100' : 'opacity-0'
-                }`}
-                style={{
-                  objectFit: 'cover',
-                  objectPosition: 'center'
-                }}
-                onLoad={() => setImageLoaded(true)}
-                onError={() => {
-                  setImageError(true);
-                  setImageLoaded(true);
-                }}
+                className="object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                priority={false}
               />
             ) : (
-              /* Fallback when no image or error */
-              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700">
-                <div className="text-center text-gray-500 dark:text-gray-400">
-                  <svg className="w-12 h-12 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+              <div className="flex h-full items-center justify-center">
+                <div className="text-center">
+                  <svg
+                    className="mx-auto h-12 w-12 text-gray-400"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1}
+                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    />
                   </svg>
-                  <p className="text-sm font-medium">Article</p>
+                  <p className="mt-2 text-sm text-gray-500">Image</p>
                 </div>
               </div>
             )}
-            
-            {/* Loading skeleton */}
-            {!imageLoaded && !imageError && image && (
-              <div className="absolute inset-0 bg-gray-200 dark:bg-gray-700 animate-pulse" />
-            )}
           </div>
+        </div>
 
-          {/* Content - Fixed padding and spacing */}
-          <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold mb-3 text-gray-900 dark:text-white group-hover:text-[#007070] transition-colors leading-tight">
-              <span className="line-clamp-2">{title}</span>
-            </h2>
-            
-            <time className="text-gray-500 dark:text-gray-400 text-sm mb-4 block font-medium">
-              {new Date(date).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long', 
-                day: 'numeric'
-              })}
-            </time>
-            
-            <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed mb-4">
-              <span className="line-clamp-3">{summary}</span>
-            </p>
-            
-            {/* Read more indicator */}
-            <div className="flex items-center text-[#007070] font-medium text-sm group-hover:translate-x-1 transition-transform">
+        {/* Content - Stripe-style typography */}
+        <div className="space-y-3">
+          {/* Date */}
+          <time className="text-sm font-medium text-gray-500 dark:text-gray-400">
+            {new Date(date).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            })}
+          </time>
+
+          {/* Title */}
+          <h3 className="text-xl font-semibold leading-tight text-gray-900 dark:text-white group-hover:text-[#007070] transition-colors duration-200">
+            {title}
+          </h3>
+
+          {/* Summary */}
+          <p className="text-base leading-relaxed text-gray-600 dark:text-gray-300 line-clamp-2">
+            {summary}
+          </p>
+
+          {/* Read more link - Stripe style */}
+          <div className="pt-2">
+            <span className="inline-flex items-center text-sm font-medium text-[#007070] group-hover:text-[#005f5f] transition-colors">
               Read article
-              <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
-            </div>
+            </span>
           </div>
         </div>
       </Link>
