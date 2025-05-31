@@ -18,18 +18,16 @@ export default function PostPage({ source, frontMatter }) {
 
       <article className="prose prose-lg dark:prose-invert">
         <h1>{frontMatter.title}</h1>
-        {frontMatter.date && (
-          <p className="text-gray-500">{new Date(frontMatter.date).toLocaleDateString()}</p>
-        )}
+        <p className="text-gray-500">{new Date(frontMatter.date).toLocaleDateString()}</p>
 
         {frontMatter.image && (
-          <div className="relative w-full h-64 mb-8 rounded-lg overflow-hidden">
+          <div className="w-full mb-8">
             <Image
               src={frontMatter.image}
               alt={frontMatter.title}
-              fill
-              style={{ objectFit: 'cover' }}
-              className="rounded-lg"
+              width={960}
+              height={540}
+              className="rounded-lg object-cover w-full h-auto"
               priority
             />
           </div>
@@ -37,7 +35,7 @@ export default function PostPage({ source, frontMatter }) {
 
         <MDXRemote {...source} />
 
-        {frontMatter.author?.name && (
+        {frontMatter.author && (
           <div className="mt-8 flex items-center gap-4">
             {frontMatter.author.avatar && (
               <Image
@@ -50,9 +48,7 @@ export default function PostPage({ source, frontMatter }) {
             )}
             <div>
               <p className="font-semibold">{frontMatter.author.name}</p>
-              {frontMatter.author.role && (
-                <p className="text-sm text-gray-500">{frontMatter.author.role}</p>
-              )}
+              <p className="text-sm text-gray-500">{frontMatter.author.role}</p>
             </div>
           </div>
         )}
@@ -63,22 +59,23 @@ export default function PostPage({ source, frontMatter }) {
 
 export async function getStaticPaths() {
   const postsDirectory = path.join(process.cwd(), 'posts');
-  const filenames = fs.readdirSync(postsDirectory);
+  const filenames = fs.readdirSync(postsDirectory)
+    .filter(name => name.endsWith('.mdx')); // ignore .txt, .DS_Store, etc.
 
-  const paths = filenames
-    .filter((filename) => filename.endsWith('.mdx'))
-    .map((filename) => ({
-      params: { slug: filename.replace(/\.mdx$/, '') },
-    }));
+  const paths = filenames.map((filename) => ({
+    params: { slug: filename.replace(/\.mdx$/, '') },
+  }));
 
-  return {
-    paths,
-    fallback: false,
-  };
+  return { paths, fallback: false };
 }
 
 export async function getStaticProps({ params }) {
   const postPath = path.join(process.cwd(), 'posts', `${params.slug}.mdx`);
+
+  if (!fs.existsSync(postPath)) {
+    return { notFound: true };
+  }
+
   const source = fs.readFileSync(postPath, 'utf8');
   const { content, data } = matter(source);
   const mdxSource = await serialize(content);
