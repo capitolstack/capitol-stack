@@ -1,11 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: 'class', // Enables dark mode using a 'class' strategy
+  darkMode: 'class', // Enables dark mode via class strategy
   content: [
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
     './lib/**/*.{js,ts}',
-    './posts/**/*.mdx', // ✅ fixed pattern
+    './posts/**/*.mdx', // MDX blog content
   ],
   theme: {
     extend: {
@@ -48,6 +48,8 @@ module.exports = {
       }),
     },
   },
- plugins: [require('@tailwindcss/typography'), require('@tailwindcss/aspect-ratio')],
-
+  plugins: [
+    require('@tailwindcss/typography'),
+    require('@tailwindcss/aspect-ratio'), // Enables `aspect-w-*` and `aspect-h-*` utilities
+  ],
 };
