@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 export default function PortfolioSection() {
   return (
     <section className="bg-white py-28 px-6 font-inter text-[#1A1A1A]">
@@ -6,17 +8,21 @@ export default function PortfolioSection() {
           Portfolio Highlights
         </h2>
         <p className="text-md text-[#4B5563] mb-12 pl-4">
-          Selected investments from the founder’s prior fund, Carbon Ventures
+          Selected investments from the founder's prior fund, Carbon Ventures
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-12">
           {/* Fortify */}
           <div className="flex items-start space-x-4">
-            <img
-              src="/logos/fortify.png"
-              alt="Fortify Logo"
-              className="w-16 h-16 object-contain rounded-md border border-[#E5E7EB]"
-            />
-            <div className="space-y-3">
+            <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 flex-shrink-0">
+              <Image
+                src="/logos/fortify.png"
+                alt="Fortify Logo"
+                fill
+                className="object-contain rounded-md border border-[#E5E7EB]"
+                sizes="(max-width: 640px) 48px, (max-width: 768px) 56px, 64px"
+              />
+            </div>
+            <div className="space-y-3 min-w-0 flex-1">
               <h3 className="text-xl font-bold text-[#1A1A1A]">Fortify</h3>
               <p className="text-md text-[#4B5563]">
                 Fortify is a Boston-based digital manufacturing company specializing in advanced composite materials for additive manufacturing.
@@ -26,12 +32,16 @@ export default function PortfolioSection() {
 
           {/* Andium */}
           <div className="flex items-start space-x-4">
-            <img
-              src="/logos/andium.png"
-              alt="Andium Logo"
-              className="w-16 h-16 object-contain rounded-md border border-[#E5E7EB]"
-            />
-            <div className="space-y-3">
+            <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 flex-shrink-0">
+              <Image
+                src="/logos/andium.png"
+                alt="Andium Logo"
+                fill
+                className="object-contain rounded-md border border-[#E5E7EB]"
+                sizes="(max-width: 640px) 48px, (max-width: 768px) 56px, 64px"
+              />
+            </div>
+            <div className="space-y-3 min-w-0 flex-1">
               <h3 className="text-xl font-bold text-[#1A1A1A]">Andium</h3>
               <p className="text-md text-[#4B5563]">
                 Andium provides AI-powered remote field monitoring solutions to reduce greenhouse gas emissions and enhance operational efficiency in the energy sector.
@@ -41,12 +51,16 @@ export default function PortfolioSection() {
 
           {/* SmarterX */}
           <div className="flex items-start space-x-4">
-            <img
-              src="/logos/smarterx.png"
-              alt="SmarterX Logo"
-              className="w-16 h-16 object-contain rounded-md border border-[#E5E7EB]"
-            />
-            <div className="space-y-3">
+            <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 flex-shrink-0">
+              <Image
+                src="/logos/smarterx.png"
+                alt="SmarterX Logo"
+                fill
+                className="object-contain rounded-md border border-[#E5E7EB]"
+                sizes="(max-width: 640px) 48px, (max-width: 768px) 56px, 64px"
+              />
+            </div>
+            <div className="space-y-3 min-w-0 flex-1">
               <h3 className="text-xl font-bold text-[#1A1A1A]">SmarterX</h3>
               <p className="text-md text-[#4B5563]">
                 SmarterX uses data and science to help brands and retailers safely manage regulated consumer products, reducing environmental harm and risk at scale.
