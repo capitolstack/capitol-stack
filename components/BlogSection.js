@@ -18,7 +18,7 @@ export default function BlogSection({ posts }) {
           >
             <Link href={`/blog/${post.slug}`}>
               <div className="bg-white dark:bg-zinc-900 p-6 rounded-xl shadow hover:shadow-lg transition group-hover:scale-[1.02]">
-                <div className="relative w-full h-48 mb-4">
+                <div className="relative w-full aspect-[16/9] mb-4">
                   <Image
                     src={post.image}
                     alt={post.title}
