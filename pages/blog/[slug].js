@@ -7,7 +7,7 @@ import { serialize } from 'next-mdx-remote/serialize';
 import { MDXRemote } from 'next-mdx-remote';
 import Head from 'next/head';
 import Image from 'next/image';
-import Layout from '@/components/Layout';
+import Layout from '../../components/Layout';
 
 export default function BlogPost({ frontMatter, mdxSource }) {
   const { title, date, image, description } = frontMatter;
