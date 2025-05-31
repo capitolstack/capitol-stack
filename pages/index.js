@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Image from 'next/image'
 import ThesisSection from '../components/ThesisSection'
 import PortfolioSection from '../components/PortfolioSection'
 import TeamSection from '../components/TeamSection'
@@ -28,20 +29,25 @@ export default function Home({ posts }) {
       </Head>
 
       <main className="bg-[#F3F7FB] min-h-screen px-6 py-32 text-center font-inter flex flex-col items-center justify-center text-[#1A1A1A]">
-        <img
-          src="/capitol-stack-logo.png"
-          alt="Capitol Stack Logo"
-          className="w-[140px] mb-10"
-        />
-        <h1 className="text-5xl md:text-6xl font-bold leading-tight text-gray-900 max-w-3xl mb-6">
+        <div className="relative w-24 h-24 sm:w-32 sm:h-32 md:w-[140px] md:h-[140px] mb-6 sm:mb-8 md:mb-10">
+          <Image
+            src="/capitol-stack-logo.png"
+            alt="Capitol Stack Logo"
+            fill
+            className="object-contain"
+            sizes="(max-width: 640px) 96px, (max-width: 768px) 128px, 140px"
+            priority
+          />
+        </div>
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight text-gray-900 max-w-3xl mb-6">
           Backing the Next Generation of Climate Tech Builders
         </h1>
-        <p className="text-lg md:text-xl text-gray-700 max-w-xl mb-8">
+        <p className="text-base sm:text-lg md:text-xl text-gray-700 max-w-xl mb-8">
           Capitol Stack is a pre-seed VC fund based in Washington, D.C., investing in founders emerging from the world's deepest policy, tech, and scientific talent pool.
         </p>
         <a
           href="#contact"
-          className="inline-block bg-[#007070] hover:bg-[#005F5F] text-white font-semibold px-8 py-3 rounded-full transition-colors mb-20"
+          className="inline-block bg-[#007070] hover:bg-[#005F5F] text-white font-semibold px-6 sm:px-8 py-3 rounded-full transition-colors mb-20"
         >
           Learn More
         </a>
