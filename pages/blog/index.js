@@ -13,7 +13,7 @@ export default function Blog({ featured, posts }) {
       {featured && (
         <Link href={`/blog/${featured.slug}`} className="block mb-16 group">
           <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="relative w-full h-64 md:h-80">
+            <div className="relative w-full aspect-[16/9]">
               <Image
                 src={featured.image || '/default.jpg'}
                 alt={featured.title}
@@ -57,7 +57,7 @@ export default function Blog({ featured, posts }) {
         {posts.map((post) => (
           <Link key={post.slug} href={`/blog/${post.slug}`}>
             <div className="group relative border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition">
-              <div className="relative w-full h-48">
+              <div className="relative w-full aspect-[16/9]">
                 <Image
                   src={post.image || '/default.jpg'}
                   alt={post.title}
