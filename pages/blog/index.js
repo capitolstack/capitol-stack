@@ -83,4 +83,12 @@ export async function getStaticProps() {
   const featured = allPosts.find((post) => post.slug === featuredSlug) || null
   const posts = allPosts
     .filter((post) => post.slug !== featuredSlug)
-    .sort((a, b) => new Date(b.date) - new Date(a.dat
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
+
+  return {
+    props: {
+      featured,
+      posts
+    }
+  }
+}
