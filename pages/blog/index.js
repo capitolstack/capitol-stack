@@ -8,7 +8,7 @@ export async function getStaticProps() {
   const postsDir = path.join(process.cwd(), 'posts')
   const filenames = fs.readdirSync(postsDir)
 
-  const allPosts = filenames
+  const posts = filenames
     .filter((fn) => fn.endsWith('.mdx'))
     .map((filename) => {
       const filePath = path.join(postsDir, filename)
@@ -20,26 +20,23 @@ export async function getStaticProps() {
         ...data
       }
     })
-    .filter(post => {
-      // Only include posts with a publish date that is today or earlier
-      return new Date(post.date) <= new Date()
-    })
+    .filter((post) => new Date(post.date) <= new Date()) // Only show published posts
     .sort((a, b) => new Date(b.date) - new Date(a.date))
 
-  const featured = allPosts.find(post => post.slug === 'inside-capitol-stack')
-  const nonFeatured = allPosts.filter(post => post.slug !== 'inside-capitol-stack')
+  const featured = posts.find(post => post.slug === 'inside-capitol-stack')
+  const nonFeatured = posts.filter(post => post.slug !== 'inside-capitol-stack')
 
   return {
     props: {
       featured: featured || null,
       posts: nonFeatured
     },
-    revalidate: 60 // ISR: revalidate every 60 seconds
+    revalidate: 60 // ISR: revalidate once per minute
   }
 }
 
 export default function Blog({ featured, posts }) {
-  const visibleCount = 3
+  const visibleCount = Math.min(3, posts.length)
   const [index, setIndex] = useState(0)
 
   const slideLeft = () => {
@@ -50,12 +47,14 @@ export default function Blog({ featured, posts }) {
     setIndex((prev) => (prev + 1) % posts.length)
   }
 
-  const visiblePosts = posts.length > 0
-    ? Array.from({ length: visibleCount }).map((_, i) => {
-        const postIndex = (index + i) % posts.length
-        return posts[postIndex]
-      })
-    : []
+  const visiblePosts = posts.slice(index, index + visibleCount)
+  if (visiblePosts.length < visibleCount) {
+    visiblePosts.push(...posts.slice(0, visibleCount - visiblePosts.length))
+  }
+
+  const showCarousel = posts.length > 0
+  const showArrows = posts.length > visibleCount
+  const showHistorical = posts.length > 3
 
   return (
     <main className="max-w-7xl mx-auto px-4 py-8">
@@ -67,19 +66,21 @@ export default function Blog({ featured, posts }) {
         </div>
       )}
 
-      {visiblePosts.length > 0 && (
+      {showCarousel && (
         <>
           <h2 className="text-2xl font-semibold mb-4">More from the Blog</h2>
           <div className="relative flex items-center">
-            <button
-              onClick={slideLeft}
-              className="bg-white border border-gray-300 rounded-full p-2 shadow z-10 hover:bg-gray-100"
-              aria-label="Scroll Left"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
+            {showArrows && (
+              <button
+                onClick={slideLeft}
+                className="bg-white border border-gray-300 rounded-full p-2 shadow z-10 hover:bg-gray-100"
+                aria-label="Scroll Left"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+            )}
 
             <div className="flex gap-4 overflow-hidden px-4 w-full">
               {visiblePosts.map((post) => (
@@ -89,20 +90,22 @@ export default function Blog({ featured, posts }) {
               ))}
             </div>
 
-            <button
-              onClick={slideRight}
-              className="bg-white border border-gray-300 rounded-full p-2 shadow z-10 hover:bg-gray-100"
-              aria-label="Scroll Right"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
+            {showArrows && (
+              <button
+                onClick={slideRight}
+                className="bg-white border border-gray-300 rounded-full p-2 shadow z-10 hover:bg-gray-100"
+                aria-label="Scroll Right"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            )}
           </div>
         </>
       )}
 
-      {posts.length > 0 && (
+      {showHistorical && (
         <>
           <h2 className="text-2xl font-semibold mt-12 mb-4">Historical Posts</h2>
           <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
