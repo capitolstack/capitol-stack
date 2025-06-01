@@ -8,8 +8,6 @@ export async function getStaticProps() {
   const postsDir = path.join(process.cwd(), 'posts')
   const filenames = fs.readdirSync(postsDir)
 
-  const now = new Date()
-
   const posts = filenames
     .filter((fn) => fn.endsWith('.mdx'))
     .map((filename) => {
@@ -22,7 +20,11 @@ export async function getStaticProps() {
         ...data
       }
     })
-    .filter((post) => new Date(post.date) <= now && post.hidden !== true)
+    .filter(post => {
+      const now = new Date()
+      const postDate = new Date(post.date)
+      return postDate <= now && post.hide !== true
+    })
     .sort((a, b) => new Date(b.date) - new Date(a.date))
 
   const featured = posts.find(post => post.slug === 'inside-capitol-stack')
@@ -33,12 +35,12 @@ export async function getStaticProps() {
       featured: featured || null,
       posts: nonFeatured
     },
-    revalidate: 60 // Regenerates the page in the background every 60 seconds
+    revalidate: 60
   }
 }
 
 export default function Blog({ featured, posts }) {
-  const visibleCount = 3
+  const visibleCount = Math.min(3, posts.length)
   const [index, setIndex] = useState(0)
 
   const slideLeft = () => {
@@ -49,10 +51,12 @@ export default function Blog({ featured, posts }) {
     setIndex((prev) => (prev + 1) % posts.length)
   }
 
-  const visiblePosts = Array.from({ length: visibleCount }).map((_, i) => {
-    const postIndex = (index + i) % posts.length
-    return posts[postIndex]
-  })
+  const visiblePosts = posts.length > 3
+    ? Array.from({ length: visibleCount }).map((_, i) => {
+        const postIndex = (index + i) % posts.length
+        return posts[postIndex]
+      })
+    : posts
 
   return (
     <main className="max-w-7xl mx-auto px-4 py-8">
@@ -64,7 +68,7 @@ export default function Blog({ featured, posts }) {
         </div>
       )}
 
-      {posts.length > 0 && (
+      {posts.length > 1 && (
         <>
           <h2 className="text-2xl font-semibold mb-4">More from the Blog</h2>
           <div className="relative flex items-center">
