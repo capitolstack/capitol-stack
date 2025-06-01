@@ -1,6 +1,4 @@
-// pages/blog/index.js
 import Head from 'next/head';
-import Link from 'next/link';
 import { getAllPosts } from '../../lib/posts';
 import BlogCard from '../../components/BlogCard';
 
@@ -22,7 +20,7 @@ export default function Blog({ posts }) {
         <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-8 text-center">From the Stack</h1>
         <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {posts.map((post) => (
-            <BlogCard key={post.slug} post={post} />
+            <BlogCard key={post.slug} {...post} />
           ))}
         </div>
       </section>
