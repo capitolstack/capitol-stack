@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import Image from 'next/image'
 
 export default function BlogCard({ post, featured = false }) {
   const containerClasses = featured
@@ -14,11 +13,9 @@ export default function BlogCard({ post, featured = false }) {
     <Link href={`/blog/${post.slug}`}>
       <div className={containerClasses}>
         <div className={imageWrapperClasses}>
-          <Image
-            src={post.cover}
+          <img
+            src={`/images/${post.cover}`}
             alt={post.title}
-            width={featured ? 1200 : 600}
-            height={featured ? 675 : 338}
             className="w-full h-full object-cover"
           />
         </div>
