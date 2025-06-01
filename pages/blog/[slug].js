@@ -7,23 +7,47 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Layout from '../../components/Layout';
 
-export default function BlogPost({ frontMatter, mdxSource }) {
-  const { title, date, image, description } = frontMatter;
-  const imagePath = image?.startsWith('/') ? image : `/blog/${image}`;
+export default function BlogPost({ frontMatter, mdxSource, slug }) {
+  const { title, date, image, description, cover } = frontMatter;
+
+  const siteUrl = 'https://www.capitolstack.vc';
+  const canonicalUrl = `${siteUrl}/blog/${slug}`;
+  const imagePath = image?.startsWith('/')
+    ? image
+    : `/images/${image || cover}`;
 
   return (
     <Layout>
       <Head>
         <title>{title} | Capitol Stack Blog</title>
         <meta name="description" content={description} />
-        {image && <meta property="og:image" content={imagePath} />}
+        <link rel="canonical" href={canonicalUrl} />
+
+        {/* Open Graph */}
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={`${siteUrl}${imagePath}`} />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:type" content="article" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={`${siteUrl}${imagePath}`} />
       </Head>
 
       <article className="max-w-3xl mx-auto px-4 py-12">
         <h1 className="text-4xl font-bold mb-4">{title}</h1>
-        <p className="text-sm text-gray-500 mb-6">{date}</p>
+        <p className="text-sm text-gray-500 mb-6">
+          {date && new Date(date).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })}
+        </p>
 
-        {image && (
+        {imagePath && (
           <div className="w-full mb-6 rounded-lg overflow-hidden">
             <Image
               src={imagePath}
@@ -66,6 +90,7 @@ export async function getStaticProps({ params }) {
     props: {
       frontMatter: data,
       mdxSource,
+      slug: params.slug,
     },
   };
 }
