@@ -3,9 +3,11 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 
 export default function BlogSection({ posts }) {
-  const displayPosts = posts?.slice(0, 6) || [];
+  const featured = posts?.find((post) => post.slug === 'inside-capitol-stack');
 
-  if (!displayPosts.length) return null;
+  if (!featured) return null;
+
+  const imagePath = featured.image?.startsWith('/') ? featured.image : `/images/blog/${featured.image}`;
 
   return (
     <section className="bg-white py-24 sm:py-32">
@@ -13,78 +15,50 @@ export default function BlogSection({ posts }) {
         {/* Header */}
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            Latest insights
+            Explore Capitol Stack
           </h2>
           <p className="mt-4 text-lg leading-8 text-gray-600">
-            Learn about the latest developments in climate tech and venture capital.
+            Understand the thesis behind our fund and the role of community in climate innovation.
           </p>
         </div>
 
-        {/* Posts Grid */}
-        <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-10 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-          {displayPosts.map((post, index) => {
-            const imagePath = post.image?.startsWith('/') ? post.image : `/images/blog/${post.image}`;
-            return (
-              <motion.article
-                key={post.slug}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="group flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm hover:shadow-md transition-shadow"
-              >
-                <Link href={`/blog/${post.slug}`} className="block">
-                  <div className="relative w-full">
-                    <Image
-                      src={imagePath}
-                      alt={post.title}
-                      width={1600}
-                      height={900}
-                      className="object-cover rounded-t-2xl transition-transform duration-300 group-hover:scale-105"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      priority
-                    />
-                  </div>
-                  <div className="flex flex-col justify-between p-6">
-                    <div>
-                      <time dateTime={post.date} className="block text-sm text-gray-500 mb-2">
-                        {post.date}
-                      </time>
-                      <h2 className="text-lg font-semibold text-gray-900 group-hover:underline">
-                        {post.title}
-                      </h2>
-                      <p className="mt-2 text-sm text-gray-600 line-clamp-3">
-                        {post.excerpt}
-                      </p>
-                    </div>
-                    {post.author && (
-                      <div className="mt-4 flex items-center gap-3 text-xs text-gray-500">
-                        {typeof post.author === 'object' && post.author.avatar && (
-                          <Image
-                            src={post.author.avatar}
-                            alt={post.author.name}
-                            width={24}
-                            height={24}
-                            className="rounded-full object-cover"
-                          />
-                        )}
-                        <div className="leading-tight">
-                          <span className="font-medium">
-                            {typeof post.author === 'string'
-                              ? post.author
-                              : post.author?.name ?? 'Capitol Stack'}
-                          </span>
-                          {post.author?.role && (
-                            <div className="text-gray-400 text-[0.7rem]">{post.author.role}</div>
-                          )}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </Link>
-              </motion.article>
-            );
-          })}
+        {/* Featured Blog Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="mx-auto mt-16 max-w-4xl"
+        >
+          <Link href={`/blog/${featured.slug}`} className="group block rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+            <div className="relative w-full h-64 sm:h-80 md:h-96">
+              <Image
+                src={imagePath}
+                alt={featured.title}
+                fill
+                className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
+                sizes="(max-width: 768px) 100vw, 75vw"
+                priority
+              />
+            </div>
+            <div className="bg-white p-6">
+              <h3 className="text-2xl font-bold text-gray-900">{featured.title}</h3>
+              <p className="mt-2 text-gray-600">{featured.excerpt}</p>
+              <div className="mt-4 text-sm text-gray-500">
+                {featured.date && new Date(featured.date).toLocaleDateString()}
+              </div>
+            </div>
+          </Link>
+        </motion.div>
+
+        {/* CTA */}
+        <div className="mt-12 text-center">
+          <Link
+            href="/blog"
+            className="text-base font-medium text-blue-600 hover:text-blue-800 underline"
+          >
+            View Full Blog Archive →
+          </Link>
         </div>
       </div>
     </section>
