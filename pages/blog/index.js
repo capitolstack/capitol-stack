@@ -8,6 +8,8 @@ export async function getStaticProps() {
   const postsDir = path.join(process.cwd(), 'posts')
   const filenames = fs.readdirSync(postsDir)
 
+  const now = new Date()
+
   const posts = filenames
     .filter((fn) => fn.endsWith('.mdx'))
     .map((filename) => {
@@ -17,16 +19,13 @@ export async function getStaticProps() {
 
       return {
         slug: filename.replace(/\.mdx$/, ''),
-        title: data.title || '',
-        date: data.date || '',
-        cover: data.cover || '',
-        excerpt: data.summary || '',
-        author: data.author || {},
-        image: data.image || '',
-        description: data.description || ''
+        ...data
       }
     })
-    .filter(post => post.slug !== 'example-hidden-post') // hide example
+    .filter(post => {
+      const postDate = new Date(post.date)
+      return postDate <= now && post.slug !== 'example-hidden-post'
+    })
     .sort((a, b) => new Date(b.date) - new Date(a.date))
 
   const featured = posts.find(post => post.slug === 'inside-capitol-stack')
@@ -36,7 +35,8 @@ export async function getStaticProps() {
     props: {
       featured: featured || null,
       posts: nonFeatured
-    }
+    },
+    revalidate: 60, // ISR revalidation every 60 seconds
   }
 }
 
@@ -52,10 +52,12 @@ export default function Blog({ featured, posts }) {
     setIndex((prev) => (prev + 1) % posts.length)
   }
 
-  const visiblePosts = Array.from({ length: visibleCount }).map((_, i) => {
-    const postIndex = (index + i) % posts.length
-    return posts[postIndex]
-  })
+  const visiblePosts = posts.length > 0
+    ? Array.from({ length: Math.min(visibleCount, posts.length) }).map((_, i) => {
+        const postIndex = (index + i) % posts.length
+        return posts[postIndex]
+      })
+    : []
 
   return (
     <main className="max-w-7xl mx-auto px-4 py-8">
@@ -64,54 +66,3 @@ export default function Blog({ featured, posts }) {
       {featured && (
         <div className="mb-12">
           <BlogCard post={featured} featured />
-        </div>
-      )}
-
-      {posts.length > 0 && (
-        <>
-          <h2 className="text-2xl font-semibold mb-4">More from the Blog</h2>
-          <div className="relative flex items-center">
-            <button
-              onClick={slideLeft}
-              className="bg-white border border-gray-300 rounded-full p-2 shadow z-10 hover:bg-gray-100"
-              aria-label="Scroll Left"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-
-            <div className="flex gap-4 overflow-hidden px-4 w-full">
-              {visiblePosts.map((post) => (
-                <div key={post.slug} className="flex-1 min-w-0">
-                  <BlogCard post={post} />
-                </div>
-              ))}
-            </div>
-
-            <button
-              onClick={slideRight}
-              className="bg-white border border-gray-300 rounded-full p-2 shadow z-10 hover:bg-gray-100"
-              aria-label="Scroll Right"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
-        </>
-      )}
-
-      {posts.length > 0 && (
-        <>
-          <h2 className="text-2xl font-semibold mt-12 mb-4">Historical Posts</h2>
-          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-            {posts.map((post) => (
-              <BlogCard key={post.slug} post={post} />
-            ))}
-          </div>
-        </>
-      )}
-    </main>
-  )
-}
