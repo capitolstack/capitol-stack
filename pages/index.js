@@ -4,6 +4,7 @@ import PortfolioSection from '../components/PortfolioSection'
 import TeamSection from '../components/TeamSection'
 import BlogSection from '../components/BlogSection'
 import ContactSection from '../components/ContactSection'
+import { motion } from 'framer-motion'
 import { getAllPosts } from '@/lib/posts'
 
 export async function getStaticProps() {
@@ -22,10 +23,13 @@ export default function Home({ posts }) {
       </Head>
 
       <main className="bg-gray-50 min-h-screen px-6 py-16 text-center">
-        <img 
-          src="/capitol-stack-logo.png" 
-          alt="Capitol Stack Logo" 
-          className="w-32 h-32 mx-auto mb-8 object-contain" 
+        <motion.img
+          initial={ scale: 0.9, opacity: 0 }
+          animate={ scale: 1, opacity: 1 }
+          transition={ duration: 0.8, ease: 'easeOut' }
+          src="/capitol-stack-logo.png"
+          alt="Capitol Stack Logo"
+          className="w-48 sm:w-64 md:w-72 lg:w-80 mx-auto mb-10 object-contain"
         />
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 tracking-tight leading-tight mb-6 max-w-4xl mx-auto">
           Backing the Next Generation<br className="hidden md:inline" />
@@ -45,7 +49,7 @@ export default function Home({ posts }) {
       <ThesisSection />
       <PortfolioSection />
       <TeamSection />
-      <BlogSection posts={posts} />
+      <BlogSection posts={ posts } />
       <ContactSection />
 
       <footer className="bg-black text-white p-8 text-center">
