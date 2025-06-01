@@ -1,29 +1,59 @@
-import Head from 'next/head';
-import { getAllPosts } from '../../lib/posts';
-import BlogCard from '../../components/BlogCard';
+import fs from 'fs'
+import path from 'path'
+import matter from 'gray-matter'
+import BlogCard from '@/components/BlogCard'
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
 
 export async function getStaticProps() {
-  const posts = getAllPosts();
+  const postsDir = path.join(process.cwd(), 'posts')
+  const filenames = fs.readdirSync(postsDir)
+
+  const posts = filenames
+    .filter((fn) => fn.endsWith('.mdx'))
+    .map((filename) => {
+      const filePath = path.join(postsDir, filename)
+      const source = fs.readFileSync(filePath, 'utf-8')
+      const { data } = matter(source)
+
+      return {
+        slug: filename.replace(/\.mdx$/, ''),
+        ...data
+      }
+    })
+    .filter(post => new Date(post.date) <= new Date()) // Exclude future-dated posts
+    .sort((a, b) => new Date(b.date) - new Date(a.date)) // Most recent first
+
+  const featured = posts.find(post => post.featured)
+  const rest = posts.filter(post => !post.featured)
+
   return {
-    props: { posts },
-  };
+    props: {
+      featured: featured || null,
+      posts: rest
+    }
+  }
 }
 
-export default function Blog({ posts }) {
+export default function Blog({ featured, posts }) {
   return (
-    <>
-      <Head>
-        <title>Blog | Capitol Stack</title>
-        <meta name="description" content="Insights, stories, and updates from the Capitol Stack team." />
-      </Head>
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-8 text-center">From the Stack</h1>
-        <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-          {posts.map((post) => (
-            <BlogCard key={post.slug} {...post} />
-          ))}
+    <main className="max-w-7xl mx-auto px-4 py-8">
+      <h1 className="text-4xl font-bold mb-8 text-gray-900">Capitol Stack Blog</h1>
+
+      {featured && (
+        <div className="mb-12">
+          <BlogCard post={featured} featured />
         </div>
-      </section>
-    </>
-  );
+      )}
+
+      <h2 className="text-2xl font-semibold mb-4">Recent Posts</h2>
+      <div className="flex overflow-x-auto space-x-6 pb-4 snap-x">
+        {posts.map((post) => (
+          <div key={post.slug} className="min-w-[300px] snap-center">
+            <BlogCard post={post} />
+          </div>
+        ))}
+      </div>
+    </main>
+  )
 }
