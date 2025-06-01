@@ -3,6 +3,7 @@ import path from 'path'
 import matter from 'gray-matter'
 import BlogCard from '@/components/BlogCard'
 import Link from 'next/link'
+import { useRef } from 'react'
 
 export async function getStaticProps() {
   const postsDir = path.join(process.cwd(), 'posts')
@@ -20,21 +21,33 @@ export async function getStaticProps() {
         ...data
       }
     })
-    // No date filtering — for testing purposes
-    .sort((a, b) => new Date(b.date) - new Date(a.date)) // Most recent first
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
 
   const featured = posts.find(post => post.featured)
-  const rest = posts.filter(post => !post.featured)
+  const nonFeatured = posts.filter(post => !post.featured)
+  const carousel = nonFeatured.slice(0, 4)
+  const historical = nonFeatured.slice(4)
 
   return {
     props: {
       featured: featured || null,
-      posts: rest
+      carousel,
+      historical
     }
   }
 }
 
-export default function Blog({ featured, posts }) {
+export default function Blog({ featured, carousel, historical }) {
+  const scrollRef = useRef(null)
+
+  const scroll = (direction) => {
+    const container = scrollRef.current
+    if (container) {
+      const scrollAmount = container.offsetWidth / 1.5
+      container.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' })
+    }
+  }
+
   return (
     <main className="max-w-7xl mx-auto px-4 py-8">
       <h1 className="text-4xl font-bold mb-8 text-gray-900">Capitol Stack Blog</h1>
@@ -46,13 +59,44 @@ export default function Blog({ featured, posts }) {
       )}
 
       <h2 className="text-2xl font-semibold mb-4">Recent Posts</h2>
-      <div className="flex overflow-x-auto space-x-6 pb-4 snap-x">
-        {posts.map((post) => (
-          <div key={post.slug} className="min-w-[300px] snap-center">
-            <BlogCard post={post} />
-          </div>
-        ))}
+      <div className="relative">
+        <button
+          onClick={() => scroll('left')}
+          className="absolute left-0 top-1/2 -translate-y-1/2 bg-white border border-gray-300 rounded-full p-2 shadow z-10 hover:bg-gray-100"
+          aria-label="Scroll Left"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <div ref={scrollRef} className="flex overflow-x-scroll no-scrollbar snap-x space-x-6 pb-4 px-8">
+          {carousel.map((post) => (
+            <div key={post.slug} className="min-w-[300px] snap-center flex-shrink-0">
+              <BlogCard post={post} />
+            </div>
+          ))}
+        </div>
+        <button
+          onClick={() => scroll('right')}
+          className="absolute right-0 top-1/2 -translate-y-1/2 bg-white border border-gray-300 rounded-full p-2 shadow z-10 hover:bg-gray-100"
+          aria-label="Scroll Right"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
       </div>
+
+      {historical.length > 0 && (
+        <>
+          <h2 className="text-2xl font-semibold mt-12 mb-4">Historical Posts</h2>
+          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+            {historical.map((post) => (
+              <BlogCard key={post.slug} post={post} />
+            ))}
+          </div>
+        </>
+      )}
     </main>
   )
 }
