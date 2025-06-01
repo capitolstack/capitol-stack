@@ -9,6 +9,14 @@ export default function BlogCard({ post, featured = false }) {
   const textWrapperClasses = featured ? "md:w-1/2 p-6 flex flex-col justify-center" : "p-4"
   const titleClasses = featured ? "text-3xl font-bold text-gray-900 mb-2" : "text-xl font-bold text-gray-900 mb-2"
 
+  const formattedDate = post.date
+    ? new Date(post.date + 'T00:00:00').toLocaleDateString(undefined, {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      })
+    : ''
+
   return (
     <Link href={`/blog/${post.slug}`}>
       <div className={containerClasses}>
@@ -26,7 +34,7 @@ export default function BlogCard({ post, featured = false }) {
           </h2>
           <p className="text-gray-600 mb-2">{post.excerpt || ''}</p>
           <div className="text-sm text-gray-500">
-            {post.date && new Date(post.date).toLocaleDateString()}
+            {formattedDate}
           </div>
         </div>
       </div>
