@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 import BlogCard from '@/components/BlogCard'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 
 export async function getStaticProps() {
   const postsDir = path.join(process.cwd(), 'posts')
@@ -22,8 +22,8 @@ export async function getStaticProps() {
     })
     .sort((a, b) => new Date(b.date) - new Date(a.date))
 
-  const featured = posts.find(post => post.featured)
-  const nonFeatured = posts.filter(post => !post.featured)
+  const featured = posts.find(post => post.slug === 'inside-capitol-stack')
+  const nonFeatured = posts.filter(post => post.slug !== 'inside-capitol-stack')
 
   return {
     props: {
@@ -34,12 +34,21 @@ export async function getStaticProps() {
 }
 
 export default function Blog({ featured, posts }) {
-  const [index, setIndex] = useState(0)
   const visibleCount = 3
-  const maxIndex = Math.max(0, posts.length - visibleCount)
+  const [index, setIndex] = useState(0)
 
-  const slideLeft = () => setIndex(prev => Math.max(prev - 1, 0))
-  const slideRight = () => setIndex(prev => Math.min(prev + 1, maxIndex))
+  const slideLeft = () => {
+    setIndex((prev) => (prev - 1 + posts.length) % posts.length)
+  }
+
+  const slideRight = () => {
+    setIndex((prev) => (prev + 1) % posts.length)
+  }
+
+  const visiblePosts = Array.from({ length: visibleCount }).map((_, i) => {
+    const postIndex = (index + i) % posts.length
+    return posts[postIndex]
+  })
 
   return (
     <main className="max-w-7xl mx-auto px-4 py-8">
@@ -66,7 +75,7 @@ export default function Blog({ featured, posts }) {
             </button>
 
             <div className="flex gap-4 overflow-hidden px-4 w-full">
-              {posts.slice(index, index + visibleCount).map((post) => (
+              {visiblePosts.map((post) => (
                 <div key={post.slug} className="flex-1 min-w-0">
                   <BlogCard post={post} />
                 </div>
