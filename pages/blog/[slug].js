@@ -1,4 +1,3 @@
-// --- pages/blog/[slug].js ---
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
@@ -48,9 +47,11 @@ export async function getStaticPaths() {
   const postsDir = path.join(process.cwd(), 'posts');
   const filenames = fs.readdirSync(postsDir);
 
-  const paths = filenames.map((name) => ({
-    params: { slug: name.replace(/\\.mdx?$/, '') },
-  }));
+  const paths = filenames
+    .filter((name) => name.endsWith('.mdx'))
+    .map((name) => ({
+      params: { slug: name.replace(/\.mdx$/, '') },
+    }));
 
   return { paths, fallback: false };
 }
