@@ -3,6 +3,9 @@ import Image from 'next/image';
 
 export default function BlogCard({ slug, title, date, author = 'Capitol Stack', excerpt, image }) {
   const imagePath = image?.startsWith('/') ? image : `/blog/${image}`;
+  const authorName = typeof author === 'string' ? author : author?.name ?? 'Capitol Stack';
+  const authorAvatar = typeof author === 'object' ? author?.avatar : null;
+  const authorRole = typeof author === 'object' ? author?.role : null;
 
   return (
     <div className="flex flex-col overflow-hidden rounded-2xl shadow hover:shadow-md transition bg-white">
@@ -29,8 +32,21 @@ export default function BlogCard({ slug, title, date, author = 'Capitol Stack', 
           </h2>
           <p className="mt-2 text-sm text-gray-600">{excerpt}</p>
         </div>
-        <div className="mt-4 text-xs text-gray-500">
-          <span>{author}</span> &bull; <span>{date}</span>
+        <div className="mt-4 flex items-center gap-3 text-xs text-gray-500">
+          {authorAvatar && (
+            <Image
+              src={authorAvatar}
+              alt={authorName}
+              width={24}
+              height={24}
+              className="rounded-full object-cover"
+            />
+          )}
+          <div className="flex flex-col leading-tight">
+            <span className="font-medium">{authorName}</span>
+            {authorRole && <span className="text-[0.7rem] text-gray-400">{authorRole}</span>}
+          </div>
+          <span className="ml-auto">{date}</span>
         </div>
       </div>
     </div>
