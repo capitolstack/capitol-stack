@@ -9,12 +9,13 @@ import { getAllPosts } from '@/lib/posts'
 
 export async function getStaticProps() {
   const posts = getAllPosts()
+  const featured = posts.find(post => post.slug === 'inside-capitol-stack') || null
   return {
-    props: { posts }
+    props: { featured }
   }
 }
 
-export default function Home({ posts }) {
+export default function Home({ featured }) {
   return (
     <div>
       <Head>
@@ -49,7 +50,7 @@ export default function Home({ posts }) {
       <ThesisSection />
       <PortfolioSection />
       <TeamSection />
-      <BlogSection posts={posts} />
+      {featured && <BlogSection featured={featured} />}
       <ContactSection />
 
       <footer className="bg-black text-white p-8 text-center">
