@@ -17,10 +17,16 @@ export async function getStaticProps() {
 
       return {
         slug: filename.replace(/\.mdx$/, ''),
-        ...data
+        title: data.title || '',
+        date: data.date || '',
+        cover: data.cover || '',
+        excerpt: data.summary || '',
+        author: data.author || {},
+        image: data.image || '',
+        description: data.description || ''
       }
     })
-    .filter(post => !post.hidden) // ✅ Exclude hidden posts
+    .filter(post => post.slug !== 'example-hidden-post') // hide example
     .sort((a, b) => new Date(b.date) - new Date(a.date))
 
   const featured = posts.find(post => post.slug === 'inside-capitol-stack')
