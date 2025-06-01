@@ -20,6 +20,7 @@ export async function getStaticProps() {
         ...data
       }
     })
+    .filter(post => !post.hidden) // ✅ Exclude hidden posts
     .sort((a, b) => new Date(b.date) - new Date(a.date))
 
   const featured = posts.find(post => post.slug === 'inside-capitol-stack')
