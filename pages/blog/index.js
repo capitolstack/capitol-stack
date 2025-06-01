@@ -2,7 +2,6 @@ import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 import BlogCard from '@/components/BlogCard'
-import { useEffect, useState } from 'react'
 import Link from 'next/link'
 
 export async function getStaticProps() {
@@ -21,7 +20,7 @@ export async function getStaticProps() {
         ...data
       }
     })
-    .filter(post => new Date(post.date) <= new Date()) // Exclude future-dated posts
+    // No date filtering — for testing purposes
     .sort((a, b) => new Date(b.date) - new Date(a.date)) // Most recent first
 
   const featured = posts.find(post => post.featured)
