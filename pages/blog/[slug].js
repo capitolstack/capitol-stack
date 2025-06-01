@@ -1,5 +1,4 @@
-// pages/blog/[slug].js
-
+// --- pages/blog/[slug].js ---
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
@@ -11,13 +10,14 @@ import Layout from '../../components/Layout';
 
 export default function BlogPost({ frontMatter, mdxSource }) {
   const { title, date, image, description } = frontMatter;
+  const imagePath = image?.startsWith('/') ? image : `/blog/${image}`;
 
   return (
     <Layout>
       <Head>
         <title>{title} | Capitol Stack Blog</title>
         <meta name="description" content={description} />
-        {image && <meta property="og:image" content={`/images/${image}`} />}
+        {image && <meta property="og:image" content={imagePath} />}
       </Head>
 
       <article className="max-w-3xl mx-auto px-4 py-12">
@@ -27,17 +27,16 @@ export default function BlogPost({ frontMatter, mdxSource }) {
         {image && (
           <div className="w-full mb-6 rounded-lg overflow-hidden">
             <Image
-              src={`/images/${image}`}
+              src={imagePath}
               alt={title}
-              width={1200}
-              height={630}
-              className="w-full h-auto object-cover"
-              priority
+              width={800}
+              height={450}
+              className="object-cover rounded"
             />
           </div>
         )}
 
-        <div className="prose prose-lg max-w-none">
+        <div className="prose dark:prose-invert">
           <MDXRemote {...mdxSource} />
         </div>
       </article>
@@ -46,32 +45,25 @@ export default function BlogPost({ frontMatter, mdxSource }) {
 }
 
 export async function getStaticPaths() {
-  const files = fs.readdirSync(path.join('posts'));
+  const postsDir = path.join(process.cwd(), 'posts');
+  const filenames = fs.readdirSync(postsDir);
 
-  const paths = files
-    .filter((filename) => filename.endsWith('.mdx')) // Only MDX posts
-    .map((filename) => ({
-      params: { slug: filename.replace('.mdx', '') },
-    }));
+  const paths = filenames.map((name) => ({
+    params: { slug: name.replace(/\\.mdx?$/, '') },
+  }));
 
-  return {
-    paths,
-    fallback: false,
-  };
+  return { paths, fallback: false };
 }
 
-export async function getStaticProps({ params: { slug } }) {
-  const markdownWithMeta = fs.readFileSync(
-    path.join('posts', slug + '.mdx'),
-    'utf-8'
-  );
-
-  const { data: frontMatter, content } = matter(markdownWithMeta);
+export async function getStaticProps({ params }) {
+  const filePath = path.join(process.cwd(), 'posts', `${params.slug}.mdx`);
+  const fileContent = fs.readFileSync(filePath, 'utf8');
+  const { data, content } = matter(fileContent);
   const mdxSource = await serialize(content);
 
   return {
     props: {
-      frontMatter,
+      frontMatter: data,
       mdxSource,
     },
   };
