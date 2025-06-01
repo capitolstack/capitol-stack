@@ -23,9 +23,9 @@ export default function Home({ posts }) {
 
       <main className="bg-gray-50 min-h-screen px-6 py-16 text-center">
         <img 
-          src="/capitol-stack-logo.png" 
+          src="/capitol-stack-logo-transparent.png" 
           alt="Capitol Stack Logo" 
-          className="w-32 h-32 mx-auto mb-8 object-contain" 
+          className="w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 mx-auto mb-10 object-contain transition-all duration-300 ease-in-out" 
         />
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 tracking-tight leading-tight mb-6 max-w-4xl mx-auto">
           Backing the Next Generation<br className="hidden md:inline" />
