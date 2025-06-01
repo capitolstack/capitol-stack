@@ -15,7 +15,7 @@ export default function BlogCard({ post, featured = false }) {
       <div className={containerClasses}>
         <div className={imageWrapperClasses}>
           <Image
-            src={`/images/${post.cover}`}
+            src={post.cover}
             alt={post.title}
             width={featured ? 1200 : 600}
             height={featured ? 675 : 338}
