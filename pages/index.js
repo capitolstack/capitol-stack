@@ -24,9 +24,9 @@ export default function Home({ posts }) {
 
       <main className="bg-gray-50 min-h-screen px-6 py-16 text-center">
         <motion.img
-          initial={ scale: 0.9, opacity: 0 }
-          animate={ scale: 1, opacity: 1 }
-          transition={ duration: 0.8, ease: 'easeOut' }
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
           src="/capitol-stack-logo.png"
           alt="Capitol Stack Logo"
           className="w-48 sm:w-64 md:w-72 lg:w-80 mx-auto mb-10 object-contain"
@@ -49,7 +49,7 @@ export default function Home({ posts }) {
       <ThesisSection />
       <PortfolioSection />
       <TeamSection />
-      <BlogSection posts={ posts } />
+      <BlogSection posts={posts} />
       <ContactSection />
 
       <footer className="bg-black text-white p-8 text-center">
