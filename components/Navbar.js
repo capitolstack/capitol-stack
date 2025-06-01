@@ -1,47 +1,46 @@
-import Link from 'next/link';
-import { useTheme } from 'next-themes';
-import { useEffect, useState } from 'react';
-import { Sun, Moon } from 'lucide-react';
+import Link from 'next/link'
 
 export default function Navbar() {
-  const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => setMounted(true), []);
-
   return (
-    <nav className="w-full border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 md:px-8 py-4 flex items-center justify-between">
-      <Link 
-        href="/"
-        className="text-xl font-bold tracking-tight text-gray-900 dark:text-white hover:opacity-80 transition-opacity"
-      >
-        Capitol Stack
-      </Link>
-
-      <div className="flex items-center gap-6">
-        <Link 
-          href="/blog"
-          className="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors"
-        >
-          Blog
-        </Link>
-        <Link 
-          href="/submit"
-          className="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors"
-        >
-          Submit
-        </Link>
-
-        {mounted && (
-          <button
-            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            className="ml-4 p-2 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition"
-            aria-label="Toggle Dark Mode"
-          >
-            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-          </button>
-        )}
-      </div>
-    </nav>
-  );
+    <header className="sticky top-0 z-50 backdrop-blur-md bg-white/70 border-b border-gray-200">
+      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+        <div className="text-2xl font-bold text-gray-900 tracking-tight">
+          <Link href="/">Capitol Stack</Link>
+        </div>
+        <ul className="flex space-x-6 text-base font-medium text-gray-700">
+          <li className="relative group">
+            <Link href="/" className="hover:text-black">
+              Home
+              <span className="block h-0.5 bg-blue-600 scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+            </Link>
+          </li>
+          <li className="relative group">
+            <Link href="/#portfolio" className="hover:text-black">
+              Portfolio
+              <span className="block h-0.5 bg-blue-600 scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+            </Link>
+          </li>
+          <li className="relative group">
+            <Link href="/blog" className="hover:text-black">
+              Blog
+              <span className="block h-0.5 bg-blue-600 scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+            </Link>
+          </li>
+          <li className="relative group">
+            <Link href="/#contact" className="hover:text-black">
+              Contact
+              <span className="block h-0.5 bg-blue-600 scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+            </Link>
+          </li>
+        </ul>
+        <div className="ml-6">
+          <Link href="/submit.html">
+            <span className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition">
+              Submit Startup
+            </span>
+          </Link>
+        </div>
+      </nav>
+    </header>
+  )
 }
