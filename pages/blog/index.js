@@ -3,7 +3,7 @@ import path from 'path'
 import matter from 'gray-matter'
 import BlogCard from '@/components/BlogCard'
 import Link from 'next/link'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 
 export async function getStaticProps() {
   const postsDir = path.join(process.cwd(), 'posts')
@@ -38,14 +38,14 @@ export async function getStaticProps() {
 }
 
 export default function Blog({ featured, carousel, historical }) {
-  const scrollRef = useRef(null)
+  const [index, setIndex] = useState(0)
 
-  const scroll = (direction) => {
-    const container = scrollRef.current
-    if (container) {
-      const scrollAmount = container.offsetWidth / 1.5
-      container.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' })
-    }
+  const slideLeft = () => {
+    setIndex((prev) => Math.max(prev - 1, 0))
+  }
+
+  const slideRight = () => {
+    setIndex((prev) => Math.min(prev + 1, carousel.length - 1))
   }
 
   return (
@@ -59,26 +59,24 @@ export default function Blog({ featured, carousel, historical }) {
       )}
 
       <h2 className="text-2xl font-semibold mb-4">Recent Posts</h2>
-      <div className="relative">
+      <div className="relative flex items-center">
         <button
-          onClick={() => scroll('left')}
-          className="absolute left-0 top-1/2 -translate-y-1/2 bg-white border border-gray-300 rounded-full p-2 shadow z-10 hover:bg-gray-100"
+          onClick={slideLeft}
+          className="bg-white border border-gray-300 rounded-full p-2 shadow z-10 hover:bg-gray-100"
           aria-label="Scroll Left"
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
           </svg>
         </button>
-        <div ref={scrollRef} className="flex overflow-x-scroll no-scrollbar snap-x space-x-6 pb-4 px-8">
-          {carousel.map((post) => (
-            <div key={post.slug} className="min-w-[300px] snap-center flex-shrink-0">
-              <BlogCard post={post} />
-            </div>
-          ))}
+
+        <div className="flex-1 px-6">
+          <BlogCard post={carousel[index]} />
         </div>
+
         <button
-          onClick={() => scroll('right')}
-          className="absolute right-0 top-1/2 -translate-y-1/2 bg-white border border-gray-300 rounded-full p-2 shadow z-10 hover:bg-gray-100"
+          onClick={slideRight}
+          className="bg-white border border-gray-300 rounded-full p-2 shadow z-10 hover:bg-gray-100"
           aria-label="Scroll Right"
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
