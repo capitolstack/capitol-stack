@@ -19,7 +19,8 @@ export default function BlogPost({ frontMatter, mdxSource, slug }) {
   return (
     <Layout>
       <Head>
-        <title>{title} | Capitol Stack Blog</title>
+        <title>{title}</title>
+<title>{title} | Capitol Stack Blog</title>
         <meta name="description" content={description} />
         <link rel="canonical" href={canonicalUrl} />
 
