@@ -1,5 +1,3 @@
-
-// components/Layout.js
 import Head from 'next/head';
 import { useState } from 'react';
 
@@ -16,6 +14,7 @@ export default function Layout({ children, title = 'Capitol Stack' }) {
     if (email.trim()) {
       setSubmitted(true);
       setEmail('');
+      // hook this into your email platform later
     }
   };
 
@@ -26,12 +25,16 @@ export default function Layout({ children, title = 'Capitol Stack' }) {
         <meta name="description" content={description} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/capitol-stack-logo.png" />
+
+        {/* Canonical + Open Graph */}
         <link rel="canonical" href={siteUrl} />
         <meta property="og:type" content="website" />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
         <meta property="og:url" content={siteUrl} />
         <meta property="og:image" content={ogImage} />
+
+        {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
@@ -42,26 +45,27 @@ export default function Layout({ children, title = 'Capitol Stack' }) {
         {children}
       </main>
 
-      {/* Email Capture Section */}
-      <section id="newsletter" className="bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+      {/* Newsletter Signup */}
+      <section className="bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-4">Get the Latest from Capitol Stack</h2>
-          <p className="text-gray-600 mb-6">Be the first to know when we publish new posts or open up our network.</p>
+          <h2 className="text-2xl font-semibold text-gray-900 mb-4">Subscribe for Updates</h2>
+          <p className="text-gray-600 mb-6">Get the latest posts, updates, and news from Capitol Stack.</p>
+
           {!submitted ? (
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row items-center gap-4 justify-center">
+            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <input
                 type="email"
                 placeholder="Your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="px-4 py-2 rounded-full border border-gray-300 w-full sm:w-64"
+                className="px-4 py-2 rounded-full border border-gray-300 w-full sm:w-72"
               />
               <button
                 type="submit"
                 className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full transition-colors"
               >
-                Subscribe for Updates
+                Subscribe
               </button>
             </form>
           ) : (
