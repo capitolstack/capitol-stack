@@ -1,58 +1,70 @@
-import Link from 'next/link'
-import Image from 'next/image'
+// components/Navbar.js
+import Link from 'next/link';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Navbar() {
+  const [showForm, setShowForm] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    if (email) {
+      // Here, connect to your email backend (e.g., ConvertKit, Mailchimp, Formspree)
+      console.log('Email submitted:', email);
+      setSubmitted(true);
+      setTimeout(() => setShowForm(false), 3000); // Auto-close after success
+    }
+  };
+
   return (
-    <header className="sticky top-0 z-50 backdrop-blur-md bg-white/70 border-b border-gray-200">
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-        <Link href="/" className="flex items-center space-x-2">
-          <Image
-            src="/capitol-stack-logo.png"
-            alt="Capitol Stack Logo"
-            width={40}
-            height={40}
-            className="object-contain"
-          />
-          <span className="text-xl font-bold text-gray-900 tracking-tight">
-            Capitol Stack
-          </span>
+    <nav className="w-full bg-white shadow-sm px-4 py-4 flex justify-between items-center">
+      <Link href="/">
+        <span className="text-xl font-bold text-gray-800">Capitol Stack</span>
+      </Link>
+      <div className="space-x-4">
+        <Link href="/submit">
+          <span className="text-gray-700 hover:text-blue-700">Submit a Deck</span>
         </Link>
+        <button
+          onClick={() => setShowForm((prev) => !prev)}
+          className="text-gray-700 hover:text-blue-700"
+        >
+          Get Email Updates
+        </button>
+      </div>
 
-        <ul className="flex space-x-6 text-base font-medium text-gray-700">
-          <li className="relative group">
-            <Link href="/" className="hover:text-black">
-              Home
-              <span className="block h-0.5 bg-blue-600 scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
-            </Link>
-          </li>
-          <li className="relative group">
-            <Link href="/#portfolio" className="hover:text-black">
-              Portfolio
-              <span className="block h-0.5 bg-blue-600 scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
-            </Link>
-          </li>
-          <li className="relative group">
-            <Link href="/blog" className="hover:text-black">
-              Blog
-              <span className="block h-0.5 bg-blue-600 scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
-            </Link>
-          </li>
-          <li className="relative group">
-            <Link href="/#contact" className="hover:text-black">
-              Contact
-              <span className="block h-0.5 bg-blue-600 scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
-            </Link>
-          </li>
-        </ul>
-
-        <div className="ml-6">
-          <Link href="/submit.html">
-            <span className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition">
-              Submit Startup
-            </span>
-          </Link>
-        </div>
-      </nav>
-    </header>
-  )
+      <AnimatePresence>
+        {showForm && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="absolute top-16 left-1/2 transform -translate-x-1/2 w-full max-w-md bg-white shadow-lg rounded-xl p-6 z-50"
+          >
+            {submitted ? (
+              <p className="text-green-700 text-sm">Thanks — we’ll keep you updated on what we’re building.</p>
+            ) : (
+              <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 items-center">
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="you@example.com"
+                  required
+                  className="flex-1 px-4 py-2 rounded-full border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                />
+                <button
+                  type="submit"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full font-medium"
+                >
+                  Submit
+                </button>
+              </form>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </nav>
+  );
 }
