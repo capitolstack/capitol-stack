@@ -27,7 +27,7 @@ export default function App({ Component, pageProps }) {
   }, [router.events]);
 
   return (
-    <main className={inter.variable}>
+    <main role="main" className={inter.variable}>
       <ThemeProvider attribute="class">
         <Head>
           <title>Capitol Stack – Founder-First Climate Tech VC</title>
