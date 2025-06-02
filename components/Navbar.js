@@ -30,9 +30,6 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-8 text-sm font-medium">
-            <Link href="/#about" className="hover:underline hover:decoration-teal-500 hover:underline-offset-4 transition">
-              About
-            </Link>
             <Link href="/blog" className="hover:underline hover:decoration-teal-500 hover:underline-offset-4 transition">
               Blog
             </Link>
@@ -57,7 +54,6 @@ export default function Navbar() {
       {/* Mobile Menu */}
       <div className={`md:hidden ${isOpen ? 'block' : 'hidden'} bg-white shadow-lg`}>
         <div className="px-4 pt-4 pb-6 space-y-4 text-center text-base font-medium">
-          <Link href="/#about" className="block hover:text-teal-600">About</Link>
           <Link href="/blog" className="block hover:text-teal-600">Blog</Link>
           <Link href="/#contact" className="block hover:text-teal-600">Contact</Link>
         </div>
