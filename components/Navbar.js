@@ -1,96 +1,75 @@
-// components/Navbar.js
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
+// components/Layout.js
+import Head from 'next/head';
+import { useState } from 'react';
 
-export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+export default function Layout({ children, title = 'Capitol Stack' }) {
+  const siteUrl = 'https://www.capitolstack.vc';
+  const description = 'Capitol Stack backs the next generation of climate tech builders.';
+  const ogImage = `${siteUrl}/images/og-preview.png`;
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const [email, setEmail] = useState('');
+  const [submitted, setSubmitted] = useState(false);
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (email.trim()) {
+      setSubmitted(true);
+      setEmail('');
+    }
   };
 
   return (
-    <header
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? 'bg-white shadow-md' : 'bg-white bg-opacity-60 backdrop-blur-sm'
-      }`}
-    >
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-        {/* Logo & Brand */}
-        <Link href="/" className="flex items-center space-x-2">
-          <Image src="/capitol-stack-logo.png" alt="Capitol Stack Logo" width={32} height={32} />
-          <span className="text-xl font-semibold text-gray-800">Capitol Stack</span>
-        </Link>
+    <>
+      <Head>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/capitol-stack-logo.png" />
 
-        {/* Desktop Nav */}
-        <div className="hidden md:flex items-center space-x-6">
-          <Link href="/#contact" scroll={false} className="text-gray-700 hover:text-blue-600 transition">
-            Contact
-          </Link>
-          <Link href="/blog" className="text-gray-700 hover:text-blue-600 transition">
-            Blog
-          </Link>
-          <a
-            href="https://capitolstack.decilehub.com/submit_your_company"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
-          >
-            Submit a Deck
-          </a>
+        <link rel="canonical" href={siteUrl} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={siteUrl} />
+        <meta property="og:image" content={ogImage} />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={ogImage} />
+      </Head>
+
+      <main className="px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto py-8">
+        {children}
+      </main>
+
+      {/* Newsletter Section */}
+      <section id="newsletter" className="bg-white py-16 px-4 sm:px-6 lg:px-8 border-t border-gray-200">
+        <div className="max-w-2xl mx-auto text-center">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-4">Join Our Newsletter</h2>
+          <p className="text-gray-600 mb-6">Sign up to get our latest insights, updates, and more. No spam, just signal.</p>
+          {!submitted ? (
+            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row items-center gap-4 justify-center">
+              <input
+                type="email"
+                placeholder="Your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="px-4 py-2 rounded-full border border-gray-300 w-full sm:w-64"
+              />
+              <button
+                type="submit"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full transition-colors"
+              >
+                Subscribe for Updates
+              </button>
+            </form>
+          ) : (
+            <p className="text-green-600 font-medium">Thanks! You're now subscribed.</p>
+          )}
         </div>
-
-        {/* Mobile Menu Toggle */}
-        <button
-          onClick={toggleMenu}
-          className="md:hidden text-gray-700 focus:outline-none"
-          aria-label="Toggle menu"
-        >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-            {isOpen ? (
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-            ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-            )}
-          </svg>
-        </button>
-      </nav>
-
-      {/* Mobile Nav Menu */}
-      {isOpen && (
-        <div className="md:hidden px-4 pb-4 space-y-3">
-          <Link
-            href="/#contact"
-            scroll={false}
-            className="block text-gray-700 hover:text-blue-600"
-            onClick={toggleMenu}
-          >
-            Contact
-          </Link>
-          <Link href="/blog" className="block text-gray-700 hover:text-blue-600" onClick={toggleMenu}>
-            Blog
-          </Link>
-          <a
-            href="https://capitolstack.decilehub.com/submit_your_company"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
-            onClick={toggleMenu}
-          >
-            Submit a Deck
-          </a>
-        </div>
-      )}
-    </header>
+      </section>
+    </>
   );
 }
