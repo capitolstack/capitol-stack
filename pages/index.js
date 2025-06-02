@@ -67,7 +67,7 @@ export default function Home({ featured }) {
       {featured && <BlogSection featured={featured} />}
       <ContactSection />
 
-      <footer className="bg-black text-white p-8 text-center">
+      <footer role="contentinfo" className="bg-black text-white p-8 text-center">
         <p>© 2024 Capitol Stack VC. All rights reserved.</p>
       </footer>
     </div>
