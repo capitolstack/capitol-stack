@@ -10,7 +10,7 @@ export default function BlogCard({ post, featured = false }) {
   const titleClasses = featured ? "text-3xl font-bold text-gray-900 mb-2" : "text-xl font-bold text-gray-900 mb-2"
 
   const formattedDate = post.date
-    ? new Date(post.date + 'T00:00:00').toLocaleDateString(undefined, {
+    ? new Date(post.date).toLocaleDateString('en-US', {\n      timeZone: 'UTC',
         year: 'numeric',
         month: 'long',
         day: 'numeric',
