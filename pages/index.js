@@ -1,3 +1,4 @@
+
 import Head from 'next/head'
 import ThesisSection from '../components/ThesisSection'
 import PortfolioSection from '../components/PortfolioSection'
@@ -19,8 +20,21 @@ export default function Home({ featured }) {
   return (
     <div>
       <Head>
-        <title>Capitol Stack VC</title>
+        <title>Capitol Stack – Founder-First Climate Tech VC</title>
+        <meta
+          name="description"
+          content="Capitol Stack backs mission-driven climate tech founders emerging from government, science, and infrastructure systems."
+        />
+        <link rel="canonical" href="https://capitolstack.vc/" />
         <link rel="icon" href="/capitol-stack-logo.png" />
+        <meta property="og:title" content="Capitol Stack – Founder-First Climate Tech VC" />
+        <meta
+          property="og:description"
+          content="Investing in overlooked but deeply capable builders at the intersection of climate, government, and software."
+        />
+        <meta property="og:image" content="/images/og-preview.png" />
+        <meta property="og:url" content="https://capitolstack.vc" />
+        <meta name="twitter:card" content="summary_large_image" />
       </Head>
 
       <main className="bg-gray-50 min-h-screen px-6 py-16 text-center">
