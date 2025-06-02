@@ -19,8 +19,33 @@ export default function BlogPost({ frontMatter, mdxSource, slug }) {
   return (
     <Layout>
       <Head>
-        <title>{title}</title>
-<title>{title} | Capitol Stack Blog</title>
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "BlogPosting",
+              "headline": "${title}",
+              "description": "${description}",
+              "image": "${siteUrl}${imagePath}",
+              "url": "${canonicalUrl}",
+              "datePublished": "${date}",
+              "author": {
+                "@type": "Person",
+                "name": "${frontMatter.author?.name || 'Capitol Stack'}"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Capitol Stack",
+                "logo": {
+                  "@type": "ImageObject",
+                  "url": "${siteUrl}/capitol-stack-logo.png"
+                }
+              }
+            }
+          `}
+        </script>
+
+        <title>{title} | Capitol Stack Blog</title>
         <meta name="description" content={description} />
         <link rel="canonical" href={canonicalUrl} />
 
@@ -42,7 +67,6 @@ export default function BlogPost({ frontMatter, mdxSource, slug }) {
         <h1 className="text-4xl font-bold mb-4">{title}</h1>
         <p className="text-sm text-gray-500 mb-6">
           {date && new Date(date).toLocaleDateString('en-US', {
-  timeZone: 'UTC',
             year: 'numeric',
             month: 'long',
             day: 'numeric',
