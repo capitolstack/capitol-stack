@@ -41,6 +41,7 @@ export default function BlogPost({ frontMatter, mdxSource, slug }) {
         <h1 className="text-4xl font-bold mb-4">{title}</h1>
         <p className="text-sm text-gray-500 mb-6">
           {date && new Date(date).toLocaleDateString('en-US', {
+  timeZone: 'UTC',
             year: 'numeric',
             month: 'long',
             day: 'numeric',
