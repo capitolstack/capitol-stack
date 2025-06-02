@@ -9,7 +9,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 30);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -17,28 +17,25 @@ export default function Navbar() {
 
   return (
     <header className={`fixed w-full top-0 z-50 transition-all duration-500 ${
-      isScrolled ? 'bg-white shadow-md' : 'bg-transparent'
+      isScrolled ? 'bg-white/90 backdrop-blur shadow-sm' : 'bg-transparent'
     }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 font-sans">
         <div className="flex items-center justify-between h-16">
-          {/* Logo / Brand */}
-          <div className="flex-shrink-0">
-            <Link href="/" className="text-2xl font-extrabold text-gray-900 hover:text-teal-600 transition-colors">
-              Capitol Stack
+          {/* Logo and Site Name */}
+          <div className="flex items-center space-x-2">
+            <Link href="/" className="flex items-center space-x-2">
+              <img src="/logo.svg" alt="Capitol Stack Logo" className="h-8 w-auto" />
+              <span className="text-xl font-bold text-gray-900 hover:text-teal-600 transition-colors">Capitol Stack</span>
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-8 text-sm font-medium">
-            <Link href="/blog" className="hover:underline hover:decoration-teal-500 hover:underline-offset-4 transition">
-              Blog
-            </Link>
-            <Link href="/#contact" className="hover:underline hover:decoration-teal-500 hover:underline-offset-4 transition">
-              Contact
-            </Link>
+          {/* Desktop Links */}
+          <div className="hidden md:flex space-x-8 text-sm font-medium text-gray-900">
+            <Link href="/blog" className="hover:text-teal-600 transition-colors">Blog</Link>
+            <Link href="/#contact" className="hover:text-teal-600 transition-colors">Contact</Link>
           </div>
 
-          {/* Mobile Toggle Button */}
+          {/* Mobile Toggle */}
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -52,7 +49,7 @@ export default function Navbar() {
       </div>
 
       {/* Mobile Menu */}
-      <div className={`md:hidden ${isOpen ? 'block' : 'hidden'} bg-white shadow-lg`}>
+      <div className={`md:hidden ${isOpen ? 'block' : 'hidden'} bg-white/95 backdrop-blur-md shadow-md`}>
         <div className="px-4 pt-4 pb-6 space-y-4 text-center text-base font-medium">
           <Link href="/blog" className="block hover:text-teal-600">Blog</Link>
           <Link href="/#contact" className="block hover:text-teal-600">Contact</Link>
