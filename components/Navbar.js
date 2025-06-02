@@ -1,71 +1,74 @@
 // components/Navbar.js
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 
 export default function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <nav className="bg-white shadow-sm fixed top-0 left-0 right-0 z-50">
+    <header className={`fixed w-full top-0 z-50 transition-colors duration-500 ${isScrolled ? 'bg-white shadow-md' : 'bg-transparent'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/">
-              <img
-                src="/capitol-stack-logo.png"
-                alt="Capitol Stack Logo"
-                className="h-10 w-auto"
-              />
+              <span className="text-2xl font-bold text-gray-900 transition-colors duration-300 hover:text-teal-600">
+                Capitol Stack
+              </span>
             </Link>
           </div>
-          <div className="hidden md:flex space-x-8 items-center">
-            <Link href="/blog" className="text-gray-700 hover:text-blue-600 font-medium">
-              Blog
-            </Link>
-            <a href="/#contact" className="text-gray-700 hover:text-blue-600 font-medium">
-              Contact
-            </a>
+
+          {/* Desktop nav */}
+          <nav className="hidden md:flex space-x-8">
+            <Link href="/#blog" className="text-gray-700 hover:text-teal-600 transition-colors duration-300">Blog</Link>
+            <Link href="/#contact" className="text-gray-700 hover:text-teal-600 transition-colors duration-300">Contact</Link>
             <a
               href="https://capitolstack.decilehub.com/submit_your_company"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors text-sm font-medium"
+              className="text-white bg-teal-600 hover:bg-teal-700 transition-colors duration-300 px-4 py-2 rounded-md shadow-md"
             >
-              Submit Your Deck
+              Submit a Deck
             </a>
-          </div>
-          <div className="md:hidden flex items-center">
-            <button onClick={toggleMenu} className="text-gray-700 hover:text-blue-600 focus:outline-none">
-              {menuOpen ? <X size={24} /> : <Menu size={24} />}
+          </nav>
+
+          {/* Mobile menu button */}
+          <div className="md:hidden">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="text-gray-700 hover:text-teal-600 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-teal-500 transition-transform duration-200"
+            >
+              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      {menuOpen && (
-        <div className="md:hidden bg-white px-4 pb-4 space-y-3 shadow-sm">
-          <Link href="/blog" className="block text-gray-700 hover:text-blue-600 font-medium">
-            Blog
-          </Link>
-          <a href="/#contact" className="block text-gray-700 hover:text-blue-600 font-medium">
-            Contact
-          </a>
+      {/* Mobile menu */}
+      {isOpen && (
+        <div className="md:hidden px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white shadow-lg transition-all duration-300 ease-in-out">
+          <Link href="/#blog" className="block text-gray-700 hover:text-teal-600 px-3 py-2 rounded-md text-base font-medium">Blog</Link>
+          <Link href="/#contact" className="block text-gray-700 hover:text-teal-600 px-3 py-2 rounded-md text-base font-medium">Contact</Link>
           <a
             href="https://capitolstack.decilehub.com/submit_your_company"
             target="_blank"
             rel="noopener noreferrer"
-            className="block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors text-sm font-medium"
+            className="block text-white bg-teal-600 hover:bg-teal-700 px-3 py-2 rounded-md text-base font-medium"
           >
-            Submit Your Deck
+            Submit a Deck
           </a>
         </div>
       )}
-    </nav>
+    </header>
   );
 }
