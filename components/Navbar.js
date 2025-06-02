@@ -1,4 +1,4 @@
-// components/Navbar.js
+
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -48,6 +48,14 @@ export default function Navbar() {
           >
             Submit a Deck
           </a>
+          <a
+            href="https://tally.so/r/your-newsletter-form"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-gray-900 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition"
+          >
+            Get Updates
+          </a>
         </div>
 
         {/* Mobile Menu Toggle */}
@@ -84,10 +92,17 @@ export default function Navbar() {
             href="https://capitolstack.decilehub.com/submit_your_company"
             target="_blank"
             rel="noopener noreferrer"
-            className="block bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
-            onClick={toggleMenu}
+            className="block text-white bg-blue-600 px-4 py-2 rounded-md hover:bg-blue-700 transition"
           >
             Submit a Deck
+          </a>
+          <a
+            href="https://tally.so/r/your-newsletter-form"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block text-white bg-gray-900 px-4 py-2 rounded-md hover:bg-gray-800 transition"
+          >
+            Get Updates
           </a>
         </div>
       )}
