@@ -1,119 +1,90 @@
+import { useState, useEffect } from 'react';
+import Head from 'next/head';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
+import { getAllPosts } from '@/lib/posts';
 
-import fs from 'fs'
-import path from 'path'
-import matter from 'gray-matter'
-import BlogCard from '@/components/BlogCard'
-import { useState } from 'react'
+// Import your components
+import Navbar from '@/components/Navbar';
+import ThesisSection from '@/components/ThesisSection';
+import TeamSection from '@/components/TeamSection';
+import PortfolioSection from '@/components/PortfolioSection';
+import BlogSection from '@/components/BlogSection';
+import ContactSection from '@/components/ContactSection';
 
 export async function getStaticProps() {
-  const postsDir = path.join(process.cwd(), 'posts')
-  const filenames = fs.readdirSync(postsDir)
-
-  const posts = filenames
-    .filter((fn) => fn.endsWith('.mdx'))
-    .map((filename) => {
-      const filePath = path.join(postsDir, filename)
-      const source = fs.readFileSync(filePath, 'utf-8')
-      const { data } = matter(source)
-
-      return {
-        slug: filename.replace(/\.mdx$/, ''),
-        ...data
-      }
-    })
-    .filter(post => {
-      const now = new Date()
-      const postDate = new Date(post.date)
-      return postDate <= now && post.hide !== true
-    })
-    .sort((a, b) => new Date(b.date) - new Date(a.date))
-
-  const featured = posts.find(post => post.slug === 'inside-capitol-stack')
-  const nonFeatured = posts.filter(post => post.slug !== 'inside-capitol-stack')
-
+  const posts = getAllPosts();
   return {
     props: {
-      featured: featured || null,
-      posts: nonFeatured
+      posts: posts.slice(0, 3), // Only pass a few posts for the homepage
     },
-    revalidate: 60
-  }
+  };
 }
 
-export default function Blog({ featured, posts }) {
-  const visibleCount = Math.min(3, posts.length)
-  const [index, setIndex] = useState(0)
-
-  const slideLeft = () => {
-    setIndex((prev) => (prev - 1 + posts.length) % posts.length)
-  }
-
-  const slideRight = () => {
-    setIndex((prev) => (prev + 1) % posts.length)
-  }
-
-  const visiblePosts = posts.length > 3
-    ? Array.from({ length: visibleCount }).map((_, i) => {
-        const postIndex = (index + i) % posts.length
-        return posts[postIndex]
-      })
-    : posts
-
+export default function Home({ posts }) {
   return (
-    <main className="max-w-7xl mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-8 text-gray-900 dark:text-white">Capitol Stack Blog</h1>
+    <>
+      <Head>
+        <title>Capitol Stack – Founder-First Climate Tech VC</title>
+        <meta
+          name="description"
+          content="Capitol Stack backs mission-driven climate tech founders emerging from government, science, and infrastructure systems."
+        />
+        <link rel="canonical" href="https://www.capitolstack.vc" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Capitol Stack – Founder-First Climate Tech VC" />
+        <meta property="og:description" content="Capitol Stack backs mission-driven climate tech founders emerging from government, science, and infrastructure systems." />
+        <meta property="og:url" content="https://www.capitolstack.vc" />
+        <meta property="og:image" content="https://www.capitolstack.vc/images/og-preview.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Capitol Stack – Founder-First Climate Tech VC" />
+        <meta name="twitter:description" content="Capitol Stack backs mission-driven climate tech founders emerging from government, science, and infrastructure systems." />
+        <meta name="twitter:image" content="https://www.capitolstack.vc/images/og-preview.png" />
+      </Head>
 
-      {featured && (
-        <div className="mb-12">
-          <BlogCard post={featured} featured />
-        </div>
-      )}
+      {/* Add Navbar */}
+      <Navbar />
 
-      {posts.length > 1 && (
-        <>
-          <h2 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">More from the Blog</h2>
-          <div className="relative flex items-center">
-            <button
-              onClick={slideLeft}
-              className="bg-white border border-gray-300 rounded-full p-2 shadow z-10 hover:bg-gray-100"
-              aria-label="Scroll Left"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-
-            <div className="flex gap-4 overflow-x-auto px-4 w-full">
-              {visiblePosts.map((post) => (
-                <div key={post.slug} className="flex-1 min-w-[300px] max-w-[400px]">
-                  <BlogCard post={post} />
-                </div>
-              ))}
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-white pt-20 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 mb-4 sm:mb-6">
+              Founder-First Climate Tech VC
+            </h1>
+            <p className="text-lg sm:text-xl md:text-2xl text-gray-600 mb-6 sm:mb-8 max-w-3xl mx-auto">
+              Capitol Stack backs mission-driven climate tech founders emerging from government, science, and infrastructure systems.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+              <a
+                href="https://capitolstack.decilehub.com/submit_your_company"
+                className="btn-primary text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Submit Your Deck
+              </a>
+              <a
+                href="#contact"
+                className="btn-secondary text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4"
+              >
+                Get in Touch
+              </a>
             </div>
+          </motion.div>
+        </div>
+      </section>
 
-            <button
-              onClick={slideRight}
-              className="bg-white border border-gray-300 rounded-full p-2 shadow z-10 hover:bg-gray-100"
-              aria-label="Scroll Right"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
-        </>
-      )}
-
-      {posts.length > 0 && (
-        <>
-          <h2 className="text-2xl font-semibold mt-12 mb-4 text-gray-900 dark:text-white">Historical Posts</h2>
-          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-            {posts.map((post) => (
-              <BlogCard key={post.slug} post={post} />
-            ))}
-          </div>
-        </>
-      )}
-    </main>
-  )
+      {/* Your existing sections */}
+      <ThesisSection />
+      <TeamSection />
+      <PortfolioSection />
+      <BlogSection posts={posts} />
+      <ContactSection />
+    </>
+  );
 }
