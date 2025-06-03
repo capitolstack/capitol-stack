@@ -1,3 +1,4 @@
+
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
@@ -60,17 +61,17 @@ export default function Blog({ featured, posts }) {
 
   return (
     <main className="max-w-7xl mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-8 text-gray-900">Capitol Stack Blog</h1>
+      <h1 className="text-4xl font-bold mb-8 text-gray-900 dark:text-white">Capitol Stack Blog</h1>
 
       {featured && (
-        <div className="mb-12 aspect-w-16 aspect-h-9 w-full">
+        <div className="mb-12">
           <BlogCard post={featured} featured />
         </div>
       )}
 
       {posts.length > 1 && (
         <>
-          <h2 className="text-2xl font-semibold mb-4">More from the Blog</h2>
+          <h2 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">More from the Blog</h2>
           <div className="relative flex items-center">
             <button
               onClick={slideLeft}
@@ -82,9 +83,9 @@ export default function Blog({ featured, posts }) {
               </svg>
             </button>
 
-            <div className="flex gap-4 overflow-hidden px-4 w-full">
+            <div className="flex gap-4 overflow-x-auto px-4 w-full">
               {visiblePosts.map((post) => (
-                <div key={post.slug} className="flex-1 min-w-0">
+                <div key={post.slug} className="flex-1 min-w-[300px] max-w-[400px]">
                   <BlogCard post={post} />
                 </div>
               ))}
@@ -105,7 +106,7 @@ export default function Blog({ featured, posts }) {
 
       {posts.length > 0 && (
         <>
-          <h2 className="text-2xl font-semibold mt-12 mb-4">Historical Posts</h2>
+          <h2 className="text-2xl font-semibold mt-12 mb-4 text-gray-900 dark:text-white">Historical Posts</h2>
           <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
             {posts.map((post) => (
               <BlogCard key={post.slug} post={post} />
