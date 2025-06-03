@@ -60,16 +60,69 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
   }
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Mobile improvements */
+  @media (max-width: 768px) {
+    /* Ensure minimum touch targets */
+    .btn-primary,
+    .btn-secondary {
+      @apply min-h-[48px] min-w-[48px];
+    }
+    
+    /* Better mobile typography */
+    .prose h1 {
+      @apply text-2xl;
+    }
+    
+    .prose h2 {
+      @apply text-xl;
+    }
+    
+    .prose h3 {
+      @apply text-lg;
+    }
+
+    /* Ensure readable font sizes */
+    html {
+      font-size: 16px;
+    }
+    
+    body {
+      line-height: 1.5;
+    }
+    
+    /* Ensure images don't overflow */
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+    
+    /* Better touch targets for buttons and links */
+    button, a {
+      min-height: 44px;
+      min-width: 44px;
+    }
+  }
 }
 
 @layer components {
   /* Stripe-style buttons */
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-full bg-[#007070] px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#005f5f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#007070] transition-colors;
+    @apply inline-flex items-center justify-center rounded-full bg-[#007070] px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#005f5f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#007070] transition-colors min-h-[44px];
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 transition-colors;
+    @apply inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 transition-colors min-h-[44px];
   }
 
   /* Layout containers */
@@ -182,7 +235,6 @@
 .dark ::-webkit-scrollbar-thumb:hover {
   @apply bg-gray-500;
 }
-
 
 /* Utility class for dark-mode safe blog post layout */
 .prose-page {
