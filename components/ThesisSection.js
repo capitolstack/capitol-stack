@@ -1,6 +1,6 @@
 export default function ThesisSection() {
   return (
-    <section className="bg-[#F9FAFB] py-28 px-6 font-inter text-[#1A1A1A]">
+    <section className="bg-[#F9FAFB] dark:bg-gray-900 py-28 px-6 font-inter text-[#1A1A1A] dark:text-white">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
         <div className="space-y-6">
           <h2 className="text-3xl font-semibold border-l-4 border-[#007070] pl-4">
