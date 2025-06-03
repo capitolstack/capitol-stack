@@ -63,7 +63,7 @@ export default function BlogPost({ frontMatter, mdxSource, slug }) {
         <meta name="twitter:image" content={`${siteUrl}${imagePath}`} />
       </Head>
 
-      <article className="max-w-3xl mx-auto px-4 py-12">
+      <article className="prose-page" className="max-w-3xl mx-auto px-4 py-12">
         <h1 className="text-4xl font-bold mb-4">{title}</h1>
         <p className="text-sm text-gray-500 mb-6">
           {date && new Date(date).toLocaleDateString('en-US', {
