@@ -1,7 +1,6 @@
 import Head from 'next/head';
+import { allPosts } from 'contentlayer/client';
 import { useMDXComponent } from 'next-contentlayer/hooks';
-import { allPosts } from 'contentlayer/generated';
-import { useRouter } from 'next/router';
 import MDXComponents from '@/components/MDXComponents';
 
 export async function getStaticPaths() {
@@ -22,7 +21,7 @@ export default function BlogPost({ post }) {
     timeZone: 'UTC',
     year: 'numeric',
     month: 'long',
-    day: 'numeric'
+    day: 'numeric',
   });
 
   return (
