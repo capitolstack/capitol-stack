@@ -182,3 +182,9 @@
 .dark ::-webkit-scrollbar-thumb:hover {
   @apply bg-gray-500;
 }
+
+
+/* Utility class for dark-mode safe blog post layout */
+.prose-page {
+  @apply prose dark:prose-invert bg-white dark:bg-gray-900 max-w-3xl mx-auto px-4 py-12;
+}
