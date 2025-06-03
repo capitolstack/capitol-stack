@@ -2,12 +2,26 @@ import Head from 'next/head';
 import Script from 'next/script';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { ThemeProvider } from 'next-themes';
+import { ThemeProvider, useTheme } from 'next-themes';
 import '../styles/globals.css';
 import Navbar from '@/components/Navbar';
 
 import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+
+function DarkModeClassManager() {
+  const { resolvedTheme } = useTheme();
+
+  useEffect(() => {
+    if (resolvedTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [resolvedTheme]);
+
+  return null;
+}
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
@@ -28,6 +42,7 @@ export default function App({ Component, pageProps }) {
 
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <DarkModeClassManager />
       <main role="main" className={inter.variable}>
         <Head>
           <title>Capitol Stack – Founder-First Climate Tech VC</title>
