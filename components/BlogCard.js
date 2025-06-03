@@ -11,15 +11,15 @@ export default function BlogCard({ post }) {
   });
 
   return (
-    <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
+    <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md hover:shadow-lg overflow-hidden transition">
       <Link href={`/blog/${post.slug}`}>
-        <div className="aspect-w-16 aspect-h-9 bg-gray-100">
+        <div className="w-full">
           <Image
             src={post.image}
             alt={post.title}
-            layout="fill"
-            objectFit="cover"
-            className="transition-transform duration-300 group-hover:scale-105"
+            width={800}
+            height={450}
+            className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105 rounded-t-lg"
             loading="lazy"
           />
         </div>
