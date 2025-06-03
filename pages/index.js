@@ -1,75 +1,118 @@
-
-import Head from 'next/head'
-import ThesisSection from '../components/ThesisSection'
-import PortfolioSection from '../components/PortfolioSection'
-import TeamSection from '../components/TeamSection'
-import BlogSection from '../components/BlogSection'
-import ContactSection from '../components/ContactSection'
-import { motion } from 'framer-motion'
-import { getAllPosts } from '@/lib/posts'
+import fs from 'fs'
+import path from 'path'
+import matter from 'gray-matter'
+import BlogCard from '@/components/BlogCard'
+import { useState } from 'react'
 
 export async function getStaticProps() {
-  const posts = getAllPosts()
-  const featured = posts.find(post => post.slug === 'inside-capitol-stack') || null
+  const postsDir = path.join(process.cwd(), 'posts')
+  const filenames = fs.readdirSync(postsDir)
+
+  const posts = filenames
+    .filter((fn) => fn.endsWith('.mdx'))
+    .map((filename) => {
+      const filePath = path.join(postsDir, filename)
+      const source = fs.readFileSync(filePath, 'utf-8')
+      const { data } = matter(source)
+
+      return {
+        slug: filename.replace(/\.mdx$/, ''),
+        ...data
+      }
+    })
+    .filter(post => {
+      const now = new Date()
+      const postDate = new Date(post.date)
+      return postDate <= now && post.hide !== true
+    })
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
+
+  const featured = posts.find(post => post.slug === 'inside-capitol-stack')
+  const nonFeatured = posts.filter(post => post.slug !== 'inside-capitol-stack')
+
   return {
-    props: { featured }
+    props: {
+      featured: featured || null,
+      posts: nonFeatured
+    },
+    revalidate: 60
   }
 }
 
-export default function Home({ featured }) {
+export default function Blog({ featured, posts }) {
+  const visibleCount = Math.min(3, posts.length)
+  const [index, setIndex] = useState(0)
+
+  const slideLeft = () => {
+    setIndex((prev) => (prev - 1 + posts.length) % posts.length)
+  }
+
+  const slideRight = () => {
+    setIndex((prev) => (prev + 1) % posts.length)
+  }
+
+  const visiblePosts = posts.length > 3
+    ? Array.from({ length: visibleCount }).map((_, i) => {
+        const postIndex = (index + i) % posts.length
+        return posts[postIndex]
+      })
+    : posts
+
   return (
-    <div>
-      <Head>
-        <title>Capitol Stack – Founder-First Climate Tech VC</title>
-        <meta
-          name="description"
-          content="Capitol Stack backs mission-driven climate tech founders emerging from government, science, and infrastructure systems."
-        />
-        <link rel="canonical" href="https://capitolstack.vc/" />
-        <link rel="icon" href="/capitol-stack-logo.png" />
-        <meta property="og:title" content="Capitol Stack – Founder-First Climate Tech VC" />
-        <meta
-          property="og:description"
-          content="Investing in overlooked but deeply capable builders at the intersection of climate, government, and software."
-        />
-        <meta property="og:image" content="/images/og-preview.png" />
-        <meta property="og:url" content="https://capitolstack.vc" />
-        <meta name="twitter:card" content="summary_large_image" />
-      </Head>
+    <main className="max-w-7xl mx-auto px-4 py-8">
+      <h1 className="text-4xl font-bold mb-8 text-gray-900">Capitol Stack Blog</h1>
 
-      <main className="bg-gray-50 min-h-screen px-6 py-16 text-center">
-        <motion.img
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
-          src="/capitol-stack-logo.png"
-          alt="Capitol Stack Logo"
-          className="w-48 sm:w-64 md:w-72 lg:w-80 mx-auto mb-10 object-contain"
-        />
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 tracking-tight leading-tight mb-6 max-w-4xl mx-auto">
-          Backing the Next Generation<br className="hidden md:inline" />
-          <span className="text-teal-700"> of Climate Tech Builders</span>
-        </h1>
-        <p className="text-lg sm:text-xl mb-8 max-w-2xl mx-auto text-gray-700 leading-relaxed">
-          Capitol Stack is a pre-seed VC fund based in Washington, D.C., investing in founders emerging from the deepest policy, tech, and scientific talent pool.
-        </p>
-        <a 
-          href="#contact" 
-          className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg transition-colors font-medium text-base sm:text-lg"
-        >
-          Learn More
-        </a>
-      </main>
+      {featured && (
+        <div className="mb-12">
+          <BlogCard post={featured} featured />
+        </div>
+      )}
 
-      <ThesisSection />
-      <PortfolioSection />
-      <TeamSection />
-      {featured && <BlogSection featured={featured} />}
-      <ContactSection />
+      {posts.length > 1 && (
+        <>
+          <h2 className="text-2xl font-semibold mb-4">More from the Blog</h2>
+          <div className="relative flex items-center">
+            <button
+              onClick={slideLeft}
+              className="bg-white border border-gray-300 rounded-full p-2 shadow z-10 hover:bg-gray-100"
+              aria-label="Scroll Left"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
 
-      <footer role="contentinfo" className="bg-black text-white p-8 text-center">
-        <p>© 2024 Capitol Stack VC. All rights reserved.</p>
-      </footer>
-    </div>
+            <div className="flex gap-4 px-4 w-full">
+              {visiblePosts.map((post) => (
+                <div key={post.slug} className="flex-1 min-w-0">
+                  <BlogCard post={post} />
+                </div>
+              ))}
+            </div>
+
+            <button
+              onClick={slideRight}
+              className="bg-white border border-gray-300 rounded-full p-2 shadow z-10 hover:bg-gray-100"
+              aria-label="Scroll Right"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+        </>
+      )}
+
+      {posts.length > 0 && (
+        <>
+          <h2 className="text-2xl font-semibold mt-12 mb-4">Historical Posts</h2>
+          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+            {posts.map((post) => (
+              <BlogCard key={post.slug} post={post} />
+            ))}
+          </div>
+        </>
+      )}
+    </main>
   )
 }
