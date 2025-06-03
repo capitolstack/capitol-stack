@@ -60,38 +60,6 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
   }
-
-  /* MOBILE FIXES ONLY - preserve existing design */
-  @media (max-width: 768px) {
-    /* Ensure readable font sizes on mobile */
-    html {
-      font-size: 16px;
-    }
-    
-    body {
-      line-height: 1.5;
-    }
-    
-    /* Ensure images don't overflow container */
-    img {
-      max-width: 100%;
-      height: auto;
-    }
-    
-    /* Better touch targets for mobile */
-    button, a {
-      min-height: 44px;
-    }
-
-    /* Fix text that might be too small on mobile */
-    .text-xs {
-      font-size: 0.75rem;
-    }
-    
-    .text-sm {
-      font-size: 0.875rem;
-    }
-  }
 }
 
 @layer components {
@@ -213,10 +181,4 @@
 
 .dark ::-webkit-scrollbar-thumb:hover {
   @apply bg-gray-500;
-}
-
-
-/* Utility class for dark-mode safe blog post layout */
-.prose-page {
-  @apply prose dark:prose-invert bg-white dark:bg-gray-900 max-w-3xl mx-auto px-4 py-12;
 }

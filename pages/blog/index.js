@@ -2,7 +2,6 @@ import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 import BlogCard from '@/components/BlogCard'
-import Layout from '@/components/Layout'
 import { useState } from 'react'
 
 export async function getStaticProps() {
@@ -60,66 +59,60 @@ export default function Blog({ featured, posts }) {
     : posts
 
   return (
-    <Layout title="Capitol Stack Blog">
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <h1 className="text-3xl sm:text-4xl font-bold mb-6 sm:mb-8 text-gray-900 dark:text-white">Capitol Stack Blog</h1>
+    <main className="max-w-7xl mx-auto px-4 py-8">
+      <h1 className="text-4xl font-bold mb-8 text-gray-900">Capitol Stack Blog</h1>
 
-        {featured && (
-          <div className="mb-8 sm:mb-12">
-            <BlogCard post={featured} featured />
-          </div>
-        )}
+      {featured && (
+        <div className="mb-12">
+          <BlogCard post={featured} featured />
+        </div>
+      )}
 
-        {posts.length > 1 && (
-          <>
-            <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-gray-900 dark:text-white">More from the Blog</h2>
-            <div className="relative flex items-center mb-8">
-              {posts.length > 3 && (
-                <button
-                  onClick={slideLeft}
-                  className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full p-2 shadow z-10 hover:bg-gray-100 dark:hover:bg-gray-700 mr-2 flex-shrink-0"
-                  aria-label="Scroll Left"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-                  </svg>
-                </button>
-              )}
+      {posts.length > 1 && (
+        <>
+          <h2 className="text-2xl font-semibold mb-4">More from the Blog</h2>
+          <div className="relative flex items-center">
+            <button
+              onClick={slideLeft}
+              className="bg-white border border-gray-300 rounded-full p-2 shadow z-10 hover:bg-gray-100"
+              aria-label="Scroll Left"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
 
-              <div className="flex gap-4 overflow-x-auto px-2 w-full scrollbar-hide">
-                {visiblePosts.map((post) => (
-                  <div key={post.slug} className="flex-none w-full sm:w-80 md:w-96">
-                    <BlogCard post={post} />
-                  </div>
-                ))}
-              </div>
-
-              {posts.length > 3 && (
-                <button
-                  onClick={slideRight}
-                  className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full p-2 shadow z-10 hover:bg-gray-100 dark:hover:bg-gray-700 ml-2 flex-shrink-0"
-                  aria-label="Scroll Right"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                  </svg>
-                </button>
-              )}
-            </div>
-          </>
-        )}
-
-        {posts.length > 0 && (
-          <>
-            <h2 className="text-xl sm:text-2xl font-semibold mt-8 sm:mt-12 mb-4 text-gray-900 dark:text-white">All Posts</h2>
-            <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-              {posts.map((post) => (
-                <BlogCard key={post.slug} post={post} />
+            <div className="flex gap-4 overflow-hidden px-4 w-full">
+              {visiblePosts.map((post) => (
+                <div key={post.slug} className="flex-1 min-w-0">
+                  <BlogCard post={post} />
+                </div>
               ))}
             </div>
-          </>
-        )}
-      </div>
-    </Layout>
+
+            <button
+              onClick={slideRight}
+              className="bg-white border border-gray-300 rounded-full p-2 shadow z-10 hover:bg-gray-100"
+              aria-label="Scroll Right"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+        </>
+      )}
+
+      {posts.length > 0 && (
+        <>
+          <h2 className="text-2xl font-semibold mt-12 mb-4">Historical Posts</h2>
+          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+            {posts.map((post) => (
+              <BlogCard key={post.slug} post={post} />
+            ))}
+          </div>
+        </>
+      )}
+    </main>
   )
 }

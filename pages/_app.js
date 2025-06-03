@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { ThemeProvider } from 'next-themes';
 import '../styles/globals.css';
+import Navbar from '@/components/Navbar';
 
 import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
@@ -65,8 +66,9 @@ export default function App({ Component, pageProps }) {
           }}
         />
 
-        {/* REMOVED: Global Navbar to prevent duplicate */}
-        
+        {/* ✅ Global Navbar */}
+        <Navbar />
+
         {/* ✅ Page content */}
         <Component {...pageProps} />
       </ThemeProvider>
