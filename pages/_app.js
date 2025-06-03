@@ -27,8 +27,8 @@ export default function App({ Component, pageProps }) {
   }, [router.events]);
 
   return (
-    <main role="main" className={inter.variable}>
-      <ThemeProvider attribute="class">
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <main role="main" className={inter.variable}>
         <Head>
           <title>Capitol Stack – Founder-First Climate Tech VC</title>
           <meta
@@ -48,7 +48,6 @@ export default function App({ Component, pageProps }) {
           <meta name="viewport" content="width=device-width, initial-scale=1" />
         </Head>
 
-        {/* ✅ Load GA4 script */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-NH6MMP8EQF"
           strategy="afterInteractive"
@@ -66,12 +65,9 @@ export default function App({ Component, pageProps }) {
           }}
         />
 
-        {/* ✅ Global Navbar */}
         <Navbar />
-
-        {/* ✅ Page content */}
         <Component {...pageProps} />
-      </ThemeProvider>
-    </main>
+      </main>
+    </ThemeProvider>
   );
 }
