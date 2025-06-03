@@ -2,12 +2,12 @@ import Image from 'next/image';
 
 export default function PortfolioSection() {
   return (
-    <section className="bg-white dark:bg-gray-900 py-28 px-6 font-inter text-[#1A1A1A] dark:text-white">
+    <section className="bg-white py-28 px-6 font-inter text-[#1A1A1A] dark:text-white">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl font-semibold text-[#1A1A1A] mb-4 border-l-4 border-[#007070] pl-4">
+        <h2 className="text-3xl font-semibold text-[#1A1A1A] dark:text-white mb-4 border-l-4 border-[#007070] pl-4">
           Portfolio Highlights
         </h2>
-        <p className="text-md text-[#4B5563] mb-12 pl-4">
+        <p className="text-md text-[#4B5563] dark:text-gray-300 mb-12 pl-4">
           Selected investments from the founder's prior fund, Carbon Ventures
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-12">
@@ -23,8 +23,8 @@ export default function PortfolioSection() {
               />
             </div>
             <div className="space-y-3 min-w-0 flex-1">
-              <h3 className="text-xl font-bold text-[#1A1A1A]">Fortify</h3>
-              <p className="text-md text-[#4B5563]">
+              <h3 className="text-xl font-bold text-[#1A1A1A] dark:text-white">Fortify</h3>
+              <p className="text-md text-[#4B5563] dark:text-gray-300">
                 Fortify is a Boston-based digital manufacturing company specializing in advanced composite materials for additive manufacturing.
               </p>
             </div>
@@ -42,8 +42,8 @@ export default function PortfolioSection() {
               />
             </div>
             <div className="space-y-3 min-w-0 flex-1">
-              <h3 className="text-xl font-bold text-[#1A1A1A]">Andium</h3>
-              <p className="text-md text-[#4B5563]">
+              <h3 className="text-xl font-bold text-[#1A1A1A] dark:text-white">Andium</h3>
+              <p className="text-md text-[#4B5563] dark:text-gray-300">
                 Andium provides AI-powered remote field monitoring solutions to reduce greenhouse gas emissions and enhance operational efficiency in the energy sector.
               </p>
             </div>
@@ -61,8 +61,8 @@ export default function PortfolioSection() {
               />
             </div>
             <div className="space-y-3 min-w-0 flex-1">
-              <h3 className="text-xl font-bold text-[#1A1A1A]">SmarterX</h3>
-              <p className="text-md text-[#4B5563]">
+              <h3 className="text-xl font-bold text-[#1A1A1A] dark:text-white">SmarterX</h3>
+              <p className="text-md text-[#4B5563] dark:text-gray-300">
                 SmarterX uses data and science to help brands and retailers safely manage regulated consumer products, reducing environmental harm and risk at scale.
               </p>
             </div>
