@@ -11,26 +11,28 @@ export default function BlogCard({ post }) {
   });
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition hover:shadow-lg">
-      <Link href={`/blog/${post.slug}`}>
-        <div className="relative w-full h-48">
+    <Link href={`/blog/${post.slug}`}>
+      <a className="block group border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition">
+        <div className="aspect-w-16 aspect-h-9 bg-gray-100">
           <Image
             src={post.image}
             alt={post.title}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, 50vw"
+            layout="fill"
+            objectFit="cover"
+            className="group-hover:scale-105 transition-transform duration-300"
+            loading="lazy"
           />
         </div>
-      </Link>
-      <div className="p-4">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{post.title}</h2>
-        <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">{formattedDate}</p>
-        <p className="text-gray-700 dark:text-gray-300 text-sm mb-4">{post.description}</p>
-        <Link href={`/blog/${post.slug}`}>
-          <span className="text-blue-600 dark:text-blue-400 font-medium hover:underline">Read more →</span>
-        </Link>
-      </div>
-    </div>
+        <div className="p-4 bg-white dark:bg-gray-900">
+          <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-white group-hover:underline">
+            {post.title}
+          </h2>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{formattedDate}</p>
+          <p className="mt-2 text-gray-700 dark:text-gray-300 text-sm line-clamp-3">
+            {post.description}
+          </p>
+        </div>
+      </a>
+    </Link>
   );
 }
