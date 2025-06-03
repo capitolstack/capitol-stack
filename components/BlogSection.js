@@ -10,14 +10,14 @@ export default function BlogSection({ posts }) {
   const imagePath = featured.image?.startsWith('/') ? featured.image : `/images/blog/${featured.image}`;
 
   return (
-    <section className="bg-white py-12 sm:py-20 lg:py-32">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section className="bg-white py-24 sm:py-32">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Header */}
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-gray-900">
+          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
             Explore Capitol Stack
           </h2>
-          <p className="mt-3 sm:mt-4 text-base sm:text-lg leading-6 sm:leading-8 text-gray-600">
+          <p className="mt-4 text-lg leading-8 text-gray-600">
             Understand the thesis behind our fund and the role of community in climate innovation.
           </p>
         </div>
@@ -28,10 +28,10 @@ export default function BlogSection({ posts }) {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="mx-auto mt-8 sm:mt-12 lg:mt-16 max-w-4xl"
+          className="mx-auto mt-16 max-w-4xl"
         >
-          <Link href={`/blog/${featured.slug}`} className="group block rounded-xl sm:rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow">
-            <div className="relative w-full h-48 sm:h-64 md:h-80 lg:h-96">
+          <Link href={`/blog/${featured.slug}`} className="group block rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+            <div className="relative w-full h-64 sm:h-80 md:h-96">
               <Image
                 src={imagePath}
                 alt={featured.title}
@@ -41,10 +41,10 @@ export default function BlogSection({ posts }) {
                 priority
               />
             </div>
-            <div className="bg-white p-4 sm:p-6">
-              <h3 className="text-xl sm:text-2xl font-bold text-gray-900">{featured.title}</h3>
-              <p className="mt-2 text-sm sm:text-base text-gray-600">{featured.excerpt}</p>
-              <div className="mt-3 sm:mt-4 text-xs sm:text-sm text-gray-500">
+            <div className="bg-white p-6">
+              <h3 className="text-2xl font-bold text-gray-900">{featured.title}</h3>
+              <p className="mt-2 text-gray-600">{featured.excerpt}</p>
+              <div className="mt-4 text-sm text-gray-500">
                 {featured.date && new Date(featured.date).toLocaleDateString()}
               </div>
             </div>
@@ -52,10 +52,10 @@ export default function BlogSection({ posts }) {
         </motion.div>
 
         {/* CTA */}
-        <div className="mt-8 sm:mt-12 text-center">
+        <div className="mt-12 text-center">
           <Link
             href="/blog"
-            className="text-sm sm:text-base font-medium text-blue-600 hover:text-blue-800 underline"
+            className="text-base font-medium text-blue-600 hover:text-blue-800 underline"
           >
             View Full Blog Archive →
           </Link>

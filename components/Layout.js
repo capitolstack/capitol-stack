@@ -34,8 +34,7 @@ export default function Layout({ children, title = 'Capitol Stack' }) {
 
       <Navbar />
 
-      {/* ONLY CHANGE: Added pt-20 to account for fixed navbar */}
-      <main className="pt-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto py-8">
+      <main className="px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto py-8">
         {children}
       </main>
     </>
