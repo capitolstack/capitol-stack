@@ -34,7 +34,7 @@ export default function Blog({ featured, posts }) {
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl">
               Inside Capitol Stack
             </h1>
-            <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
+            <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-200">
               Insights on climate tech, venture capital, and building the future.
               Learn from our team's experience in the intersection of policy, technology, and impact.
             </p>
@@ -115,7 +115,7 @@ export default function Blog({ featured, posts }) {
                     <h3 className="mt-4 text-3xl font-bold tracking-tight text-gray-900 dark:text-white group-hover:text-[#007070] transition-colors">
                       {featured.title}
                     </h3>
-                    <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
+                    <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-200">
                       {featured.description}
                     </p>
 
@@ -131,7 +131,7 @@ export default function Blog({ featured, posts }) {
                           />
                         ) : (
                           <div className="h-12 w-12 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                            <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
+                            <span className="text-sm font-medium text-gray-600 dark:text-gray-200">
                               {featured.author.name.charAt(0)}
                             </span>
                           </div>
@@ -173,7 +173,7 @@ export default function Blog({ featured, posts }) {
                   {searchTerm ? 'Search results' : 'All articles'}
                 </h2>
                 {searchTerm && (
-                  <p className="mt-2 text-lg leading-8 text-gray-600 dark:text-gray-300">
+                  <p className="mt-2 text-lg leading-8 text-gray-600 dark:text-gray-200">
                     {filteredPosts.length} {filteredPosts.length === 1 ? 'result' : 'results'} for "{searchTerm}"
                   </p>
                 )}
