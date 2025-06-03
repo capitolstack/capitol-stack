@@ -18,7 +18,7 @@ export async function getStaticProps() {
 
 export default function Home({ featured }) {
   return (
-    <div>
+    <div className="bg-white text-gray-900 dark:bg-gray-900 dark:text-white">
       <Head>
         <title>Capitol Stack – Founder-First Climate Tech VC</title>
         <meta
@@ -37,25 +37,16 @@ export default function Home({ featured }) {
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
 
-      <main className="bg-surface dark:bg-dark-surface text-primary dark:text-dark-primary py-24 px-6 text-center font-inter">
+      <main className="bg-white text-gray-900 dark:bg-gray-900 dark:text-white py-24 px-6 text-center font-inter">
   <div className="max-w-3xl mx-auto space-y-8">
     <div className="w-24 h-24 mx-auto relative">
-      <img
-        src="/logo-light.svg"
-        alt="Capitol Stack Logo"
-        className="dark:hidden object-contain w-full h-full"
-      />
-      <img
-        src="/logo-dark.svg"
-        alt="Capitol Stack Logo Dark"
-        className="hidden dark:block object-contain w-full h-full"
-      />
+      <img src="/capitol-stack-logo.png" alt="Capitol Stack Logo" className="w-full h-full object-contain" />
     </div>
     <h1 className="text-4xl font-bold leading-tight">
       Backing the Next Generation <br />
       <span className="text-teal-600 dark:text-teal-400">of Climate Tech Builders</span>
     </h1>
-    <p className="text-lg text-secondary dark:text-dark-secondary max-w-xl mx-auto">
+    <p className="text-lg text-gray-700 dark:text-gray-300 max-w-xl mx-auto">
       Capitol Stack is a pre-seed VC fund based in Washington, D.C., investing in founders emerging
       from the deepest policy, tech, and scientific talent pool.
     </p>
