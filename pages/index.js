@@ -18,7 +18,7 @@ export async function getStaticProps() {
 
 export default function Home({ featured }) {
   return (
-    <div>
+    <div className="bg-white text-gray-900 dark:bg-gray-900 dark:text-white">
       <Head>
         <title>Capitol Stack – Founder-First Climate Tech VC</title>
         <meta
