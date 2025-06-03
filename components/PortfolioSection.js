@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 export default function PortfolioSection() {
   return (
-    <section className="bg-white py-28 px-6 font-inter text-[#1A1A1A] dark:text-white">
+    <section className="bg-gray-50 dark:bg-gray-900 py-28 px-6 font-inter text-[#1A1A1A] dark:text-white">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-3xl font-semibold text-[#1A1A1A] dark:text-white mb-4 border-l-4 border-[#007070] pl-4">
           Portfolio Highlights
