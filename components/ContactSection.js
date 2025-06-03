@@ -5,9 +5,9 @@ export default function ContactSection() {
   const contactFormUrl = 'https://tally.so/embed/wA5yjW?hideTitle=1&transparentBackground=1';
 
   return (
-    <section id="contact" className="py-28 px-6 bg-[#F9FAFB] font-inter text-[#1A1A1A]">
+    <section id="contact" className="py-28 px-6 bg-gray-50 dark:bg-gray-900 font-inter text-[#1A1A1A] dark:text-white">
       <div className="max-w-4xl mx-auto text-center">
-        <h2 className="text-3xl font-semibold text-[#1A1A1A] mb-6 border-l-4 border-[#007070] pl-4 text-left">
+        <h2 className="text-3xl font-semibold text-[#1A1A1A] dark:text-white mb-6 border-l-4 border-[#007070] pl-4 text-left">
           Get in Touch
         </h2>
         <p className="mb-8 text-lg text-[#4B5563] dark:text-gray-300 text-left">
