@@ -63,7 +63,7 @@ export default function Blog({ featured, posts }) {
       <h1 className="text-4xl font-bold mb-8 text-gray-900">Capitol Stack Blog</h1>
 
       {featured && (
-        <div className="mb-12">
+        <div className="mb-12 aspect-w-16 aspect-h-9 w-full">
           <BlogCard post={featured} featured />
         </div>
       )}
@@ -82,7 +82,7 @@ export default function Blog({ featured, posts }) {
               </svg>
             </button>
 
-            <div className="flex gap-4 px-4 w-full">
+            <div className="flex gap-4 overflow-hidden px-4 w-full">
               {visiblePosts.map((post) => (
                 <div key={post.slug} className="flex-1 min-w-0">
                   <BlogCard post={post} />
