@@ -1,43 +1,35 @@
-import Link from 'next/link'
+import Link from 'next/link';
+import Image from 'next/image';
 
-export default function BlogCard({ post, featured = false }) {
-  const containerClasses = featured
-    ? "md:flex shadow-lg rounded-xl overflow-hidden bg-white"
-    : "rounded-lg shadow-md bg-white transition hover:shadow-xl"
-
-  const imageWrapperClasses = featured ? "md:w-1/2" : ""
-  const textWrapperClasses = featured ? "md:w-1/2 p-6 flex flex-col justify-center" : "p-4"
-  const titleClasses = featured ? "text-3xl font-bold text-gray-900 mb-2" : "text-xl font-bold text-gray-900 mb-2"
-
-  const formattedDate = post.date
-    ? new Date(post.date + 'T00:00:00').toLocaleDateString(undefined, {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      })
-    : ''
+export default function BlogCard({ post }) {
+  const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
+    timeZone: 'UTC',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
 
   return (
-    <Link href={`/blog/${post.slug}`}>
-      <div className={containerClasses}>
-        <div className={imageWrapperClasses}>
-          <img
-            src={`/images/${post.cover}`}
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition hover:shadow-lg">
+      <Link href={`/blog/${post.slug}`}>
+        <div className="relative w-full h-48">
+          <Image
+            src={post.image}
             alt={post.title}
-            className="w-full h-full object-cover"
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 50vw"
           />
         </div>
-
-        <div className={textWrapperClasses}>
-          <h2 className={titleClasses}>
-            {post.title}
-          </h2>
-          <p className="text-gray-600 mb-2">{post.excerpt || ''}</p>
-          <div className="text-sm text-gray-500">
-            {formattedDate}
-          </div>
-        </div>
+      </Link>
+      <div className="p-4">
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{post.title}</h2>
+        <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">{formattedDate}</p>
+        <p className="text-gray-700 dark:text-gray-300 text-sm mb-4 line-clamp-3">{post.description}</p>
+        <Link href={`/blog/${post.slug}`}>
+          <span className="text-blue-600 dark:text-blue-400 font-medium hover:underline">Read more →</span>
+        </Link>
       </div>
-    </Link>
-  )
+    </div>
+  );
 }
