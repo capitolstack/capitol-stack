@@ -37,29 +37,36 @@ export default function Home({ featured }) {
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
 
-      <main className="bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-white min-h-screen px-6 py-16 text-center">
-        <motion.img
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
-          src="/capitol-stack-logo.png"
-          alt="Capitol Stack Logo"
-          className="w-48 sm:w-64 md:w-72 lg:w-80 mx-auto mb-10 object-contain"
-        />
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 tracking-tight leading-tight mb-6 max-w-4xl mx-auto">
-          Backing the Next Generation<br className="hidden md:inline" />
-          <span className="text-teal-700"> of Climate Tech Builders</span>
-        </h1>
-        <p className="text-lg sm:text-xl mb-8 max-w-2xl mx-auto text-gray-700 leading-relaxed">
-          Capitol Stack is a pre-seed VC fund based in Washington, D.C., investing in founders emerging from the deepest policy, tech, and scientific talent pool.
-        </p>
-        <a 
-          href="#contact" 
-          className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg transition-colors font-medium text-base sm:text-lg"
-        >
-          Learn More
-        </a>
-      </main>
+      <main className="bg-surface dark:bg-dark-surface text-primary dark:text-dark-primary py-24 px-6 text-center font-inter">
+  <div className="max-w-3xl mx-auto space-y-8">
+    <div className="w-24 h-24 mx-auto relative">
+      <img
+        src="/logo-light.svg"
+        alt="Capitol Stack Logo"
+        className="dark:hidden object-contain w-full h-full"
+      />
+      <img
+        src="/logo-dark.svg"
+        alt="Capitol Stack Logo Dark"
+        className="hidden dark:block object-contain w-full h-full"
+      />
+    </div>
+    <h1 className="text-4xl font-bold leading-tight">
+      Backing the Next Generation <br />
+      <span className="text-teal-600 dark:text-teal-400">of Climate Tech Builders</span>
+    </h1>
+    <p className="text-lg text-secondary dark:text-dark-secondary max-w-xl mx-auto">
+      Capitol Stack is a pre-seed VC fund based in Washington, D.C., investing in founders emerging
+      from the deepest policy, tech, and scientific talent pool.
+    </p>
+    <a
+      href="#contact"
+      className="inline-block mt-4 px-6 py-3 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 transition"
+    >
+      Learn More
+    </a>
+  </div>
+</main>
 
       <ThesisSection />
       <PortfolioSection />
