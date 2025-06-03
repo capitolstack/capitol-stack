@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { ThemeProvider } from 'next-themes';
 import '../styles/globals.css';
-import Navbar from '@/components/Navbar';
 
 import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
@@ -48,7 +47,7 @@ export default function App({ Component, pageProps }) {
           <meta name="viewport" content="width=device-width, initial-scale=1" />
         </Head>
 
-        {/* ✅ Load GA4 script */}
+        {/* Load GA4 script */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-NH6MMP8EQF"
           strategy="afterInteractive"
@@ -66,10 +65,7 @@ export default function App({ Component, pageProps }) {
           }}
         />
 
-        {/* ✅ Global Navbar */}
-        <Navbar />
-
-        {/* ✅ Page content */}
+        {/* Page content - no global navbar */}
         <Component {...pageProps} />
       </ThemeProvider>
     </main>
