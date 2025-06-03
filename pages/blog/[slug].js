@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { useMDXComponent } from 'next-contentlayer/hooks';
-import { allPosts } from 'contentlayer/output';
+import { allPosts } from 'contentlayer/generated';
 import { useRouter } from 'next/router';
 import MDXComponents from '@/components/MDXComponents';
 
