@@ -1,7 +1,8 @@
+
 const { fontFamily } = require('tailwindcss/defaultTheme');
 
 module.exports = {
-  darkMode: 'class', // enables dark mode via class
+  darkMode: 'class',
   content: [
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
@@ -11,7 +12,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#007070',
+        primary: '#007070'
       },
       fontFamily: {
         sans: ['Inter', ...fontFamily.sans],
@@ -28,14 +29,14 @@ module.exports = {
             h4: { color: theme('colors.gray.100') },
             code: { color: theme('colors.gray.100') },
             figcaption: { color: theme('colors.gray.400') },
-          },
-        },
-      }),
+          }
+        }
+      })
     },
   },
   plugins: [
     require('@tailwindcss/typography'),
     require('@tailwindcss/line-clamp'),
-    require('@tailwindcss/aspect-ratio'),
-  ],
+    require('@tailwindcss/aspect-ratio')
+  ]
 };
