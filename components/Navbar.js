@@ -44,7 +44,7 @@ export default function Navbar() {
             href="https://capitolstack.decilehub.com/submit_your_company"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
+            className="bg-blue-600 text-gray-50 dark:text-gray-100 px-4 py-2 rounded-md hover:bg-blue-700 transition"
           >
             Submit a Deck
           </a>
@@ -52,7 +52,7 @@ export default function Navbar() {
             href="https://tally.so/r/your-newsletter-form"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-gray-900 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition"
+            className="bg-gray-900 text-gray-50 dark:text-gray-100 px-4 py-2 rounded-md hover:bg-gray-800 transition"
           >
             Get Updates
           </a>
@@ -92,7 +92,7 @@ export default function Navbar() {
             href="https://capitolstack.decilehub.com/submit_your_company"
             target="_blank"
             rel="noopener noreferrer"
-            className="block text-white bg-blue-600 px-4 py-2 rounded-md hover:bg-blue-700 transition"
+            className="block text-gray-50 dark:text-gray-100 bg-blue-600 px-4 py-2 rounded-md hover:bg-blue-700 transition"
           >
             Submit a Deck
           </a>
@@ -100,7 +100,7 @@ export default function Navbar() {
             href="https://tally.so/r/your-newsletter-form"
             target="_blank"
             rel="noopener noreferrer"
-            className="block text-white bg-gray-900 px-4 py-2 rounded-md hover:bg-gray-800 transition"
+            className="block text-gray-50 dark:text-gray-100 bg-gray-900 px-4 py-2 rounded-md hover:bg-gray-800 transition"
           >
             Get Updates
           </a>
