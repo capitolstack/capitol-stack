@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 export default function TeamSection() {
   return (
-    <section className="bg-white py-28 px-6 font-inter text-center text-[#1A1A1A]">
+    <section className="bg-white dark:bg-gray-900 py-28 px-6 font-inter text-center text-[#1A1A1A] dark:text-white">
       <div className="max-w-4xl mx-auto">
         <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 mx-auto mb-6">
           <Image
