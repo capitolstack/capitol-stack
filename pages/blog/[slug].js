@@ -85,7 +85,7 @@ export default function BlogPost({ frontMatter, mdxSource, slug }) {
           </div>
         )}
 
-        <div className="prose dark:prose-invert">
+        <div className="prose prose-gray dark:prose-invert dark:prose-headings:text-gray-100 dark:text-gray-200">
           <MDXRemote {...mdxSource} />
         </div>
       </article>
