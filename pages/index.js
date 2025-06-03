@@ -18,7 +18,7 @@ export async function getStaticProps() {
 
 export default function Home({ featured }) {
   return (
-    <div className="bg-white text-gray-900 dark:bg-gray-900 dark:text-white">
+    <div>
       <Head>
         <title>Capitol Stack – Founder-First Climate Tech VC</title>
         <meta
@@ -37,7 +37,7 @@ export default function Home({ featured }) {
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
 
-      <main className="bg-gray-50 min-h-screen px-6 py-16 text-center">
+      <main className="bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-white min-h-screen px-6 py-16 text-center">
         <motion.img
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
