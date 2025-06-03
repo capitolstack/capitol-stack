@@ -47,7 +47,7 @@ export default function App({ Component, pageProps }) {
           <meta name="viewport" content="width=device-width, initial-scale=1" />
         </Head>
 
-        {/* Load GA4 script */}
+        {/* ✅ Load GA4 script */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-NH6MMP8EQF"
           strategy="afterInteractive"
@@ -65,7 +65,9 @@ export default function App({ Component, pageProps }) {
           }}
         />
 
-        {/* Page content - no global navbar */}
+        {/* REMOVED: Global Navbar to prevent duplicate */}
+        
+        {/* ✅ Page content */}
         <Component {...pageProps} />
       </ThemeProvider>
     </main>
