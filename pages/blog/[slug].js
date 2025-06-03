@@ -1,3 +1,4 @@
+// Trigger rebuild - 2025-06-03
 
 import Head from 'next/head';
 import { useMDXComponent } from 'next-contentlayer/hooks';
