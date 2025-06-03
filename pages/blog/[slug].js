@@ -63,7 +63,7 @@ export default function BlogPost({ frontMatter, mdxSource, slug }) {
         <meta name="twitter:image" content={`${siteUrl}${imagePath}`} />
       </Head>
 
-      <article className="max-w-3xl mx-auto px-4 py-12">
+      <article className="max-w-3xl mx-auto px-4 py-12 bg-white dark:bg-gray-900">
         <h1 className="text-4xl font-bold mb-4">{title}</h1>
         <p className="text-sm text-gray-500 mb-6">
           {date && new Date(date).toLocaleDateString('en-US', {
@@ -85,23 +85,7 @@ export default function BlogPost({ frontMatter, mdxSource, slug }) {
           </div>
         )}
 
-        <div className="prose prose-gray" style={{
-    '--tw-prose-body': '#1f2937',
-    '--tw-prose-headings': '#111827',
-    '--tw-prose-links': '#0369a1',
-    '--tw-prose-bold': '#000000',
-    '--tw-prose-counters': '#6b7280',
-    '--tw-prose-bullets': '#6b7280',
-    '--tw-prose-hr': '#d1d5db',
-    '--tw-prose-quotes': '#374151',
-    '--tw-prose-quote-borders': '#d1d5db',
-    '--tw-prose-captions': '#6b7280',
-    '--tw-prose-code': '#111827',
-    '--tw-prose-pre-code': '#e5e7eb',
-    '--tw-prose-pre-bg': '#1f2937',
-    '--tw-prose-th-borders': '#d1d5db',
-    '--tw-prose-td-borders': '#e5e7eb'
-  }}>
+        <div className="prose prose-gray dark:prose-invert dark:text-gray-200">
           <MDXRemote {...mdxSource} />
         </div>
       </article>
