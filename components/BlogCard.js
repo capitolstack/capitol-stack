@@ -25,7 +25,7 @@ export default function BlogCard({ post }) {
       <div className="p-4">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{post.title}</h2>
         <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">{formattedDate}</p>
-        <p className="text-gray-700 dark:text-gray-300 text-sm mb-4 line-clamp-3">{post.description}</p>
+        <p className="text-gray-700 dark:text-gray-300 text-sm mb-4">{post.description}</p>
         <Link href={`/blog/${post.slug}`}>
           <span className="text-blue-600 dark:text-blue-400 font-medium hover:underline">Read more →</span>
         </Link>
