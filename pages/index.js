@@ -39,7 +39,7 @@ export default function Home({ featured }) {
 
       <main className="bg-white text-gray-900 dark:bg-gray-900 dark:text-white py-24 px-6 text-center font-inter">
   <div className="max-w-3xl mx-auto space-y-8">
-    <div className="w-24 h-24 mx-auto relative">
+    <div className="mx-auto">
       <img src="/capitol-stack-logo.png" alt="Capitol Stack Logo" className="mx-auto h-28 md:h-36 object-contain" />
     </div>
     <h1 className="text-4xl font-bold leading-tight">
