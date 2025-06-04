@@ -1,3 +1,4 @@
+
 import Head from 'next/head'
 import ThesisSection from '../components/ThesisSection'
 import PortfolioSection from '../components/PortfolioSection'
@@ -37,29 +38,26 @@ export default function Home({ featured }) {
       </Head>
 
       <main className="bg-white text-gray-900 dark:bg-gray-900 dark:text-white py-24 px-6 text-center font-inter">
-        <div className="max-w-3xl mx-auto space-y-8">
-          <div className="w-24 h-24 mx-auto relative">
-            <picture>
-              <source srcSet="/capitol-stack-logo-white.png" media="(prefers-color-scheme: dark)" />
-              <img src="/capitol-stack-logo.png" alt="Capitol Stack Logo" className="mx-auto h-28 md:h-36 object-contain" />
-            </picture>
-          </div>
-          <h1 className="text-4xl font-bold leading-tight">
-            Backing the Next Generation <br />
-            <span className="text-teal-600 dark:text-teal-400">of Climate Tech Builders</span>
-          </h1>
-          <p className="text-lg text-gray-700 dark:text-gray-300 max-w-xl mx-auto">
-            Capitol Stack is a pre-seed VC fund based in Washington, D.C., investing in founders emerging
-            from the deepest policy, tech, and scientific talent pool.
-          </p>
-          <a
-            href="#contact"
-            className="inline-block mt-4 px-6 py-3 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 transition"
-          >
-            Learn More
-          </a>
-        </div>
-      </main>
+  <div className="max-w-3xl mx-auto space-y-8">
+    <div className="w-24 h-24 mx-auto relative">
+      <img src="/capitol-stack-logo.png" alt="Capitol Stack Logo" className="mx-auto h-28 md:h-36 object-contain" />
+    </div>
+    <h1 className="text-4xl font-bold leading-tight">
+      Backing the Next Generation <br />
+      <span className="text-teal-600 dark:text-teal-400">of Climate Tech Builders</span>
+    </h1>
+    <p className="text-lg text-gray-700 dark:text-gray-300 max-w-xl mx-auto">
+      Capitol Stack is a pre-seed VC fund based in Washington, D.C., investing in founders emerging
+      from the deepest policy, tech, and scientific talent pool.
+    </p>
+    <a
+      href="#contact"
+      className="inline-block mt-4 px-6 py-3 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 transition"
+    >
+      Learn More
+    </a>
+  </div>
+</main>
 
       <ThesisSection />
       <PortfolioSection />
