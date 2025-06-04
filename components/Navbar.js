@@ -28,7 +28,7 @@ export default function Navbar() {
       <nav role="navigation" aria-label="Main Navigation" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
         {/* Logo & Brand */}
         <Link href="/" className="flex items-center space-x-2">
-          <Image src="/capitol-stack-logo.png" alt="Capitol Stack Logo" width={32} height={32} />
+          <Image src="/capitol-stack-logo.png" alt="Capitol Stack Logo" width={48} height={48} />
           <span className="text-xl font-semibold text-gray-800">Capitol Stack</span>
         </Link>
 
