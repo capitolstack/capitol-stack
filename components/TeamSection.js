@@ -8,8 +8,9 @@ export default function TeamSection() {
           <Image
             src="/jason-headshot.jpg"
             alt="Jason Cahill"
-            fill
-            className="rounded-full object-cover border border-[#E5E7EB] shadow-sm"
+            width={128}
+            height={128}
+            className="rounded-full object-cover object-top border border-[#E5E7EB] shadow-sm"
             sizes="(max-width: 640px) 96px, (max-width: 768px) 112px, 128px"
             priority
           />
