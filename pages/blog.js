@@ -30,7 +30,7 @@ export default function Blog({ featured, posts }) {
       <div className="bg-white dark:bg-gray-900">
         {/* Header */}
         <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
-          <div className="mx-auto max-w-2xl text-center">
+          <div className="mx-auto max-w-2xl text-center pt-24">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl">
               Inside Capitol Stack
             </h1>
@@ -68,7 +68,7 @@ export default function Blog({ featured, posts }) {
               </div>
             </div>
 
-            <article className="mx-auto mt-24 max-w-2xl lg:mx-0 lg:max-w-none">
+            <article className="mx-auto mt-16 max-w-2xl lg:mx-0 lg:max-w-none">
               <Link href={`/blog/${featured.slug}`} className="group">
                 <div className="lg:grid lg:grid-cols-2 lg:gap-16">
                   <div className="relative">
@@ -168,7 +168,7 @@ export default function Blog({ featured, posts }) {
         <div className="mx-auto max-w-7xl px-6 py-24 lg:px-8">
           {filteredPosts.length > 0 ? (
             <>
-              <div className="mx-auto max-w-2xl text-center">
+              <div className="mx-auto max-w-2xl text-center pt-24">
                 <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
                   {searchTerm ? 'Search results' : 'All articles'}
                 </h2>
