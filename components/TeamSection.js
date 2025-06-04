@@ -6,7 +6,7 @@ export default function TeamSection() {
       <div className="max-w-4xl mx-auto">
         <div className="mx-auto mb-6">
           <Image
-            src="/jason-cahill-padded.jpg"
+            src="/jason-cahill.jpg"
             alt="Jason Cahill"
             width={128}
             height={128}
