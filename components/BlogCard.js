@@ -19,7 +19,7 @@ export default function BlogCard({ post, featured = false }) {
 
   return (
     <Link href={`/blog/${post.slug}`}>
-      <div className={`${containerClasses} min-w-[80%] sm:min-w-[33%] snap-center`}>
+      <div className={`${containerClasses} ${!featured ? 'min-w-[80%] sm:min-w-[33%] snap-center' : ''}`}>
         <div className={imageWrapperClasses}>
           <img
             src={`/images/${post.cover}`}
