@@ -59,7 +59,7 @@ export default function Blog({ featured, posts }) {
 
         {/* Featured article */}
         {featured && searchTerm === '' && (
-          <div className="mx-auto max-w-7xl px-6 lg:px-8 mt-24">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl border-t border-gray-200 dark:border-gray-800 pt-16 sm:pt-20">
               <div className="text-center">
                 <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
@@ -68,7 +68,7 @@ export default function Blog({ featured, posts }) {
               </div>
             </div>
 
-            <article className="mx-auto mt-16 max-w-2xl lg:mx-0 lg:max-w-none">
+            <article className="mx-auto mt-24 max-w-2xl lg:mx-0 lg:max-w-none">
               <Link href={`/blog/${featured.slug}`} className="group">
                 <div className="lg:grid lg:grid-cols-2 lg:gap-16">
                   <div className="relative">
