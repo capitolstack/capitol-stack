@@ -4,13 +4,13 @@ export default function TeamSection() {
   return (
     <section className="bg-gray-50 dark:bg-gray-900 py-28 px-6 font-inter text-center text-[#1A1A1A] dark:text-white">
       <div className="max-w-4xl mx-auto">
-        <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 mx-auto mb-6">
+        <div className="rounded-full p-1 bg-gray-900 dark:bg-gray-900 w-fit mx-auto mb-6">
           <Image
-            src="/jason-headshot.jpg"
+            src="/jason-cahill-padded.jpg"
             alt="Jason Cahill"
             width={128}
             height={128}
-            className="rounded-full object-cover object-top border border-[#E5E7EB] shadow-sm"
+            className="rounded-full object-cover object-top"
             sizes="(max-width: 640px) 96px, (max-width: 768px) 112px, 128px"
             priority
           />
