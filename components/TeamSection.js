@@ -4,7 +4,7 @@ export default function TeamSection() {
   return (
     <section className="bg-gray-50 dark:bg-gray-900 py-28 px-6 font-inter text-center text-[#1A1A1A] dark:text-white">
       <div className="max-w-4xl mx-auto">
-        <div className="rounded-full p-1 bg-gray-900 dark:bg-gray-900 w-fit mx-auto mb-6">
+        <div className="mx-auto mb-6">
           <Image
             src="/jason-cahill-padded.jpg"
             alt="Jason Cahill"
