@@ -24,7 +24,7 @@ export default function BlogCard({ post, featured = false }) {
           <img
             src={`/images/${post.cover}`}
             alt={post.title}
-            className="w-full h-full object-cover"
+            className="w-full h-48 object-cover rounded-t-lg"
           />
         </div>
 
