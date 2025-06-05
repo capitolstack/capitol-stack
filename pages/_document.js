@@ -1,16 +1,15 @@
-import { Html, Head, Main, NextScript } from 'next/document'
+import { Html, Head, Main, NextScript } from 'next/document';
 
 export default function Document() {
   return (
-    <Html>
+    <Html lang="en">
       <Head>
-        {/* Tally modal embed script */}
         <script async src="https://tally.so/widgets/embed.js"></script>
       </Head>
-      <body>
+      <body className="font-inter">
         <Main />
         <NextScript />
       </body>
     </Html>
-  )
+  );
 }
