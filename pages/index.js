@@ -16,6 +16,23 @@ export async function getStaticProps() {
   }
 }
 
+
+<section className="w-full bg-white dark:bg-gray-900 text-center py-20 px-6">
+  <h1 className="text-4xl sm:text-5xl font-extrabold mb-4 text-gray-900 dark:text-white">
+    The Right Stack Wins.
+  </h1>
+  <p className="text-xl sm:text-2xl max-w-3xl mx-auto text-gray-700 dark:text-gray-300 mb-4">
+    In climate, it isn’t just software—it’s everything that surrounds it.
+  </p>
+  <p className="text-lg sm:text-xl max-w-2xl mx-auto text-gray-600 dark:text-gray-400">
+    Code. Capital. Customers. Community.
+  </p>
+  <p className="text-lg sm:text-xl max-w-2xl mx-auto mt-4 text-gray-800 dark:text-gray-200 font-semibold">
+    This is the Capitol Stack.
+  </p>
+</section>
+
+
 export default function Home({ featured }) {
   return (
     <div className="bg-white text-gray-900 dark:bg-gray-900 dark:text-white">
