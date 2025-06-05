@@ -18,6 +18,7 @@ export async function getStaticProps() {
 
 export default function Home({ featured }) {
   return (
+      <>
     <section className="w-full bg-white dark:bg-gray-900 text-center py-20 px-6">
       <h1 className="text-4xl sm:text-5xl font-extrabold mb-4 text-gray-900 dark:text-white">
         The Right Stack Wins.
@@ -84,4 +85,5 @@ export default function Home({ featured }) {
       </footer>
     </div>
   )
+      </>
 }
