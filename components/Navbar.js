@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
+import NewsletterButton from './NewsletterButton';
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -48,14 +50,7 @@ export default function Navbar() {
           >
             Submit a Deck
           </a>
-          <a
-            href="https://tally.so/r/your-newsletter-form"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-gray-900 text-gray-50 dark:text-gray-100 px-4 py-2 rounded-md hover:bg-gray-800 transition"
-          >
-            Get Updates
-          </a>
+          <NewsletterButton />
         </div>
 
         {/* Mobile Menu Toggle */}
@@ -96,14 +91,7 @@ export default function Navbar() {
           >
             Submit a Deck
           </a>
-          <a
-            href="https://tally.so/r/your-newsletter-form"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block text-gray-50 dark:text-gray-100 bg-gray-900 px-4 py-2 rounded-md hover:bg-gray-800 transition"
-          >
-            Get Updates
-          </a>
+          <NewsletterButton />
         </div>
       )}
     </header>
