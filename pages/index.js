@@ -1,4 +1,3 @@
-
 import Head from 'next/head'
 import ThesisSection from '../components/ThesisSection'
 import PortfolioSection from '../components/PortfolioSection'
@@ -66,7 +65,7 @@ export default function Home({ featured }) {
       <TeamSection />
       {featured && <BlogSection featured={featured} />}
       <NewsletterForm />
-      <ContactSection />
+      
 
       <footer role="contentinfo" className="bg-black text-white p-8 text-center">
         <p>© 2024 Capitol Stack VC. All rights reserved.</p>
