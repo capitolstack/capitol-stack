@@ -67,8 +67,7 @@ export default function Navbar() {
             )}
           </svg>
         </button>
-                <Link href="/contact" className="text-sm font-medium text-gray-700 hover:text-gray-900">Contact</Link>
-</nav>
+      </nav>
 
       {/* Mobile Nav Menu */}
       {isOpen && (
