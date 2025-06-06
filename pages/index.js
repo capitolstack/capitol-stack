@@ -5,6 +5,8 @@ import PortfolioSection from '../components/PortfolioSection'
 import TeamSection from '../components/TeamSection'
 import BlogSection from '../components/BlogSection'
 import ContactSection from '../components/ContactSection'
+import NewsletterForm from '../components/NewsletterForm'
+
 import { motion } from 'framer-motion'
 import { getAllPosts } from '@/lib/posts'
 
@@ -63,6 +65,7 @@ export default function Home({ featured }) {
       <PortfolioSection />
       <TeamSection />
       {featured && <BlogSection featured={featured} />}
+      <NewsletterForm />
       <ContactSection />
 
       <footer role="contentinfo" className="bg-black text-white p-8 text-center">
