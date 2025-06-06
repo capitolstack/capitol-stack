@@ -3,7 +3,6 @@ import ThesisSection from '../components/ThesisSection'
 import PortfolioSection from '../components/PortfolioSection'
 import TeamSection from '../components/TeamSection'
 import BlogSection from '../components/BlogSection'
-import ContactSection from '../components/ContactSection'
 import NewsletterForm from '../components/NewsletterForm'
 
 import { motion } from 'framer-motion'
