@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 
 export default function NewsletterButton() {
@@ -12,13 +11,13 @@ export default function NewsletterButton() {
 
   return (
     <button
-      data-tally-open="m6zeoo"
-      data-tally-layout="modal"
-      data-tally-width="600"
-      data-tally-overlay="1"
+      onClick={() => {
+        const section = document.getElementById('newsletter');
+        if (section) section.scrollIntoView({ behavior: 'smooth' });
+      }}
       className="px-4 py-2 rounded-md border border-gray-300 hover:bg-gray-100 transition"
     >
-      Get Updates
+      Subscribe to Newsletter
     </button>
   );
 }
