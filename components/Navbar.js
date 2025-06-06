@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -36,7 +35,7 @@ export default function Navbar() {
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center space-x-6">
-          <Link href="/#contact" scroll={false} className="text-gray-700 hover:text-blue-600 transition">
+          <Link href="/contact" className="text-gray-700 hover:text-blue-600 transition">
             Contact
           </Link>
           <Link href="/blog" className="text-gray-700 hover:text-blue-600 transition">
@@ -73,8 +72,7 @@ export default function Navbar() {
       {isOpen && (
         <div className="md:hidden px-4 pb-4 space-y-3">
           <Link
-            href="/#contact"
-            scroll={false}
+            href="/contact"
             className="block text-gray-700 hover:text-blue-600"
             onClick={toggleMenu}
           >
