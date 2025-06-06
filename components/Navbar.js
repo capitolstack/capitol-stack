@@ -27,7 +27,8 @@ export default function Navbar() {
         scrolled ? 'bg-white shadow-md' : 'bg-white bg-opacity-60 backdrop-blur-sm'
       }`}
     >
-      <nav role="navigation" aria-label="Main Navigation" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+      <nav
+        <Link href="/contact" className="text-sm font-medium text-gray-700 hover:text-gray-900">Contact</Link> role="navigation" aria-label="Main Navigation" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
         {/* Logo & Brand */}
         <Link href="/" className="flex items-center space-x-2">
           <Image src="/capitol-stack-logo.png" alt="Capitol Stack Logo" width={48} height={48} />
