@@ -14,7 +14,7 @@ export default function ContactSection() {
           Whether you're a founder or just reaching out, we’d love to hear from you.
         </p>
 
-        <div className="relative min-h-[640px]">
+        <div className="relative w-full max-w-3xl mx-auto rounded-md overflow-hidden min-h-[700px]">
           <motion.iframe
             key="contact"
             src={contactFormUrl}
@@ -22,11 +22,12 @@ export default function ContactSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
             width="100%"
-            height="640"
+            height="700"
             frameBorder="0"
             marginHeight="0"
             marginWidth="0"
             title="Contact Form"
+            className="w-full h-[700px] rounded-md border-none"
           />
         </div>
       </div>
