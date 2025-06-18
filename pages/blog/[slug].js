@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { serialize } from 'next-mdx-remote/serialize';
+import remarkGfm from 'remark-gfm';
 import { MDXRemote } from 'next-mdx-remote';
 import Head from 'next/head';
 import Image from 'next/image';
@@ -117,7 +118,12 @@ export async function getStaticProps({ params }) {
   const filePath = path.join(postsDir, matchedFile);
   const fileContent = fs.readFileSync(filePath, 'utf8');
   const { data, content } = matter(fileContent);
-  const mdxSource = await serialize(content);
+  const mdxSource = await serialize(content, {
+  mdxOptions: {
+    remarkPlugins: [remarkGfm],
+  },
+});
+
 
   return {
     props: {
