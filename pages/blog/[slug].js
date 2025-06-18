@@ -107,7 +107,30 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const filePath = path.join(process.cwd(), 'posts', `${params.slug}.mdx`);
+  const postsDir = path.join(process.cwd(), 'posts');
+  const filenames = fs.readdirSync(postsDir);
+
+  const matchedFile = filenames.find((name) =>
+    name.replace(/^\d{2}-/, '').replace(/\.mdx$/, '') === params.slug
+  );
+
+  if (!matchedFile) {
+    return { notFound: true };
+  }
+
+  const filePath = path.join(postsDir, matchedFile);
+  const fileContent = fs.readFileSync(filePath, 'utf8');
+  const { data, content } = matter(fileContent);
+  const mdxSource = await serialize(content);
+
+  return {
+    props: {
+      frontMatter: data,
+      mdxSource,
+      slug: params.slug,
+    },
+  };
+}.mdx`);
   const fileContent = fs.readFileSync(filePath, 'utf8');
   const { data, content } = matter(fileContent);
   const mdxSource = await serialize(content);
