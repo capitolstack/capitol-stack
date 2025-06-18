@@ -48,15 +48,11 @@ export default function BlogPost({ frontMatter, mdxSource, slug }) {
         <title>{title} | Capitol Stack Blog</title>
         <meta name="description" content={description} />
         <link rel="canonical" href={canonicalUrl} />
-
-        {/* Open Graph */}
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
         <meta property="og:image" content={`${siteUrl}${imagePath}`} />
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:type" content="article" />
-
-        {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
@@ -100,7 +96,7 @@ export async function getStaticPaths() {
   const paths = filenames
     .filter((name) => name.endsWith('.mdx'))
     .map((name) => ({
-      params: { slug: name.replace(/\.mdx$/, '') },
+      params: { slug: name.replace(/^\d{2}-/, '').replace(/\.mdx$/, '') },
     }));
 
   return { paths, fallback: false };
@@ -119,18 +115,6 @@ export async function getStaticProps({ params }) {
   }
 
   const filePath = path.join(postsDir, matchedFile);
-  const fileContent = fs.readFileSync(filePath, 'utf8');
-  const { data, content } = matter(fileContent);
-  const mdxSource = await serialize(content);
-
-  return {
-    props: {
-      frontMatter: data,
-      mdxSource,
-      slug: params.slug,
-    },
-  };
-}.mdx`);
   const fileContent = fs.readFileSync(filePath, 'utf8');
   const { data, content } = matter(fileContent);
   const mdxSource = await serialize(content);
