@@ -182,3 +182,17 @@
 .dark ::-webkit-scrollbar-thumb:hover {
   @apply bg-gray-500;
 }
+
+
+/* Custom blog post typography */
+.prose img {
+  @apply my-8 rounded-xl shadow-md mx-auto;
+}
+
+.prose h2, .prose h3, .prose h4 {
+  @apply mt-10 mb-4 font-semibold;
+}
+
+.prose p {
+  @apply mb-6;
+}
